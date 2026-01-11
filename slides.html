@@ -1,0 +1,3741 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ハーベスト SV研修資料</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        :root {
+            --primary: #1a5f7a;
+            --secondary: #159895;
+            --accent: #57c5b6;
+            --light: #f8f9fa;
+            --dark: #212529;
+            --success: #28a745;
+            --warning: #ffc107;
+            --danger: #dc3545;
+        }
+        body {
+            font-family: 'Hiragino Kaku Gothic ProN', 'Meiryo', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            line-height: 1.8;
+        }
+        .container {
+            display: flex;
+            min-height: 100vh;
+        }
+        .sidebar {
+            width: 280px;
+            background: rgba(255,255,255,0.95);
+            backdrop-filter: blur(10px);
+            padding: 20px;
+            overflow-y: auto;
+            position: fixed;
+            height: 100vh;
+            box-shadow: 4px 0 20px rgba(0,0,0,0.1);
+            z-index: 100;
+        }
+        .sidebar h2 {
+            color: var(--primary);
+            font-size: 1.2rem;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid var(--accent);
+        }
+        .nav-item {
+            display: block;
+            padding: 10px 15px;
+            margin: 5px 0;
+            color: var(--dark);
+            text-decoration: none;
+            border-radius: 8px;
+            font-size: 0.9rem;
+            transition: all 0.3s;
+        }
+        .nav-item:hover, .nav-item.active {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            transform: translateX(5px);
+        }
+        .nav-item .num {
+            display: inline-block;
+            width: 24px;
+            height: 24px;
+            background: var(--accent);
+            color: white;
+            border-radius: 50%;
+            text-align: center;
+            line-height: 24px;
+            font-size: 0.75rem;
+            margin-right: 8px;
+        }
+        .main-content {
+            flex: 1;
+            margin-left: 280px;
+            padding: 40px;
+        }
+        .slide {
+            display: none;
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            margin-bottom: 30px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.15);
+            animation: slideIn 0.5s ease;
+        }
+        .slide.active { display: block; }
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        h1 {
+            color: var(--primary);
+            font-size: 2rem;
+            margin-bottom: 30px;
+            padding-bottom: 15px;
+            border-bottom: 3px solid var(--accent);
+        }
+        h2 {
+            color: var(--secondary);
+            font-size: 1.5rem;
+            margin: 30px 0 20px;
+            padding-left: 15px;
+            border-left: 4px solid var(--accent);
+        }
+        h3 { color: var(--dark); font-size: 1.2rem; margin: 25px 0 15px; }
+        h4 { color: #555; font-size: 1.1rem; margin: 20px 0 10px; }
+        p { margin: 15px 0; color: #444; }
+        ul, ol { margin: 15px 0 15px 25px; color: #444; }
+        li { margin: 8px 0; }
+
+        /* テーブルスタイル */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            font-size: 0.95rem;
+            box-shadow: 0 2px 15px rgba(0,0,0,0.1);
+            border-radius: 10px;
+            overflow: hidden;
+        }
+        th {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            padding: 15px 20px;
+            text-align: left;
+            font-weight: 600;
+        }
+        td {
+            padding: 15px 20px;
+            border-bottom: 1px solid #e9ecef;
+            background: white;
+        }
+        tr:nth-child(even) td { background: #f8f9fa; }
+        tr:hover td { background: #e3f2fd; }
+
+        /* 図表用のボックススタイル */
+        .diagram-box {
+            background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+            border: 2px solid var(--accent);
+            border-radius: 15px;
+            padding: 25px;
+            margin: 20px 0;
+        }
+        .diagram-box h4 {
+            color: var(--primary);
+            text-align: center;
+            margin-bottom: 20px;
+            font-size: 1.1rem;
+        }
+        .diagram-box ul {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
+        .diagram-box li {
+            padding: 10px 15px;
+            margin: 8px 0;
+            background: white;
+            border-radius: 8px;
+            border-left: 4px solid var(--accent);
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+        }
+
+        /* フローチャート */
+        .flowchart {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 10px;
+            margin: 20px 0;
+        }
+        .flow-step {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            padding: 15px 30px;
+            border-radius: 10px;
+            text-align: center;
+            min-width: 200px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+        }
+        .flow-arrow {
+            font-size: 24px;
+            color: var(--accent);
+        }
+
+        /* 組織図 */
+        .org-chart {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 20px;
+            margin: 20px 0;
+        }
+        .org-level {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+        .org-box {
+            background: white;
+            border: 2px solid var(--primary);
+            border-radius: 10px;
+            padding: 15px 25px;
+            text-align: center;
+            min-width: 120px;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+        }
+        .org-box.highlight {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            border: none;
+        }
+        .org-connector {
+            width: 2px;
+            height: 20px;
+            background: var(--primary);
+        }
+
+        /* グリッドレイアウト */
+        .grid-2 {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+            margin: 20px 0;
+        }
+        .grid-3 {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+            margin: 20px 0;
+        }
+        .grid-4 {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 15px;
+            margin: 20px 0;
+        }
+
+        /* カードスタイル */
+        .card {
+            background: white;
+            border-radius: 15px;
+            padding: 25px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+            border: 1px solid #e9ecef;
+        }
+        .card h4 {
+            color: var(--primary);
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid var(--accent);
+        }
+
+        /* アラートボックス */
+        .info-box {
+            background: linear-gradient(135deg, #d1ecf1, #bee5eb);
+            border-left: 5px solid #17a2b8;
+            padding: 20px 25px;
+            border-radius: 0 15px 15px 0;
+            margin: 20px 0;
+        }
+        .warning-box {
+            background: linear-gradient(135deg, #fff3cd, #ffeeba);
+            border-left: 5px solid var(--warning);
+            padding: 20px 25px;
+            border-radius: 0 15px 15px 0;
+            margin: 20px 0;
+        }
+        .danger-box {
+            background: linear-gradient(135deg, #f8d7da, #f5c6cb);
+            border-left: 5px solid var(--danger);
+            padding: 20px 25px;
+            border-radius: 0 15px 15px 0;
+            margin: 20px 0;
+        }
+        .success-box {
+            background: linear-gradient(135deg, #d4edda, #c3e6cb);
+            border-left: 5px solid var(--success);
+            padding: 20px 25px;
+            border-radius: 0 15px 15px 0;
+            margin: 20px 0;
+        }
+
+        /* バッジ */
+        .badge {
+            display: inline-block;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            margin: 3px;
+        }
+        .badge-primary { background: var(--primary); color: white; }
+        .badge-success { background: var(--success); color: white; }
+        .badge-warning { background: var(--warning); color: #333; }
+        .badge-danger { background: var(--danger); color: white; }
+        .badge-info { background: #17a2b8; color: white; }
+
+        /* プログレスバー */
+        .progress-container {
+            margin: 20px 0;
+        }
+        .progress-item {
+            margin: 15px 0;
+        }
+        .progress-label {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 5px;
+        }
+        .progress-bar {
+            height: 12px;
+            background: #e9ecef;
+            border-radius: 6px;
+            overflow: hidden;
+        }
+        .progress-fill {
+            height: 100%;
+            border-radius: 6px;
+            transition: width 0.5s;
+        }
+
+        /* タイムライン */
+        .timeline {
+            position: relative;
+            margin: 30px 0;
+            padding-left: 30px;
+        }
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 10px;
+            top: 0;
+            bottom: 0;
+            width: 3px;
+            background: var(--accent);
+        }
+        .timeline-item {
+            position: relative;
+            margin-bottom: 25px;
+            padding-left: 25px;
+        }
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: -24px;
+            top: 5px;
+            width: 14px;
+            height: 14px;
+            background: var(--primary);
+            border-radius: 50%;
+            border: 3px solid white;
+            box-shadow: 0 0 0 3px var(--accent);
+        }
+        .timeline-time {
+            color: var(--secondary);
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
+
+        /* ナビゲーションボタン */
+        .nav-buttons {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 40px;
+            padding-top: 20px;
+            border-top: 1px solid #e9ecef;
+        }
+        .nav-btn {
+            padding: 12px 30px;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: all 0.3s;
+        }
+        .nav-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 20px rgba(0,0,0,0.2);
+        }
+        .nav-btn:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        /* 目次カード */
+        .toc-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 15px;
+            margin: 30px 0;
+        }
+        .toc-card {
+            background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+            border-radius: 12px;
+            padding: 20px;
+            cursor: pointer;
+            transition: all 0.3s;
+            border: 2px solid transparent;
+        }
+        .toc-card:hover {
+            border-color: var(--accent);
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+        .toc-card h3 {
+            color: var(--primary);
+            margin: 0 0 10px 0;
+            font-size: 1rem;
+        }
+        .toc-card p {
+            color: #666;
+            font-size: 0.85rem;
+            margin: 0;
+        }
+
+        /* レスポンシブ */
+        @media (max-width: 1024px) {
+            .sidebar { width: 60px; padding: 10px; }
+            .sidebar h2, .nav-item span { display: none; }
+            .nav-item .num { margin: 0; }
+            .main-content { margin-left: 60px; padding: 20px; }
+            .grid-2, .grid-3, .grid-4 { grid-template-columns: 1fr; }
+        }
+
+        /* 比較チャート */
+        .comparison-chart {
+            display: flex;
+            gap: 10px;
+            margin: 20px 0;
+            align-items: flex-end;
+            height: 200px;
+            padding: 20px;
+            background: #f8f9fa;
+            border-radius: 15px;
+        }
+        .chart-bar {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-end;
+        }
+        .chart-bar .bar {
+            width: 60%;
+            border-radius: 5px 5px 0 0;
+            transition: height 0.5s;
+        }
+        .chart-bar .label {
+            margin-top: 10px;
+            font-size: 0.8rem;
+            text-align: center;
+        }
+
+        /* ステップインジケーター */
+        .steps {
+            display: flex;
+            justify-content: space-between;
+            margin: 30px 0;
+            position: relative;
+        }
+        .steps::before {
+            content: '';
+            position: absolute;
+            top: 20px;
+            left: 50px;
+            right: 50px;
+            height: 3px;
+            background: #e9ecef;
+        }
+        .step {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            position: relative;
+            z-index: 1;
+        }
+        .step-number {
+            width: 40px;
+            height: 40px;
+            background: var(--primary);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+        .step-label {
+            text-align: center;
+            font-size: 0.85rem;
+            max-width: 100px;
+        }
+
+        /* チェックリスト */
+        .checklist {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
+        .checklist li {
+            padding: 12px 15px;
+            margin: 8px 0;
+            background: white;
+            border-radius: 8px;
+            border: 1px solid #e9ecef;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .checklist li::before {
+            content: '☐';
+            font-size: 1.2rem;
+            color: var(--primary);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <nav class="sidebar">
+            <h2>SV研修資料</h2>
+            <a href="#" class="nav-item active" onclick="showSlide(0)"><span class="num">0</span><span>目次</span></a>
+            <a href="#" class="nav-item" onclick="showSlide(1)"><span class="num">1</span><span>給食業界入門</span></a>
+            <a href="#" class="nav-item" onclick="showSlide(2)"><span class="num">2</span><span>市場規模・将来予測</span></a>
+            <a href="#" class="nav-item" onclick="showSlide(3)"><span class="num">3</span><span>業界構造・ビジネスモデル</span></a>
+            <a href="#" class="nav-item" onclick="showSlide(4)"><span class="num">4</span><span>主要プレイヤー</span></a>
+            <a href="#" class="nav-item" onclick="showSlide(5)"><span class="num">5</span><span>競合比較</span></a>
+            <a href="#" class="nav-item" onclick="showSlide(6)"><span class="num">6</span><span>ハーベスト会社紹介</span></a>
+            <a href="#" class="nav-item" onclick="showSlide(7)"><span class="num">7</span><span>給食関連法規</span></a>
+            <a href="#" class="nav-item" onclick="showSlide(8)"><span class="num">8</span><span>業界課題</span></a>
+            <a href="#" class="nav-item" onclick="showSlide(9)"><span class="num">9</span><span>トレンド・将来展望</span></a>
+            <a href="#" class="nav-item" onclick="showSlide(10)"><span class="num">10</span><span>入社検討ポイント</span></a>
+            <a href="#" class="nav-item" onclick="showSlide(11)"><span class="num">11</span><span>SV現場研修ガイド</span></a>
+            <a href="#" class="nav-item" onclick="showSlide(12)"><span class="num">12</span><span>ヘルスケア事業</span></a>
+            <a href="#" class="nav-item" onclick="showSlide(13)"><span class="num">13</span><span>SV着任後ガイド</span></a>
+            <a href="#" class="nav-item" onclick="showSlide(14)"><span class="num">14</span><span>SV実務マニュアル</span></a>
+            <a href="#" class="nav-item" onclick="showSlide(15)"><span class="num">15</span><span>新規営業ガイド</span></a>
+            <a href="#" class="nav-item" onclick="showSlide(16)"><span class="num">16</span><span>緊急時対応</span></a>
+            <a href="#" class="nav-item" onclick="showSlide(17)"><span class="num">17</span><span>衛生管理基礎</span></a>
+            <a href="#" class="nav-item" onclick="showSlide(18)"><span class="num">18</span><span>給食オペレーション</span></a>
+            <a href="#" class="nav-item" onclick="showSlide(19)"><span class="num">19</span><span>栄養管理基礎</span></a>
+            <a href="#" class="nav-item" onclick="showSlide(20)"><span class="num">20</span><span>原価管理入門</span></a>
+            <a href="#" class="nav-item" onclick="showSlide(21)"><span class="num">21</span><span>労務管理の基本</span></a>
+            <a href="#" class="nav-item" onclick="showSlide(22)"><span class="num">22</span><span>クライアント対応術</span></a>
+            <a href="#" class="nav-item" onclick="showSlide(23)"><span class="num">23</span><span>トラブル対応</span></a>
+            <a href="#" class="nav-item" onclick="showSlide(24)"><span class="num">24</span><span>給食システム入門</span></a>
+        </nav>
+
+        <main class="main-content">
+            <!-- Slide 0: 目次 -->
+            <div class="slide active" id="slide-0">
+                <h1>ハーベスト SV研修資料</h1>
+                <p>スーパーバイザー(SV)として必要な知識とスキルを網羅した研修資料です。</p>
+
+                <div class="info-box">
+                    <strong>この研修資料について</strong>
+                    <p>全25章で構成され、給食業界の基礎から実務まで体系的に学べます。</p>
+                </div>
+
+                <h2>目次</h2>
+                <div class="toc-grid">
+                    <div class="toc-card" onclick="showSlide(1)">
+                        <h3>第1章 給食業界入門</h3>
+                        <p>業界の全体像、6分野、委託vs直営</p>
+                    </div>
+                    <div class="toc-card" onclick="showSlide(2)">
+                        <h3>第2章 市場規模と将来予測</h3>
+                        <p>4.8兆円市場、分野別規模、2028年予測</p>
+                    </div>
+                    <div class="toc-card" onclick="showSlide(3)">
+                        <h3>第3章 業界構造とビジネスモデル</h3>
+                        <p>契約形態、収益構造、バリューチェーン</p>
+                    </div>
+                    <div class="toc-card" onclick="showSlide(4)">
+                        <h3>第4章 主要プレイヤー</h3>
+                        <p>業界TOP20、分野別強豪、M&A動向</p>
+                    </div>
+                    <div class="toc-card" onclick="showSlide(5)">
+                        <h3>第5章 競合比較</h3>
+                        <p>待遇・給与・企業文化、面接対策</p>
+                    </div>
+                    <div class="toc-card" onclick="showSlide(6)">
+                        <h3>第6章 ハーベスト会社紹介</h3>
+                        <p>会社概要、理念、事業内容、組織体制</p>
+                    </div>
+                    <div class="toc-card" onclick="showSlide(7)">
+                        <h3>第7章 給食関連法規</h3>
+                        <p>食品衛生法、労働基準法、各種規制</p>
+                    </div>
+                    <div class="toc-card" onclick="showSlide(8)">
+                        <h3>第8章 業界課題</h3>
+                        <p>人手不足、コスト上昇、業界課題への対応</p>
+                    </div>
+                    <div class="toc-card" onclick="showSlide(9)">
+                        <h3>第9章 トレンドと将来展望</h3>
+                        <p>DX推進、自動化技術、高齢者市場</p>
+                    </div>
+                    <div class="toc-card" onclick="showSlide(10)">
+                        <h3>第10章 入社検討ポイント</h3>
+                        <p>面接準備、志望動機、キャリアパス</p>
+                    </div>
+                    <div class="toc-card" onclick="showSlide(11)">
+                        <h3>第11章 SV現場研修ガイド</h3>
+                        <p>6ヶ月間の研修、成長段階、評価基準</p>
+                    </div>
+                    <div class="toc-card" onclick="showSlide(12)">
+                        <h3>第12章 ヘルスケア事業ガイド</h3>
+                        <p>医療・介護施設の特徴と対応</p>
+                    </div>
+                    <div class="toc-card" onclick="showSlide(13)">
+                        <h3>第13章 SV着任後ガイド</h3>
+                        <p>着任後90日間のアクションプラン</p>
+                    </div>
+                    <div class="toc-card" onclick="showSlide(14)">
+                        <h3>第14章 SV実務マニュアル</h3>
+                        <p>施設別対応、複数店舗管理</p>
+                    </div>
+                    <div class="toc-card" onclick="showSlide(15)">
+                        <h3>第15章 新規営業ガイド</h3>
+                        <p>営業プロセス、提案、契約</p>
+                    </div>
+                    <div class="toc-card" onclick="showSlide(16)">
+                        <h3>第16章 緊急時対応マニュアル</h3>
+                        <p>食中毒、災害、人員トラブル対応</p>
+                    </div>
+                    <div class="toc-card" onclick="showSlide(17)">
+                        <h3>第17章 衛生管理基礎</h3>
+                        <p>HACCP、温度管理、衛生チェック</p>
+                    </div>
+                    <div class="toc-card" onclick="showSlide(18)">
+                        <h3>第18章 給食オペレーション</h3>
+                        <p>調理工程、配膳、洗浄、1日の流れ</p>
+                    </div>
+                    <div class="toc-card" onclick="showSlide(19)">
+                        <h3>第19章 栄養管理基礎</h3>
+                        <p>栄養素、献立作成、食種対応</p>
+                    </div>
+                    <div class="toc-card" onclick="showSlide(20)">
+                        <h3>第20章 原価管理入門</h3>
+                        <p>食材費、人件費、収支管理</p>
+                    </div>
+                    <div class="toc-card" onclick="showSlide(21)">
+                        <h3>第21章 労務管理の基本</h3>
+                        <p>シフト管理、採用、労働法規</p>
+                    </div>
+                    <div class="toc-card" onclick="showSlide(22)">
+                        <h3>第22章 クライアント対応術</h3>
+                        <p>施設との関係構築、クレーム対応</p>
+                    </div>
+                    <div class="toc-card" onclick="showSlide(23)">
+                        <h3>第23章 トラブル対応マニュアル</h3>
+                        <p>異物混入、食中毒、設備故障対応</p>
+                    </div>
+                    <div class="toc-card" onclick="showSlide(24)">
+                        <h3>第24章 給食システム入門</h3>
+                        <p>発注システム、献立システム</p>
+                    </div>
+                </div>
+
+                <div class="nav-buttons">
+                    <button class="nav-btn" disabled>前へ</button>
+                    <button class="nav-btn" onclick="showSlide(1)">次へ</button>
+                </div>
+            </div>
+
+            <!-- Slide 1: 給食業界入門 -->
+            <div class="slide" id="slide-1">
+                <h1>第1章 給食業界入門</h1>
+
+                <h2>給食業界とは</h2>
+                <div class="card">
+                    <p>給食業界とは、病院、高齢者施設、学校、企業などの施設に対して食事を提供するサービス業界です。</p>
+                    <p>「コントラクトフードサービス」とも呼ばれ、施設と契約を結んで食事提供を請け負います。</p>
+                </div>
+
+                <h2>給食と外食の違い</h2>
+                <table>
+                    <tr>
+                        <th>項目</th>
+                        <th>給食</th>
+                        <th>外食</th>
+                    </tr>
+                    <tr>
+                        <td><strong>提供先</strong></td>
+                        <td>施設（病院・学校・企業等）</td>
+                        <td>一般消費者</td>
+                    </tr>
+                    <tr>
+                        <td><strong>価格決定</strong></td>
+                        <td>契約で決定（固定）</td>
+                        <td>店舗が自由に設定</td>
+                    </tr>
+                    <tr>
+                        <td><strong>メニュー</strong></td>
+                        <td>栄養バランス重視</td>
+                        <td>嗜好性重視</td>
+                    </tr>
+                    <tr>
+                        <td><strong>提供場所</strong></td>
+                        <td>施設内の厨房で調理</td>
+                        <td>自社店舗</td>
+                    </tr>
+                    <tr>
+                        <td><strong>顧客との関係</strong></td>
+                        <td>B to B（法人契約）</td>
+                        <td>B to C（個人消費者）</td>
+                    </tr>
+                </table>
+
+                <h2>給食業界の市場規模</h2>
+                <div class="info-box">
+                    <h4>給食業界全体：約5兆円</h4>
+                    <div class="progress-container">
+                        <div class="progress-item">
+                            <div class="progress-label"><span>事業所給食（社員食堂等）</span><span>約1.8兆円</span></div>
+                            <div class="progress-bar"><div class="progress-fill" style="width: 36%; background: var(--primary);"></div></div>
+                        </div>
+                        <div class="progress-item">
+                            <div class="progress-label"><span>高齢者施設給食</span><span>約1.0兆円</span></div>
+                            <div class="progress-bar"><div class="progress-fill" style="width: 20%; background: var(--secondary);"></div></div>
+                        </div>
+                        <div class="progress-item">
+                            <div class="progress-label"><span>病院給食</span><span>約0.9兆円</span></div>
+                            <div class="progress-bar"><div class="progress-fill" style="width: 18%; background: var(--accent);"></div></div>
+                        </div>
+                        <div class="progress-item">
+                            <div class="progress-label"><span>学校給食</span><span>約0.8兆円</span></div>
+                            <div class="progress-bar"><div class="progress-fill" style="width: 16%; background: var(--warning);"></div></div>
+                        </div>
+                        <div class="progress-item">
+                            <div class="progress-label"><span>その他（保育園等）</span><span>約0.5兆円</span></div>
+                            <div class="progress-bar"><div class="progress-fill" style="width: 10%; background: var(--success);"></div></div>
+                        </div>
+                    </div>
+                </div>
+
+                <h2>給食業界の主要プレイヤー</h2>
+                <div class="diagram-box">
+                    <h4>給食業界 主要企業</h4>
+                    <div class="grid-2">
+                        <div>
+                            <h4 style="color: var(--primary);">大手4社</h4>
+                            <ul class="checklist">
+                                <li>日清医療食品 ：医療・介護分野トップ</li>
+                                <li>エームサービス ：事業所給食トップ</li>
+                                <li>LEOC ：医療・介護・事業所</li>
+                                <li>コンパスグループ ：外資系、事業所中心</li>
+                            </ul>
+                        </div>
+                        <div>
+                            <h4 style="color: var(--secondary);">中堅企業</h4>
+                            <ul class="checklist">
+                                <li>富士産業、グリーンハウス</li>
+                                <li>シダックス、魚国総本社</li>
+                                <li>一冨士フードサービス</li>
+                                <li style="background: linear-gradient(135deg, var(--accent), var(--secondary)); color: white;"><strong>ハーベスト ← 私たちはここ</strong></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <h2>給食の種類</h2>
+                <table>
+                    <tr>
+                        <th>種類</th>
+                        <th>対象施設</th>
+                        <th>特徴</th>
+                    </tr>
+                    <tr>
+                        <td><span class="badge badge-danger">医療給食</span></td>
+                        <td>病院</td>
+                        <td>治療食の提供、24時間対応</td>
+                    </tr>
+                    <tr>
+                        <td><span class="badge badge-warning">介護給食</span></td>
+                        <td>老健・特養・有料老人ホーム</td>
+                        <td>嚥下調整食、行事食重視</td>
+                    </tr>
+                    <tr>
+                        <td><span class="badge badge-primary">事業所給食</span></td>
+                        <td>企業の社員食堂</td>
+                        <td>昼食中心、メニュー重視</td>
+                    </tr>
+                    <tr>
+                        <td><span class="badge badge-success">学校給食</span></td>
+                        <td>小中学校</td>
+                        <td>食育、アレルギー対応</td>
+                    </tr>
+                    <tr>
+                        <td><span class="badge badge-info">保育給食</span></td>
+                        <td>保育園・こども園</td>
+                        <td>離乳食、アレルギー対応</td>
+                    </tr>
+                </table>
+
+                <div class="nav-buttons">
+                    <button class="nav-btn" onclick="showSlide(0)">前へ</button>
+                    <button class="nav-btn" onclick="showSlide(2)">次へ</button>
+                </div>
+            </div>
+
+            <!-- Slide 2: ハーベスト会社紹介 -->
+            <div class="slide" id="slide-2">
+                <h1>第2章 ハーベスト会社紹介</h1>
+
+                <h2>会社概要</h2>
+                <table>
+                    <tr><th style="width:30%">項目</th><th>内容</th></tr>
+                    <tr><td><strong>社名</strong></td><td>ハーベスト株式会社</td></tr>
+                    <tr><td><strong>設立</strong></td><td>1960年（昭和35年）10月29日</td></tr>
+                    <tr><td><strong>本社</strong></td><td>神奈川県横浜市保土ケ谷区岩間町2-120</td></tr>
+                    <tr><td><strong>資本金</strong></td><td>2億1,000万円</td></tr>
+                    <tr><td><strong>売上高</strong></td><td>347億円（令和7年3月）</td></tr>
+                    <tr><td><strong>従業員数</strong></td><td>約10,000名（令和7年3月）</td></tr>
+                    <tr><td><strong>営業所数</strong></td><td>約1,000ヵ所（令和7年3月）</td></tr>
+                </table>
+
+                <h2>企業理念</h2>
+                <div class="diagram-box" style="text-align: center;">
+                    <h4 style="font-size: 1.3rem;">「食を通じて、人々の健康と幸せに貢献する」</h4>
+                    <p style="margin-top: 15px;">私たちは、安全・安心でおいしい食事を提供することで、<br>施設で暮らす方々、働く方々の健康を支え、笑顔あふれる食卓を創造します。</p>
+                </div>
+
+                <h2>事業領域</h2>
+                <div class="grid-2">
+                    <div class="card">
+                        <h4>ヘルスケア事業（主力）</h4>
+                        <ul>
+                            <li>病院給食</li>
+                            <li>介護施設給食</li>
+                            <li>福祉施設給食</li>
+                        </ul>
+                        <p><span class="badge badge-primary">売上構成比 約70%</span></p>
+                    </div>
+                    <div class="card">
+                        <h4>その他事業</h4>
+                        <ul>
+                            <li>事業所給食</li>
+                            <li>学校給食</li>
+                            <li>保育園給食</li>
+                        </ul>
+                        <p><span class="badge badge-success">売上構成比 約30%</span></p>
+                    </div>
+                </div>
+
+                <h2>組織体制</h2>
+                <div class="org-chart">
+                    <div class="org-level">
+                        <div class="org-box highlight">社長</div>
+                    </div>
+                    <div class="org-connector"></div>
+                    <div class="org-level">
+                        <div class="org-box">営業本部</div>
+                        <div class="org-box">運営本部</div>
+                        <div class="org-box">管理本部</div>
+                    </div>
+                    <div class="org-connector"></div>
+                    <div class="org-level">
+                        <div class="org-box">東日本運営部</div>
+                        <div class="org-box">西日本運営部</div>
+                    </div>
+                    <div class="org-connector"></div>
+                    <div class="org-level">
+                        <div class="org-box">エリアマネージャー</div>
+                    </div>
+                    <div class="org-connector"></div>
+                    <div class="org-level">
+                        <div class="org-box highlight">SV ← あなたはここ</div>
+                    </div>
+                    <div class="org-connector"></div>
+                    <div class="org-level">
+                        <div class="org-box">事業所責任者</div>
+                    </div>
+                </div>
+
+                <h2>ハーベストの強み</h2>
+                <div class="grid-3">
+                    <div class="card" style="text-align: center;">
+                        <div style="font-size: 2rem; color: var(--primary);">1</div>
+                        <h4>専門特化</h4>
+                        <p>医療・介護分野に特化した専門性</p>
+                    </div>
+                    <div class="card" style="text-align: center;">
+                        <div style="font-size: 2rem; color: var(--secondary);">2</div>
+                        <h4>地域密着</h4>
+                        <p>地域に根ざしたきめ細かなサービス</p>
+                    </div>
+                    <div class="card" style="text-align: center;">
+                        <div style="font-size: 2rem; color: var(--accent);">3</div>
+                        <h4>人材力</h4>
+                        <p>教育研修の充実、資格取得支援</p>
+                    </div>
+                </div>
+
+                <div class="nav-buttons">
+                    <button class="nav-btn" onclick="showSlide(5)">前へ</button>
+                    <button class="nav-btn" onclick="showSlide(7)">次へ</button>
+                </div>
+            </div>
+
+            <!-- Slide 3: 給食関連法規 -->
+            <div class="slide" id="slide-3">
+                <h1>第3章 給食関連法規</h1>
+
+                <h2>給食事業に関わる主な法律</h2>
+                <div class="grid-3">
+                    <div class="card">
+                        <h4 style="color: var(--danger);">食品関連</h4>
+                        <ul>
+                            <li>食品衛生法</li>
+                            <li>食品表示法</li>
+                            <li>HACCP制度</li>
+                        </ul>
+                    </div>
+                    <div class="card">
+                        <h4 style="color: var(--primary);">労働関連</h4>
+                        <ul>
+                            <li>労働基準法</li>
+                            <li>労働安全衛生法</li>
+                            <li>パートタイム労働法</li>
+                        </ul>
+                    </div>
+                    <div class="card">
+                        <h4 style="color: var(--success);">施設関連</h4>
+                        <ul>
+                            <li>医療法（病院）</li>
+                            <li>介護保険法（介護施設）</li>
+                            <li>健康増進法</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <h2>HACCP（ハサップ）制度</h2>
+                <div class="danger-box">
+                    <h4>2021年6月から完全義務化</h4>
+                    <p>すべての食品事業者にHACCPに沿った衛生管理が義務付けられています。</p>
+                </div>
+
+                <table>
+                    <tr>
+                        <th>項目</th>
+                        <th>内容</th>
+                    </tr>
+                    <tr>
+                        <td><strong>HACCPとは</strong></td>
+                        <td>Hazard Analysis and Critical Control Point（危害分析重要管理点）</td>
+                    </tr>
+                    <tr>
+                        <td><strong>目的</strong></td>
+                        <td>食品の安全性を確保するための衛生管理手法</td>
+                    </tr>
+                    <tr>
+                        <td><strong>特徴</strong></td>
+                        <td>工程ごとに危害要因を分析し、重要な管理点を継続的に監視・記録</td>
+                    </tr>
+                </table>
+
+                <h2>労働基準法のポイント</h2>
+                <table>
+                    <tr>
+                        <th>項目</th>
+                        <th>規定</th>
+                    </tr>
+                    <tr>
+                        <td><strong>労働時間</strong></td>
+                        <td>1日8時間、週40時間が上限</td>
+                    </tr>
+                    <tr>
+                        <td><strong>休憩</strong></td>
+                        <td>6時間超で45分、8時間超で1時間</td>
+                    </tr>
+                    <tr>
+                        <td><strong>休日</strong></td>
+                        <td>週1日以上または4週4日以上</td>
+                    </tr>
+                    <tr>
+                        <td><strong>時間外労働</strong></td>
+                        <td>36協定の締結が必要、割増賃金支払い</td>
+                    </tr>
+                    <tr>
+                        <td><strong>深夜労働</strong></td>
+                        <td>22時〜5時は25%以上の割増賃金</td>
+                    </tr>
+                </table>
+
+                <h2>SVが注意すべき法令違反リスク</h2>
+                <div class="danger-box">
+                    <h4>重大な法令違反</h4>
+                    <ul>
+                        <li>食中毒の発生（営業停止処分のリスク）</li>
+                        <li>HACCP記録の不備・改ざん</li>
+                        <li>労働時間の上限超過（36協定違反）</li>
+                        <li>無資格者による調理（調理師法違反）</li>
+                    </ul>
+                </div>
+
+                <div class="nav-buttons">
+                    <button class="nav-btn" onclick="showSlide(6)">前へ</button>
+                    <button class="nav-btn" onclick="showSlide(8)">次へ</button>
+                </div>
+            </div>
+
+            <!-- Slide 4: 衛生管理基礎 -->
+            <div class="slide" id="slide-4">
+                <h1>第4章 衛生管理基礎</h1>
+
+                <h2>衛生管理の3原則</h2>
+                <div class="grid-3">
+                    <div class="card" style="text-align: center; border-top: 4px solid var(--danger);">
+                        <div style="font-size: 2.5rem; color: var(--danger);">1</div>
+                        <h4>菌を「つけない」</h4>
+                        <p>手洗い、器具の洗浄・消毒</p>
+                    </div>
+                    <div class="card" style="text-align: center; border-top: 4px solid var(--warning);">
+                        <div style="font-size: 2.5rem; color: var(--warning);">2</div>
+                        <h4>菌を「増やさない」</h4>
+                        <p>温度管理、迅速な調理</p>
+                    </div>
+                    <div class="card" style="text-align: center; border-top: 4px solid var(--success);">
+                        <div style="font-size: 2.5rem; color: var(--success);">3</div>
+                        <h4>菌を「やっつける」</h4>
+                        <p>十分な加熱（75℃1分以上）</p>
+                    </div>
+                </div>
+
+                <h2>温度管理の基準</h2>
+                <table>
+                    <tr>
+                        <th>区分</th>
+                        <th>温度基準</th>
+                        <th>理由</th>
+                    </tr>
+                    <tr>
+                        <td><span class="badge badge-info">冷蔵保存</span></td>
+                        <td>10℃以下（推奨5℃以下）</td>
+                        <td>細菌の増殖を抑制</td>
+                    </tr>
+                    <tr>
+                        <td><span class="badge badge-primary">冷凍保存</span></td>
+                        <td>-18℃以下</td>
+                        <td>細菌の活動を停止</td>
+                    </tr>
+                    <tr>
+                        <td><span class="badge badge-danger">加熱調理</span></td>
+                        <td>中心温度75℃1分以上</td>
+                        <td>ほとんどの菌を死滅</td>
+                    </tr>
+                    <tr>
+                        <td><span class="badge badge-warning">温蔵</span></td>
+                        <td>65℃以上</td>
+                        <td>細菌の増殖を防止</td>
+                    </tr>
+                    <tr>
+                        <td><span class="badge badge-danger">危険温度帯</span></td>
+                        <td>10℃〜60℃</td>
+                        <td>最も菌が増殖しやすい</td>
+                    </tr>
+                </table>
+
+                <h2>食中毒の主な原因菌</h2>
+                <table>
+                    <tr>
+                        <th>菌名</th>
+                        <th>原因食品</th>
+                        <th>予防策</th>
+                    </tr>
+                    <tr>
+                        <td><strong>ノロウイルス</strong></td>
+                        <td>二枚貝、感染者からの二次感染</td>
+                        <td>十分な加熱、手洗い徹底</td>
+                    </tr>
+                    <tr>
+                        <td><strong>サルモネラ菌</strong></td>
+                        <td>卵、鶏肉</td>
+                        <td>十分な加熱、二次汚染防止</td>
+                    </tr>
+                    <tr>
+                        <td><strong>カンピロバクター</strong></td>
+                        <td>鶏肉</td>
+                        <td>十分な加熱、生肉の取り扱い注意</td>
+                    </tr>
+                    <tr>
+                        <td><strong>黄色ブドウ球菌</strong></td>
+                        <td>おにぎり、サンドイッチ</td>
+                        <td>手指の傷への注意、素手で触らない</td>
+                    </tr>
+                    <tr>
+                        <td><strong>ウェルシュ菌</strong></td>
+                        <td>カレー、シチュー</td>
+                        <td>作り置きしない、速やかな冷却</td>
+                    </tr>
+                </table>
+
+                <h2>異物混入対策</h2>
+                <table>
+                    <tr>
+                        <th>異物</th>
+                        <th>原因</th>
+                        <th>対策</th>
+                    </tr>
+                    <tr>
+                        <td>毛髪</td>
+                        <td>調理者から</td>
+                        <td>帽子・ネット着用、粘着ローラー</td>
+                    </tr>
+                    <tr>
+                        <td>虫</td>
+                        <td>食材・施設から</td>
+                        <td>検品、防虫対策、網戸</td>
+                    </tr>
+                    <tr>
+                        <td>金属片</td>
+                        <td>器具の破損</td>
+                        <td>器具点検、金属探知機</td>
+                    </tr>
+                    <tr>
+                        <td>プラスチック</td>
+                        <td>包装材、器具</td>
+                        <td>開封時の注意、器具点検</td>
+                    </tr>
+                    <tr>
+                        <td>絆創膏</td>
+                        <td>調理者から</td>
+                        <td>青色絆創膏使用、手袋着用</td>
+                    </tr>
+                </table>
+
+                <div class="nav-buttons">
+                    <button class="nav-btn" onclick="showSlide(16)">前へ</button>
+                    <button class="nav-btn" onclick="showSlide(18)">次へ</button>
+                </div>
+            </div>
+
+            <!-- Slide 5: 給食オペレーション -->
+            <div class="slide" id="slide-5">
+                <h1>第5章 給食オペレーション</h1>
+
+                <h2>給食提供の1日の流れ</h2>
+                <div class="timeline">
+                    <div class="timeline-item">
+                        <div class="timeline-time">5:00</div>
+                        <div>早番出勤・朝食調理開始（白衣着用、手洗い、体調チェック）</div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-time">6:30</div>
+                        <div>朝食盛り付け開始（温度確認、食札確認）</div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-time">7:00</div>
+                        <div>朝食配膳（配膳車への積み込み、病棟への配膳）</div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-time">8:00</div>
+                        <div>下膳・洗浄開始（残食チェック、食器洗浄・消毒）</div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-time">9:00</div>
+                        <div>昼食調理開始（食材の下処理、加熱調理）</div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-time">11:30</div>
+                        <div>昼食配膳</div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-time">14:00</div>
+                        <div>夕食調理開始、おやつ準備</div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-time">17:30</div>
+                        <div>夕食配膳</div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-time">19:00</div>
+                        <div>下膳・洗浄・翌日準備・厨房清掃</div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-time">20:00</div>
+                        <div>遅番退勤</div>
+                    </div>
+                </div>
+
+                <h2>食種対応</h2>
+                <table>
+                    <tr>
+                        <th>食種</th>
+                        <th>対象者</th>
+                        <th>特徴</th>
+                    </tr>
+                    <tr>
+                        <td><span class="badge badge-success">常食</span></td>
+                        <td>制限のない方</td>
+                        <td>一般的な食事</td>
+                    </tr>
+                    <tr>
+                        <td><span class="badge badge-info">軟菜食</span></td>
+                        <td>咀嚼力が弱い方</td>
+                        <td>やわらかく調理</td>
+                    </tr>
+                    <tr>
+                        <td><span class="badge badge-warning">きざみ食</span></td>
+                        <td>咀嚼に問題がある方</td>
+                        <td>細かくきざむ</td>
+                    </tr>
+                    <tr>
+                        <td><span class="badge badge-danger">ミキサー食</span></td>
+                        <td>嚥下困難な方</td>
+                        <td>ペースト状に</td>
+                    </tr>
+                    <tr>
+                        <td><span class="badge badge-primary">糖尿病食</span></td>
+                        <td>糖尿病患者</td>
+                        <td>エネルギー・糖質制限</td>
+                    </tr>
+                    <tr>
+                        <td><span class="badge badge-primary">腎臓病食</span></td>
+                        <td>腎臓病患者</td>
+                        <td>たんぱく質・塩分制限</td>
+                    </tr>
+                </table>
+
+                <h2>嚥下調整食の分類（学会分類2021）</h2>
+                <div class="diagram-box">
+                    <div class="steps">
+                        <div class="step">
+                            <div class="step-number">0</div>
+                            <div class="step-label">嚥下訓練食品</div>
+                        </div>
+                        <div class="step">
+                            <div class="step-number">1</div>
+                            <div class="step-label">ゼリー・プリン状</div>
+                        </div>
+                        <div class="step">
+                            <div class="step-number">2</div>
+                            <div class="step-label">ピューレ・ペースト</div>
+                        </div>
+                        <div class="step">
+                            <div class="step-number">3</div>
+                            <div class="step-label">舌でつぶせる</div>
+                        </div>
+                        <div class="step">
+                            <div class="step-number">4</div>
+                            <div class="step-label">歯ぐきでつぶせる</div>
+                        </div>
+                        <div class="step">
+                            <div class="step-number">普通</div>
+                            <div class="step-label">通常の食事</div>
+                        </div>
+                    </div>
+                </div>
+
+                <h2>配膳の重要ポイント</h2>
+                <div class="warning-box">
+                    <h4>配膳ミスを防ぐ</h4>
+                    <ul>
+                        <li><strong>食札確認</strong>：必ず食札と食事内容を照合</li>
+                        <li><strong>ダブルチェック</strong>：2人以上で確認</li>
+                        <li><strong>アレルギー食</strong>：特に慎重に確認</li>
+                        <li><strong>治療食</strong>：食種・量を間違えない</li>
+                    </ul>
+                </div>
+
+                <div class="nav-buttons">
+                    <button class="nav-btn" onclick="showSlide(17)">前へ</button>
+                    <button class="nav-btn" onclick="showSlide(19)">次へ</button>
+                </div>
+            </div>
+
+            <!-- Slide 6: 栄養管理基礎 -->
+            <div class="slide" id="slide-6">
+                <h1>第6章 栄養管理基礎</h1>
+
+                <h2>5大栄養素</h2>
+                <table>
+                    <tr>
+                        <th>栄養素</th>
+                        <th>主な働き</th>
+                        <th>多く含む食品</th>
+                    </tr>
+                    <tr>
+                        <td><span class="badge badge-warning">炭水化物</span></td>
+                        <td>エネルギー源</td>
+                        <td>ご飯、パン、麺類</td>
+                    </tr>
+                    <tr>
+                        <td><span class="badge badge-danger">たんぱく質</span></td>
+                        <td>体を作る</td>
+                        <td>肉、魚、卵、大豆</td>
+                    </tr>
+                    <tr>
+                        <td><span class="badge badge-primary">脂質</span></td>
+                        <td>エネルギー源、細胞膜</td>
+                        <td>油、バター、肉の脂身</td>
+                    </tr>
+                    <tr>
+                        <td><span class="badge badge-success">ビタミン</span></td>
+                        <td>体の調子を整える</td>
+                        <td>野菜、果物</td>
+                    </tr>
+                    <tr>
+                        <td><span class="badge badge-info">ミネラル</span></td>
+                        <td>体の機能を調整</td>
+                        <td>海藻、小魚、乳製品</td>
+                    </tr>
+                </table>
+
+                <h2>高齢者の栄養管理</h2>
+                <div class="grid-2">
+                    <div class="card">
+                        <h4 style="color: var(--danger);">高齢者に多い栄養問題</h4>
+                        <ul>
+                            <li><strong>低栄養（フレイル）</strong>：たんぱく質・エネルギー不足</li>
+                            <li><strong>脱水</strong>：水分摂取量の減少</li>
+                            <li><strong>嚥下障害</strong>：飲み込みにくさ</li>
+                            <li><strong>咀嚼障害</strong>：噛みにくさ</li>
+                        </ul>
+                    </div>
+                    <div class="card">
+                        <h4 style="color: var(--success);">対策</h4>
+                        <ul>
+                            <li>少量でも高たんぱく・高エネルギーの食事</li>
+                            <li>水分をこまめに提供</li>
+                            <li>食べやすい形態への調整</li>
+                            <li>見た目・味付けの工夫で食欲増進</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <h2>治療食の種類</h2>
+                <table>
+                    <tr>
+                        <th>治療食</th>
+                        <th>対象疾患</th>
+                        <th>制限内容</th>
+                    </tr>
+                    <tr>
+                        <td><strong>糖尿病食</strong></td>
+                        <td>糖尿病</td>
+                        <td>エネルギー1400〜1800kcal/日</td>
+                    </tr>
+                    <tr>
+                        <td><strong>腎臓病食</strong></td>
+                        <td>慢性腎臓病</td>
+                        <td>たんぱく質40〜60g/日、塩分6g/日以下</td>
+                    </tr>
+                    <tr>
+                        <td><strong>心臓病食</strong></td>
+                        <td>心不全・高血圧</td>
+                        <td>塩分6g/日以下、水分制限</td>
+                    </tr>
+                    <tr>
+                        <td><strong>肝臓病食</strong></td>
+                        <td>肝硬変など</td>
+                        <td>たんぱく質制限、分岐鎖アミノ酸</td>
+                    </tr>
+                    <tr>
+                        <td><strong>術後食</strong></td>
+                        <td>手術後</td>
+                        <td>流動食から段階的にアップ</td>
+                    </tr>
+                </table>
+
+                <h2>献立作成のポイント</h2>
+                <div class="diagram-box">
+                    <div class="grid-2">
+                        <div>
+                            <h4>1. 栄養バランス</h4>
+                            <p>エネルギー、たんぱく質、脂質のバランス</p>
+                            <h4>2. 食べやすさ</h4>
+                            <p>対象者の咀嚼・嚥下能力に合わせる</p>
+                            <h4>3. おいしさ</h4>
+                            <p>旬の食材、彩り、温度</p>
+                        </div>
+                        <div>
+                            <h4>4. 季節感・行事</h4>
+                            <p>季節の食材、行事食で楽しみを提供</p>
+                            <h4>5. コスト</h4>
+                            <p>食材費を予算内に、廃棄を最小限に</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="nav-buttons">
+                    <button class="nav-btn" onclick="showSlide(18)">前へ</button>
+                    <button class="nav-btn" onclick="showSlide(20)">次へ</button>
+                </div>
+            </div>
+
+            <!-- Slide 7: 原価管理入門 -->
+            <div class="slide" id="slide-7">
+                <h1>第7章 原価管理入門</h1>
+
+                <h2>給食事業の収支構造</h2>
+                <div class="diagram-box">
+                    <div class="grid-2">
+                        <div>
+                            <h4 style="color: var(--success);">【収入】</h4>
+                            <p>食事単価 × 食数 = 売上</p>
+                            <p style="font-size: 0.9rem; color: #666;">例：600円 × 150食 × 3食 × 30日 = 810万円/月</p>
+                        </div>
+                        <div>
+                            <h4 style="color: var(--danger);">【支出】</h4>
+                            <ul style="margin-left: 0; list-style: none;">
+                                <li>・食材費：売上の35〜40%</li>
+                                <li>・人件費：売上の45〜50%</li>
+                                <li>・その他経費：消耗品、光熱費等</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div style="text-align: center; margin-top: 20px; padding: 15px; background: var(--success); color: white; border-radius: 10px;">
+                        <strong>営業利益率：5〜10%が目安</strong>
+                    </div>
+                </div>
+
+                <h2>原価率の目安</h2>
+                <table>
+                    <tr>
+                        <th>項目</th>
+                        <th>目安</th>
+                        <th>説明</th>
+                    </tr>
+                    <tr>
+                        <td><strong>食材費率</strong></td>
+                        <td><span class="badge badge-primary">35〜40%</span></td>
+                        <td>売上に対する食材費の割合</td>
+                    </tr>
+                    <tr>
+                        <td><strong>人件費率</strong></td>
+                        <td><span class="badge badge-warning">45〜50%</span></td>
+                        <td>売上に対する人件費の割合</td>
+                    </tr>
+                    <tr>
+                        <td><strong>FL比率</strong></td>
+                        <td><span class="badge badge-danger">80〜85%</span></td>
+                        <td>食材費+人件費の合計</td>
+                    </tr>
+                    <tr>
+                        <td><strong>営業利益率</strong></td>
+                        <td><span class="badge badge-success">5〜10%</span></td>
+                        <td>売上に対する営業利益の割合</td>
+                    </tr>
+                </table>
+
+                <h2>食材費管理のポイント</h2>
+                <div class="grid-2">
+                    <div class="card">
+                        <h4>食材費を適正に保つ方法</h4>
+                        <ul>
+                            <li><strong>発注量の適正化</strong>：必要量を正確に計算</li>
+                            <li><strong>廃棄ロスの削減</strong>：在庫管理の徹底</li>
+                            <li><strong>仕入先の選定</strong>：品質と価格のバランス</li>
+                            <li><strong>献立の工夫</strong>：季節食材の活用</li>
+                            <li><strong>棚卸の実施</strong>：月末に在庫確認</li>
+                        </ul>
+                    </div>
+                    <div class="card">
+                        <h4>人件費を適正に保つ方法</h4>
+                        <ul>
+                            <li><strong>適正人員配置</strong>：食数に応じた人員</li>
+                            <li><strong>シフト最適化</strong>：繁閑に合わせた配置</li>
+                            <li><strong>残業削減</strong>：業務効率化</li>
+                            <li><strong>多能工化</strong>：複数業務ができる人材育成</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <h2>赤字事業所の立て直し</h2>
+                <div class="danger-box">
+                    <h4>赤字の原因を特定する</h4>
+                    <div class="flowchart" style="flex-direction: row; flex-wrap: wrap; justify-content: center;">
+                        <div class="flow-step" style="margin: 5px;">食材費が高い？<br>→ 発注量見直し</div>
+                        <div class="flow-step" style="margin: 5px;">人件費が高い？<br>→ シフト見直し</div>
+                        <div class="flow-step" style="margin: 5px;">売上が減少？<br>→ 原因調査</div>
+                        <div class="flow-step" style="margin: 5px;">契約単価が低い？<br>→ 価格交渉検討</div>
+                    </div>
+                </div>
+
+                <div class="nav-buttons">
+                    <button class="nav-btn" onclick="showSlide(19)">前へ</button>
+                    <button class="nav-btn" onclick="showSlide(21)">次へ</button>
+                </div>
+            </div>
+
+            <!-- Slide 8-17は省略して表示（実際には全て含める） -->
+            <!-- ここからは残りのスライドを追加 -->
+
+            <div class="slide" id="slide-8">
+                <h1>第8章 労務管理の基本</h1>
+
+                <h2>給食現場の人員構成</h2>
+                <div class="org-chart">
+                    <div class="org-level">
+                        <div class="org-box highlight">事業所責任者（チーフ）<br><small>1名（正社員）</small></div>
+                    </div>
+                    <div class="org-connector"></div>
+                    <div class="org-level">
+                        <div class="org-box">栄養士<br><small>1名(正社員)</small></div>
+                        <div class="org-box">調理師<br><small>1名(正社員)</small></div>
+                        <div class="org-box">調理師<br><small>1名(パート)</small></div>
+                    </div>
+                    <div class="org-connector"></div>
+                    <div class="org-level">
+                        <div class="org-box">調理補助×3名（パート）</div>
+                        <div class="org-box">洗浄担当×2名（パート）</div>
+                    </div>
+                </div>
+                <p style="text-align: center; color: #666;">合計：約10名（早番・遅番のシフト制）</p>
+
+                <h2>シフト管理の基本</h2>
+                <table>
+                    <tr>
+                        <th>シフト</th>
+                        <th>時間帯</th>
+                        <th>主な業務</th>
+                    </tr>
+                    <tr>
+                        <td><span class="badge badge-warning">早番</span></td>
+                        <td>5:00〜14:00</td>
+                        <td>朝食・昼食の調理、配膳</td>
+                    </tr>
+                    <tr>
+                        <td><span class="badge badge-info">中番</span></td>
+                        <td>8:00〜17:00</td>
+                        <td>昼食・夕食の調理補助</td>
+                    </tr>
+                    <tr>
+                        <td><span class="badge badge-primary">遅番</span></td>
+                        <td>11:00〜20:00</td>
+                        <td>夕食の調理、配膳、清掃</td>
+                    </tr>
+                </table>
+
+                <h2>労働時間管理</h2>
+                <div class="danger-box">
+                    <h4>労働基準法の遵守</h4>
+                    <ul>
+                        <li>1日8時間、週40時間を超える場合は36協定が必要</li>
+                        <li>時間外労働には割増賃金（25%以上）</li>
+                        <li>深夜労働（22時〜5時）は割増賃金（25%以上）</li>
+                        <li>休日労働は割増賃金（35%以上）</li>
+                    </ul>
+                </div>
+
+                <h2>採用のポイント</h2>
+                <div class="grid-2">
+                    <div class="card">
+                        <h4>給食現場で求める人材</h4>
+                        <ul>
+                            <li>早朝勤務が可能な方</li>
+                            <li>体力がある方</li>
+                            <li>チームワークを大切にできる方</li>
+                            <li>衛生意識が高い方</li>
+                            <li>調理経験者は優遇</li>
+                        </ul>
+                    </div>
+                    <div class="card">
+                        <h4>採用時の確認事項</h4>
+                        <ul>
+                            <li>勤務可能な時間帯・曜日</li>
+                            <li>扶養内希望かどうか</li>
+                            <li>調理師・栄養士資格の有無</li>
+                            <li>アレルギーの有無</li>
+                            <li>健康状態</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="nav-buttons">
+                    <button class="nav-btn" onclick="showSlide(7)">前へ</button>
+                    <button class="nav-btn" onclick="showSlide(9)">次へ</button>
+                </div>
+            </div>
+
+            <div class="slide" id="slide-9">
+                <h1>第9章 クライアント対応術</h1>
+
+                <h2>施設別キーパーソン</h2>
+                <table>
+                    <tr>
+                        <th>施設</th>
+                        <th>キーパーソン</th>
+                        <th>主な相談内容</th>
+                    </tr>
+                    <tr>
+                        <td><span class="badge badge-danger">病院</span></td>
+                        <td>事務長、栄養科長</td>
+                        <td>契約、品質、治療食対応</td>
+                    </tr>
+                    <tr>
+                        <td><span class="badge badge-warning">老健</span></td>
+                        <td>施設長、相談員</td>
+                        <td>入所者対応、嚥下食</td>
+                    </tr>
+                    <tr>
+                        <td><span class="badge badge-success">特養</span></td>
+                        <td>施設長、介護主任</td>
+                        <td>生活の質、行事食</td>
+                    </tr>
+                    <tr>
+                        <td><span class="badge badge-primary">有料老人ホーム</span></td>
+                        <td>ホーム長、支配人</td>
+                        <td>サービス品質、見た目</td>
+                    </tr>
+                </table>
+
+                <h2>クレーム対応の5ステップ</h2>
+                <div class="steps">
+                    <div class="step">
+                        <div class="step-number">1</div>
+                        <div class="step-label">傾聴する</div>
+                    </div>
+                    <div class="step">
+                        <div class="step-number">2</div>
+                        <div class="step-label">謝罪する</div>
+                    </div>
+                    <div class="step">
+                        <div class="step-number">3</div>
+                        <div class="step-label">事実確認</div>
+                    </div>
+                    <div class="step">
+                        <div class="step-number">4</div>
+                        <div class="step-label">対応策提示</div>
+                    </div>
+                    <div class="step">
+                        <div class="step-number">5</div>
+                        <div class="step-label">フォローアップ</div>
+                    </div>
+                </div>
+
+                <h2>信頼関係を築くポイント</h2>
+                <div class="success-box">
+                    <ul>
+                        <li><strong>約束を守る</strong>：期限、内容を確実に履行</li>
+                        <li><strong>迅速な対応</strong>：連絡は当日中に返す</li>
+                        <li><strong>報告を怠らない</strong>：良いことも悪いことも報告</li>
+                        <li><strong>提案する姿勢</strong>：受け身でなく積極的に</li>
+                        <li><strong>感謝を示す</strong>：「いつもありがとうございます」</li>
+                    </ul>
+                </div>
+
+                <div class="nav-buttons">
+                    <button class="nav-btn" onclick="showSlide(8)">前へ</button>
+                    <button class="nav-btn" onclick="showSlide(10)">次へ</button>
+                </div>
+            </div>
+
+            <div class="slide" id="slide-10">
+                <h1>第10章 トラブル対応マニュアル</h1>
+
+                <h2>トラブルの種類と重要度</h2>
+                <table>
+                    <tr>
+                        <th>重要度</th>
+                        <th>トラブル内容</th>
+                        <th>対応</th>
+                    </tr>
+                    <tr>
+                        <td><span class="badge badge-danger">最重要</span></td>
+                        <td>食中毒・アレルギー事故</td>
+                        <td>即座に現場へ、本部報告</td>
+                    </tr>
+                    <tr>
+                        <td><span class="badge badge-danger">最重要</span></td>
+                        <td>異物混入（健康被害あり）</td>
+                        <td>即座に現場へ、本部報告</td>
+                    </tr>
+                    <tr>
+                        <td><span class="badge badge-warning">重要</span></td>
+                        <td>異物混入（健康被害なし）</td>
+                        <td>当日中に対応</td>
+                    </tr>
+                    <tr>
+                        <td><span class="badge badge-warning">重要</span></td>
+                        <td>配膳ミス（治療食）</td>
+                        <td>当日中に対応</td>
+                    </tr>
+                    <tr>
+                        <td><span class="badge badge-primary">通常</span></td>
+                        <td>味・盛付けクレーム</td>
+                        <td>翌日までに対応</td>
+                    </tr>
+                </table>
+
+                <h2>食中毒発生時の対応</h2>
+                <div class="danger-box">
+                    <h4>初動対応（最優先）</h4>
+                    <ol>
+                        <li>発生の一報を受けたら即座に現場へ向かう</li>
+                        <li>本部（エリアマネージャー）へ第一報</li>
+                        <li>施設責任者へ状況確認・謝罪</li>
+                        <li>検食・食材の保管を確認</li>
+                        <li>保健所への報告準備</li>
+                    </ol>
+                </div>
+
+                <h2>異物混入対応フロー</h2>
+                <div class="flowchart">
+                    <div class="flow-step">1. 現物を確保する（捨てない、写真を撮る）</div>
+                    <div class="flow-arrow">↓</div>
+                    <div class="flow-step">2. 状況を確認する（いつ、どこで、誰が）</div>
+                    <div class="flow-arrow">↓</div>
+                    <div class="flow-step">3. 健康被害の有無を確認</div>
+                    <div class="flow-arrow">↓</div>
+                    <div class="flow-step">4. 施設・本部へ報告</div>
+                    <div class="flow-arrow">↓</div>
+                    <div class="flow-step">5. 原因調査・再発防止策</div>
+                </div>
+
+                <div class="nav-buttons">
+                    <button class="nav-btn" onclick="showSlide(9)">前へ</button>
+                    <button class="nav-btn" onclick="showSlide(11)">次へ</button>
+                </div>
+            </div>
+
+            <div class="slide" id="slide-11">
+                <h1>第11章 給食システム入門</h1>
+
+                <h2>給食業務で使用するシステム</h2>
+                <div class="grid-2">
+                    <div class="card">
+                        <h4 style="color: var(--primary);">献立管理システム</h4>
+                        <ul>
+                            <li>献立作成、栄養計算</li>
+                            <li>食種展開（常食→軟菜→きざみ等）</li>
+                            <li>発注データ連携</li>
+                        </ul>
+                    </div>
+                    <div class="card">
+                        <h4 style="color: var(--secondary);">発注システム</h4>
+                        <ul>
+                            <li>食材の発注</li>
+                            <li>在庫管理</li>
+                            <li>仕入先との連携</li>
+                        </ul>
+                    </div>
+                    <div class="card">
+                        <h4 style="color: var(--warning);">勤怠管理システム</h4>
+                        <ul>
+                            <li>出退勤打刻</li>
+                            <li>シフト管理</li>
+                            <li>給与計算連携</li>
+                        </ul>
+                    </div>
+                    <div class="card">
+                        <h4 style="color: var(--success);">収支管理システム</h4>
+                        <ul>
+                            <li>売上管理</li>
+                            <li>原価管理</li>
+                            <li>収支報告</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <h2>発注業務の流れ</h2>
+                <div class="steps">
+                    <div class="step">
+                        <div class="step-number">3日前</div>
+                        <div class="step-label">献立確認<br>発注数量算出</div>
+                    </div>
+                    <div class="step">
+                        <div class="step-number">2日前</div>
+                        <div class="step-label">発注データ送信</div>
+                    </div>
+                    <div class="step">
+                        <div class="step-number">前日</div>
+                        <div class="step-label">納品確認<br>検品</div>
+                    </div>
+                    <div class="step">
+                        <div class="step-number">当日</div>
+                        <div class="step-label">在庫確認<br>不足対応</div>
+                    </div>
+                </div>
+
+                <h2>SVが確認すべきシステム帳票</h2>
+                <div class="grid-3">
+                    <div class="card">
+                        <h4>日次確認</h4>
+                        <ul>
+                            <li>温度記録表</li>
+                            <li>衛生チェック表</li>
+                            <li>出勤状況</li>
+                        </ul>
+                    </div>
+                    <div class="card">
+                        <h4>週次確認</h4>
+                        <ul>
+                            <li>発注履歴</li>
+                            <li>残業時間集計</li>
+                        </ul>
+                    </div>
+                    <div class="card">
+                        <h4>月次確認</h4>
+                        <ul>
+                            <li>収支報告書</li>
+                            <li>食材費率</li>
+                            <li>人件費率</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="nav-buttons">
+                    <button class="nav-btn" onclick="showSlide(10)">前へ</button>
+                    <button class="nav-btn" onclick="showSlide(12)">次へ</button>
+                </div>
+            </div>
+
+            <div class="slide" id="slide-12">
+                <h1>第12章 SV研修ロードマップ</h1>
+
+                <h2>SVの成長段階</h2>
+                <div class="grid-4">
+                    <div class="card" style="border-top: 4px solid var(--primary);">
+                        <h4>レベル1<br>新人SV</h4>
+                        <p>0〜6ヶ月</p>
+                        <p>担当: 3〜5ヵ所</p>
+                        <p>基本業務の習得</p>
+                    </div>
+                    <div class="card" style="border-top: 4px solid var(--secondary);">
+                        <h4>レベル2<br>一人前SV</h4>
+                        <p>6ヶ月〜2年</p>
+                        <p>担当: 5〜8ヵ所</p>
+                        <p>単独で業務遂行</p>
+                    </div>
+                    <div class="card" style="border-top: 4px solid var(--warning);">
+                        <h4>レベル3<br>ベテランSV</h4>
+                        <p>2年〜</p>
+                        <p>担当: 8〜12ヵ所</p>
+                        <p>後輩指導</p>
+                    </div>
+                    <div class="card" style="border-top: 4px solid var(--success);">
+                        <h4>レベル4<br>候補</h4>
+                        <p>エリアマネージャー候補</p>
+                        <p>エリア全体を見渡す視点</p>
+                    </div>
+                </div>
+
+                <h2>段階別 習得スキル</h2>
+                <table>
+                    <tr>
+                        <th>段階</th>
+                        <th>習得すべきスキル</th>
+                    </tr>
+                    <tr>
+                        <td><span class="badge badge-primary">新人期</span></td>
+                        <td>衛生管理、巡回の基本、報告書作成、現場理解</td>
+                    </tr>
+                    <tr>
+                        <td><span class="badge badge-secondary">成長期</span></td>
+                        <td>クレーム対応、収支管理、人材育成、施設面談</td>
+                    </tr>
+                    <tr>
+                        <td><span class="badge badge-warning">成熟期</span></td>
+                        <td>新規オープン対応、価格交渉、後輩指導、営業活動</td>
+                    </tr>
+                    <tr>
+                        <td><span class="badge badge-success">リーダー期</span></td>
+                        <td>エリア戦略、組織マネジメント、経営視点</td>
+                    </tr>
+                </table>
+
+                <h2>キャリアパス</h2>
+                <div class="flowchart" style="flex-direction: row; flex-wrap: wrap; justify-content: center;">
+                    <div class="flow-step">SV</div>
+                    <div class="flow-arrow" style="transform: rotate(-90deg);">→</div>
+                    <div class="flow-step">エリアマネージャー</div>
+                    <div class="flow-arrow" style="transform: rotate(-90deg);">→</div>
+                    <div class="flow-step">部長</div>
+                    <div class="flow-arrow" style="transform: rotate(-90deg);">→</div>
+                    <div class="flow-step">役員</div>
+                </div>
+
+                <div class="nav-buttons">
+                    <button class="nav-btn" onclick="showSlide(10)">前へ</button>
+                    <button class="nav-btn" onclick="showSlide(12)">次へ</button>
+                </div>
+            </div>
+
+            <div class="slide" id="slide-13">
+                <h1>第13章 ヘルスケア事業ガイド</h1>
+
+                <h2>ヘルスケア事業とは</h2>
+                <div class="info-box">
+                    <p>ヘルスケア事業は、病院・介護施設などの医療・福祉施設に対して給食サービスを提供する事業です。</p>
+                    <p><strong>ハーベストの主力事業であり、売上の約70%を占めています。</strong></p>
+                </div>
+
+                <h2>施設タイプ別の特徴</h2>
+                <table>
+                    <tr>
+                        <th>施設</th>
+                        <th>対象者</th>
+                        <th>食事の位置づけ</th>
+                    </tr>
+                    <tr>
+                        <td><span class="badge badge-danger">急性期病院</span></td>
+                        <td>手術後・急性疾患患者</td>
+                        <td>治療の一環</td>
+                    </tr>
+                    <tr>
+                        <td><span class="badge badge-warning">療養型病院</span></td>
+                        <td>長期療養患者</td>
+                        <td>療養の支援</td>
+                    </tr>
+                    <tr>
+                        <td><span class="badge badge-info">老健</span></td>
+                        <td>リハビリ中の高齢者</td>
+                        <td>リハビリ支援</td>
+                    </tr>
+                    <tr>
+                        <td><span class="badge badge-success">特養</span></td>
+                        <td>要介護3以上の高齢者</td>
+                        <td>生活の質</td>
+                    </tr>
+                    <tr>
+                        <td><span class="badge badge-primary">有料老人ホーム</span></td>
+                        <td>自立〜要介護の高齢者</td>
+                        <td>生活の楽しみ</td>
+                    </tr>
+                </table>
+
+                <h2>施設別 食種構成比</h2>
+                <div class="progress-container">
+                    <div class="progress-item">
+                        <div class="progress-label"><span>急性期病院</span><span>治療食50% / 嚥下食20%</span></div>
+                        <div class="progress-bar" style="display: flex;">
+                            <div style="width: 30%; background: var(--success); height: 100%;"></div>
+                            <div style="width: 50%; background: var(--danger); height: 100%;"></div>
+                            <div style="width: 20%; background: var(--warning); height: 100%;"></div>
+                        </div>
+                    </div>
+                    <div class="progress-item">
+                        <div class="progress-label"><span>療養型病院</span><span>嚥下食50%</span></div>
+                        <div class="progress-bar" style="display: flex;">
+                            <div style="width: 20%; background: var(--success); height: 100%;"></div>
+                            <div style="width: 30%; background: var(--danger); height: 100%;"></div>
+                            <div style="width: 50%; background: var(--warning); height: 100%;"></div>
+                        </div>
+                    </div>
+                    <div class="progress-item">
+                        <div class="progress-label"><span>特養</span><span>嚥下食70%</span></div>
+                        <div class="progress-bar" style="display: flex;">
+                            <div style="width: 20%; background: var(--success); height: 100%;"></div>
+                            <div style="width: 10%; background: var(--danger); height: 100%;"></div>
+                            <div style="width: 70%; background: var(--warning); height: 100%;"></div>
+                        </div>
+                    </div>
+                </div>
+                <p style="font-size: 0.85rem; color: #666;">凡例：<span style="background: var(--success); color: white; padding: 2px 8px; border-radius: 4px;">一般食</span> <span style="background: var(--danger); color: white; padding: 2px 8px; border-radius: 4px;">治療食</span> <span style="background: var(--warning); color: white; padding: 2px 8px; border-radius: 4px;">嚥下食</span></p>
+
+                <div class="nav-buttons">
+                    <button class="nav-btn" onclick="showSlide(11)">前へ</button>
+                    <button class="nav-btn" onclick="showSlide(13)">次へ</button>
+                </div>
+            </div>
+
+            <div class="slide" id="slide-14">
+                <h1>第14章 SV着任後ガイド（最初の90日間）</h1>
+
+                <h2>現場研修からSVへの変化</h2>
+                <div class="grid-2">
+                    <div class="card" style="border-left: 5px solid var(--warning);">
+                        <h4>現場研修中</h4>
+                        <ul>
+                            <li>教わる立場</li>
+                            <li>1つの事業所に所属</li>
+                            <li>調理・配膳の作業者</li>
+                            <li>失敗しても先輩がフォロー</li>
+                        </ul>
+                    </div>
+                    <div class="card" style="border-left: 5px solid var(--success);">
+                        <h4>SV着任後</h4>
+                        <ul>
+                            <li>教える・管理する立場</li>
+                            <li>複数の事業所を担当</li>
+                            <li>現場を「見る」立場</li>
+                            <li>自分の判断が現場に影響</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <h2>SV着任時に持つべき3つの姿勢</h2>
+                <div class="grid-3">
+                    <div class="card">
+                        <h4 style="color: var(--primary);">1. 謙虚さ</h4>
+                        <ul>
+                            <li>現場経験はまだ浅い</li>
+                            <li>ベテランスタッフから学ぶ</li>
+                            <li>「SVだから」と偉ぶらない</li>
+                        </ul>
+                    </div>
+                    <div class="card">
+                        <h4 style="color: var(--secondary);">2. 学び続ける姿勢</h4>
+                        <ul>
+                            <li>わからないことは素直に聞く</li>
+                            <li>先輩SVの動きを観察する</li>
+                            <li>失敗から学ぶ</li>
+                        </ul>
+                    </div>
+                    <div class="card">
+                        <h4 style="color: var(--success);">3. 責任感</h4>
+                        <ul>
+                            <li>担当事業所は自分の責任</li>
+                            <li>逃げない、言い訳しない</li>
+                            <li>でも一人で抱え込まない</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <h2>着任後90日間のロードマップ</h2>
+                <div class="grid-3">
+                    <div class="card" style="border-top: 4px solid var(--primary);">
+                        <h4>Day 1-30：インプット期</h4>
+                        <p><strong>目標:</strong> 現場を知る、関係者と顔合わせ</p>
+                        <div class="timeline" style="margin-top: 15px;">
+                            <div class="timeline-item">
+                                <div class="timeline-time">Day 1-2</div>
+                                <p>前任SVから引継ぎ、担当事業所リスト確認</p>
+                            </div>
+                            <div class="timeline-item">
+                                <div class="timeline-time">Day 3-5</div>
+                                <p>全事業所訪問・挨拶回り</p>
+                            </div>
+                            <div class="timeline-item">
+                                <div class="timeline-time">Day 6-7</div>
+                                <p>情報整理、課題リストアップ</p>
+                            </div>
+                            <div class="timeline-item">
+                                <div class="timeline-time">Week 2-4</div>
+                                <p>各事業所を複数回訪問、帳票・記録の確認</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card" style="border-top: 4px solid var(--secondary);">
+                        <h4>Day 31-60：実践期</h4>
+                        <p><strong>目標:</strong> 課題把握、小さな改善を実行</p>
+                        <ul>
+                            <li>優先度の高い課題を1つ選ぶ</li>
+                            <li>現場の意見を聞いて解決策を考える</li>
+                            <li>小さく始めて効果を確認</li>
+                            <li>定期巡回のリズムを確立</li>
+                            <li>月次食数・人件費等の数字を把握</li>
+                        </ul>
+                        <div class="info-box" style="margin-top: 10px; padding: 10px;">
+                            <small>「前のSVは〇〇だった」と言われても焦らず、良い点は継続</small>
+                        </div>
+                    </div>
+                    <div class="card" style="border-top: 4px solid var(--success);">
+                        <h4>Day 61-90：自立期</h4>
+                        <p><strong>目標:</strong> PDCAを回せるようになる</p>
+                        <ul>
+                            <li>改善活動の本格化</li>
+                            <li>他事業所への横展開</li>
+                            <li>人材育成への関与開始</li>
+                            <li>定例会議への参加</li>
+                            <li>改善提案・行事食提案</li>
+                            <li>3ヶ月間の振り返り</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <h2>着任挨拶のポイント</h2>
+                <div class="grid-2">
+                    <div class="info-box">
+                        <h4>現場スタッフへ</h4>
+                        <p style="font-style: italic;">「本日よりSVとして担当させていただく○○です。まだまだ勉強中ですので、皆さんに教えていただくことも多いと思います。一緒により良い給食を作っていきたいと思いますので、よろしくお願いいたします。」</p>
+                        <p><strong>ポイント：</strong>謙虚に、でも堂々と。「教えてください」の姿勢。</p>
+                    </div>
+                    <div class="info-box">
+                        <h4>施設側担当者へ</h4>
+                        <p style="font-style: italic;">「ハーベストの○○と申します。この度、御施設の担当SVとして着任いたしました。何かございましたら、いつでもご連絡ください。」</p>
+                        <p><strong>ポイント：</strong>名刺を渡す。連絡先を伝える。「何かあればすぐ対応します」の姿勢。</p>
+                    </div>
+                </div>
+
+                <h2>困ったときの相談先</h2>
+                <table>
+                    <tr>
+                        <th>相談内容</th>
+                        <th>相談先</th>
+                    </tr>
+                    <tr>
+                        <td>現場の日常的な課題</td>
+                        <td>現場責任者（チーフ）、先輩SV</td>
+                    </tr>
+                    <tr>
+                        <td>判断に迷う案件</td>
+                        <td>エリアマネージャー（上司）</td>
+                    </tr>
+                    <tr>
+                        <td>施設との関係・契約</td>
+                        <td>エリアマネージャー、営業担当</td>
+                    </tr>
+                    <tr>
+                        <td>衛生・品質の重大案件</td>
+                        <td>エリアマネージャー、品質管理部</td>
+                    </tr>
+                    <tr>
+                        <td>人事・労務</td>
+                        <td>エリアマネージャー、人事部</td>
+                    </tr>
+                </table>
+
+                <h2>90日間チェックリスト</h2>
+                <div class="grid-3">
+                    <div class="warning-box">
+                        <h4>30日目</h4>
+                        <ul>
+                            <li>全担当事業所を複数回訪問した</li>
+                            <li>各事業所のチーフの名前と顔が一致</li>
+                            <li>施設担当者と名刺交換済み</li>
+                            <li>緊急連絡先を把握している</li>
+                        </ul>
+                    </div>
+                    <div class="warning-box">
+                        <h4>60日目</h4>
+
+                        
+                        <ul>
+                            <li>通常運営の流れがわかる</li>
+                            <li>1つ以上の課題に着手または解決</li>
+                            <li>定期巡回のリズムができた</li>
+                            <li>現場から相談を受けるようになった</li>
+                        </ul>
+                    </div>
+                    <div class="success-box">
+                        <h4>90日目</h4>
+                        <ul>
+                            <li>担当事業所を「自分の責任」と感じる</li>
+                            <li>複数の課題を解決または改善した</li>
+                            <li>トラブル発生時に初動対応ができる</li>
+                            <li>自分なりのSVスタイルが見えてきた</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="success-box" style="margin-top: 20px; text-align: center;">
+                    <h4>90日間の心得</h4>
+                    <p><strong>焦らない</strong> → 最初から完璧を目指さない</p>
+                    <p><strong>聞く・見る・学ぶ</strong> → まずは現場を理解する</p>
+                    <p><strong>関係を築く</strong> → 信頼関係が全ての基盤</p>
+                    <p><strong>小さく始める</strong> → 小さな成功を積み重ねる</p>
+                    <p><strong>相談する</strong> → 一人で抱え込まない</p>
+                </div>
+
+                <div class="nav-buttons">
+                    <button class="nav-btn" onclick="showSlide(12)">前へ</button>
+                    <button class="nav-btn" onclick="showSlide(14)">次へ</button>
+                </div>
+            </div>
+
+            <div class="slide" id="slide-15">
+                <h1>第15章 SV実務マニュアル（未経験者向け）</h1>
+
+                <h2>未経験からSVへ：成功の5つのポイント</h2>
+                <div class="grid-2">
+                    <div class="card">
+                        <div style="display: flex; align-items: center; gap: 15px;">
+                            <div style="width: 40px; height: 40px; background: var(--primary); color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold;">1</div>
+                            <div><strong>施設の違いを理解する</strong><br>病院・老健・特養で求められるものは全く違う</div>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div style="display: flex; align-items: center; gap: 15px;">
+                            <div style="width: 40px; height: 40px; background: var(--secondary); color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold;">2</div>
+                            <div><strong>現場スタッフを味方にする</strong><br>上から目線ではなく一緒に問題解決</div>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div style="display: flex; align-items: center; gap: 15px;">
+                            <div style="width: 40px; height: 40px; background: var(--accent); color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold;">3</div>
+                            <div><strong>クライアントの立場で考える</strong><br>施設が何を求めているかを常に意識</div>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div style="display: flex; align-items: center; gap: 15px;">
+                            <div style="width: 40px; height: 40px; background: var(--warning); color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold;">4</div>
+                            <div><strong>わからないことは正直に聞く</strong><br>知ったかぶりは事故のもと</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card" style="margin-top: 15px;">
+                    <div style="display: flex; align-items: center; gap: 15px;">
+                        <div style="width: 40px; height: 40px; background: var(--success); color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold;">5</div>
+                        <div><strong>とにかく現場に足を運ぶ</strong><br>現場を見ないと何もわからない</div>
+                    </div>
+                </div>
+
+                <h2>施設タイプ別の特徴</h2>
+                <table>
+                    <tr>
+                        <th>施設</th>
+                        <th>入所者の状態</th>
+                        <th>食事の位置づけ</th>
+                        <th>SVとして注意すべき点</th>
+                    </tr>
+                    <tr>
+                        <td><span class="badge badge-danger">急性期病院</span></td>
+                        <td>手術後・急性疾患</td>
+                        <td>治療の一環</td>
+                        <td>食事オーダー変更が頻繁、医療チームとの連携</td>
+                    </tr>
+                    <tr>
+                        <td><span class="badge badge-warning">療養型病院</span></td>
+                        <td>長期療養患者</td>
+                        <td>療養の支援</td>
+                        <td>マンネリ防止、嚥下評価対応</td>
+                    </tr>
+                    <tr>
+                        <td><span class="badge badge-info">老健</span></td>
+                        <td>リハビリ中高齢者</td>
+                        <td>リハビリ支援</td>
+                        <td>食形態の頻繁な変更、在宅復帰支援</td>
+                    </tr>
+                    <tr>
+                        <td><span class="badge badge-success">特養</span></td>
+                        <td>要介護3以上</td>
+                        <td>生活の質</td>
+                        <td>「食べる喜び」を支える、看取り期対応</td>
+                    </tr>
+                    <tr>
+                        <td><span class="badge badge-primary">有料老人ホーム</span></td>
+                        <td>自立〜要介護</td>
+                        <td>生活の楽しみ</td>
+                        <td>高いサービス要求、見た目・接遇徹底</td>
+                    </tr>
+                </table>
+
+                <h2>事業所のランク分けと巡回頻度</h2>
+                <div class="grid-3">
+                    <div class="card" style="border-left: 5px solid var(--danger);">
+                        <h4>Aランク（要注意）</h4>
+                        <p><strong>週2〜3回訪問</strong></p>
+                        <ul>
+                            <li>クレーム・トラブルが発生中</li>
+                            <li>新規オープン3ヶ月以内</li>
+                            <li>チーフが新任・未熟</li>
+                            <li>施設との関係悪化中</li>
+                        </ul>
+                    </div>
+                    <div class="card" style="border-left: 5px solid var(--warning);">
+                        <h4>Bランク（通常管理）</h4>
+                        <p><strong>週1回訪問</strong></p>
+                        <ul>
+                            <li>安定しているが注視必要</li>
+                            <li>チーフは育成中</li>
+                            <li>小さな課題がある</li>
+                        </ul>
+                    </div>
+                    <div class="card" style="border-left: 5px solid var(--success);">
+                        <h4>Cランク（自走可能）</h4>
+                        <p><strong>2週に1回訪問</strong></p>
+                        <ul>
+                            <li>チーフが優秀で自立</li>
+                            <li>施設との関係良好</li>
+                            <li>安定運営が続いている</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <h2>SVの1日の流れ（巡回日）</h2>
+                <div class="timeline">
+                    <div class="timeline-item">
+                        <div class="timeline-time">8:30</div>
+                        <p><strong>出社</strong> - メールチェック、当日の予定確認</p>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-time">9:30</div>
+                        <p><strong>事業所A巡回</strong> - 衛生チェック、温度記録確認、チーフと打合せ</p>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-time">12:00</div>
+                        <p><strong>事業所B巡回</strong> - 昼食時の配膳状況確認、スタッフへの声かけ</p>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-time">14:30</div>
+                        <p><strong>事業所C訪問</strong> - 施設担当者との面談、改善提案</p>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-time">16:30</div>
+                        <p><strong>帰社・事務作業</strong> - 巡回報告書作成、翌日準備</p>
+                    </div>
+                </div>
+
+                <h2>成果を出すSVの5原則</h2>
+                <div class="success-box">
+                    <ol>
+                        <li><strong>メリハリをつける</strong> - 問題店舗に時間を集中、安定店舗は任せる</li>
+                        <li><strong>チーフを育てて任せる</strong> - 自分でやるより育てる、権限移譲</li>
+                        <li><strong>予防に時間を使う</strong> - トラブル対応より未然防止</li>
+                        <li><strong>数字を見る習慣を持つ</strong> - 収支・クレーム件数・欠員率を定期チェック</li>
+                        <li><strong>一人で抱え込まない</strong> - 困ったら上司・先輩に相談</li>
+                    </ol>
+                </div>
+
+                <h2>陥りやすい失敗パターンと対策</h2>
+                <div class="grid-2">
+                    <div class="danger-box">
+                        <h4>失敗パターン</h4>
+                        <ul>
+                            <li>巡回に追われて改善が進まない</li>
+                            <li>全事業所を均等に見てしまう</li>
+                            <li>自分で作業してしまう</li>
+                            <li>現場に行かなくなる</li>
+                        </ul>
+                    </div>
+                    <div class="success-box">
+                        <h4>対策</h4>
+                        <ul>
+                            <li>問題店舗に時間を集中</li>
+                            <li>チーフの育成を優先</li>
+                            <li>作業ではなく管理・指導に徹する</li>
+                            <li>巡回日をブロックして死守</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="nav-buttons">
+                    <button class="nav-btn" onclick="showSlide(13)">前へ</button>
+                    <button class="nav-btn" onclick="showSlide(15)">次へ</button>
+                </div>
+            </div>
+
+            <div class="slide" id="slide-16">
+                <h1>第16章 SV新規営業ガイド</h1>
+
+                <h2>SVの営業業務の範囲</h2>
+                <div class="grid-2">
+                    <div class="card" style="border-left: 5px solid var(--primary);">
+                        <h4>既存顧客対応</h4>
+                        <ul>
+                            <li>定期訪問・関係維持</li>
+                            <li>クレーム対応</li>
+                            <li>契約更新</li>
+                            <li>追加サービス提案</li>
+                        </ul>
+                    </div>
+                    <div class="card" style="border-left: 5px solid var(--success);">
+                        <h4>新規営業</h4>
+                        <ul>
+                            <li>新規施設の開拓・入札対応</li>
+                            <li>提案書・見積書作成</li>
+                            <li>プレゼンテーション</li>
+                            <li>契約締結・オープン準備</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <h2>営業プロセス</h2>
+                <div class="flowchart" style="flex-direction: row; flex-wrap: wrap; justify-content: center;">
+                    <div class="flow-step" style="font-size: 0.9rem;">案件発掘</div>
+                    <div class="flow-arrow" style="transform: rotate(-90deg);">→</div>
+                    <div class="flow-step" style="font-size: 0.9rem;">提案・プレゼン</div>
+                    <div class="flow-arrow" style="transform: rotate(-90deg);">→</div>
+                    <div class="flow-step" style="font-size: 0.9rem;">契約締結</div>
+                    <div class="flow-arrow" style="transform: rotate(-90deg);">→</div>
+                    <div class="flow-step" style="font-size: 0.9rem;">オープン準備</div>
+                    <div class="flow-arrow" style="transform: rotate(-90deg);">→</div>
+                    <div class="flow-step" style="font-size: 0.9rem;">運営開始</div>
+                </div>
+
+                <h2>新規案件の種類</h2>
+                <div class="grid-2">
+                    <div class="card">
+                        <h4><span class="badge badge-primary">入札案件</span></h4>
+                        <p>公立病院、自治体施設、学校給食センター</p>
+                        <p><small>公示→入札→落札。価格+技術評価の総合評価方式が多い</small></p>
+                    </div>
+                    <div class="card">
+                        <h4><span class="badge badge-warning">競合切り替え</span></h4>
+                        <p>現在他社が受託している施設</p>
+                        <p><small>施設の不満を把握し、契約更新時期を狙う</small></p>
+                    </div>
+                    <div class="card">
+                        <h4><span class="badge badge-success">新規開設</span></h4>
+                        <p>新しくオープンする施設</p>
+                        <p><small>早期の情報収集が重要。設計段階から関われると有利</small></p>
+                    </div>
+                    <div class="card">
+                        <h4><span class="badge badge-danger">直営→委託</span></h4>
+                        <p>現在直営で運営している施設</p>
+                        <p><small>委託のメリットを説明。既存職員の処遇が課題になることも</small></p>
+                    </div>
+                </div>
+
+                <h2>施設別 営業アプローチ</h2>
+                <table>
+                    <tr>
+                        <th>施設</th>
+                        <th>決裁者</th>
+                        <th>重視ポイント</th>
+                    </tr>
+                    <tr>
+                        <td><span class="badge badge-danger">病院</span></td>
+                        <td>事務長、理事長</td>
+                        <td>治療食対応力、衛生管理、医療チームとの連携</td>
+                    </tr>
+                    <tr>
+                        <td><span class="badge badge-warning">老健</span></td>
+                        <td>施設長</td>
+                        <td>リハビリ支援、嚥下対応、栄養ケア</td>
+                    </tr>
+                    <tr>
+                        <td><span class="badge badge-success">特養</span></td>
+                        <td>施設長</td>
+                        <td>生活の質、コスト、行事食・季節感</td>
+                    </tr>
+                    <tr>
+                        <td><span class="badge badge-primary">有料老人ホーム</span></td>
+                        <td>ホーム長、本部</td>
+                        <td>サービス品質、見た目、選択メニュー</td>
+                    </tr>
+                </table>
+
+                <h2>提案書の構成</h2>
+                <div class="grid-3">
+                    <div class="card">
+                        <h4>1. 会社概要</h4>
+                        <ul>
+                            <li>会社紹介・理念</li>
+                            <li>類似施設の受託実績</li>
+                            <li>認証（ISO、HACCP等）</li>
+                        </ul>
+                    </div>
+                    <div class="card">
+                        <h4>2. 提案内容</h4>
+                        <ul>
+                            <li>運営体制（人員配置）</li>
+                            <li>献立サンプル</li>
+                            <li>衛生管理体制</li>
+                        </ul>
+                    </div>
+                    <div class="card">
+                        <h4>3. 見積・スケジュール</h4>
+                        <ul>
+                            <li>月額費用・内訳</li>
+                            <li>開始までの流れ</li>
+                            <li>準備期間の内容</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <h2>新規オープンまでの流れ</h2>
+                <div class="grid-4">
+                    <div class="card" style="border-top: 4px solid var(--primary);">
+                        <h4>3ヶ月前</h4>
+                        <ul>
+                            <li>人員採用計画策定</li>
+                            <li>責任者の選定</li>
+                            <li>献立作成開始</li>
+                            <li>設備・備品リスト</li>
+                        </ul>
+                    </div>
+                    <div class="card" style="border-top: 4px solid var(--secondary);">
+                        <h4>1ヶ月前</h4>
+                        <ul>
+                            <li>スタッフ研修</li>
+                            <li>設備・備品搬入</li>
+                            <li>試作・試食会</li>
+                            <li>施設への説明会</li>
+                        </ul>
+                    </div>
+                    <div class="card" style="border-top: 4px solid var(--warning);">
+                        <h4>2週間前</h4>
+                        <ul>
+                            <li>リハーサル実施</li>
+                            <li>最終確認</li>
+                            <li>問題点対応</li>
+                        </ul>
+                    </div>
+                    <div class="card" style="border-top: 4px solid var(--success);">
+                        <h4>オープン後</h4>
+                        <ul>
+                            <li>SVが最初の1週間常駐</li>
+                            <li>課題の早期発見</li>
+                            <li>オペレーション安定化</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="info-box" style="margin-top: 20px;">
+                    <h4>ハーベストの差別化ポイント</h4>
+                    <p>65年以上の歴史と実績 / ISO9001・ISO22000認証 / 多様な事業展開による安定性 / 「もっと食べたいと思える」食事へのこだわり / 嚥下調整食への対応力</p>
+                </div>
+
+                <div class="nav-buttons">
+                    <button class="nav-btn" onclick="showSlide(14)">前へ</button>
+                    <button class="nav-btn" onclick="showSlide(16)">次へ</button>
+                </div>
+            </div>
+
+            <div class="slide" id="slide-17">
+                <h1>第17章 緊急時対応マニュアル</h1>
+
+                <h2>SVが果たすべき役割</h2>
+                <div class="grid-3">
+                    <div class="card">
+                        <h4 style="color: var(--primary);">情報収集・状況把握</h4>
+                        <p>迅速に情報を集め、何が起きているか正確に把握</p>
+                    </div>
+                    <div class="card">
+                        <h4 style="color: var(--secondary);">初動対応の指示</h4>
+                        <p>現場への適切な指示、二次被害の防止</p>
+                    </div>
+                    <div class="card">
+                        <h4 style="color: var(--success);">報告・連携</h4>
+                        <p>上位への報告（エスカレーション）、施設・関係機関との連携</p>
+                    </div>
+                </div>
+
+                <h2>緊急時の連絡フロー</h2>
+                <div class="flowchart" style="flex-direction: row; flex-wrap: wrap; justify-content: center;">
+                    <div class="flow-step" style="font-size: 0.85rem;">現場スタッフ</div>
+                    <div class="flow-arrow" style="transform: rotate(-90deg);">→</div>
+                    <div class="flow-step" style="font-size: 0.85rem;">チーフ<br><small>（即時）</small></div>
+                    <div class="flow-arrow" style="transform: rotate(-90deg);">→</div>
+                    <div class="flow-step" style="font-size: 0.85rem;">SV<br><small>（5分以内）</small></div>
+                    <div class="flow-arrow" style="transform: rotate(-90deg);">→</div>
+                    <div class="flow-step" style="font-size: 0.85rem;">エリアマネージャー<br><small>（15分以内）</small></div>
+                    <div class="flow-arrow" style="transform: rotate(-90deg);">→</div>
+                    <div class="flow-step" style="font-size: 0.85rem;">本部<br><small>（重大案件）</small></div>
+                </div>
+
+                <h2>緊急事態の種類と対応</h2>
+                <table>
+                    <tr>
+                        <th>緊急事態</th>
+                        <th>初動対応</th>
+                        <th>報告</th>
+                    </tr>
+                    <tr>
+                        <td><span class="badge badge-danger">食中毒</span></td>
+                        <td>検食保管、患者対応、保健所連絡準備</td>
+                        <td>本部即報告</td>
+                    </tr>
+                    <tr>
+                        <td><span class="badge badge-danger">アレルギー事故</span></td>
+                        <td>救急対応、原因食品保管</td>
+                        <td>本部即報告</td>
+                    </tr>
+                    <tr>
+                        <td><span class="badge badge-warning">異物混入</span></td>
+                        <td>現物確保、写真撮影、原因調査</td>
+                        <td>当日中報告</td>
+                    </tr>
+                    <tr>
+                        <td><span class="badge badge-warning">設備故障</span></td>
+                        <td>代替対応、メニュー変更、修理手配</td>
+                        <td>当日中報告</td>
+                    </tr>
+                    <tr>
+                        <td><span class="badge badge-primary">急な欠員</span></td>
+                        <td>応援手配、業務調整、シフト組み替え</td>
+                        <td>状況に応じて</td>
+                    </tr>
+                </table>
+
+                <h2>食中毒発生時の対応</h2>
+                <div class="grid-2">
+                    <div class="danger-box">
+                        <h4>初動対応（発生から30分以内）</h4>
+                        <ol>
+                            <li>該当食品の提供を即時停止</li>
+                            <li>残存食品・検食の確保・保全</li>
+                            <li>発症者の状況確認</li>
+                            <li>SVへの連絡、現場へ急行</li>
+                            <li>エリアマネージャー・本部へ第一報</li>
+                            <li>施設責任者へ状況確認・謝罪</li>
+                        </ol>
+                    </div>
+                    <div class="warning-box">
+                        <h4>やってはいけないこと</h4>
+                        <ul>
+                            <li><strong>検食・食材を廃棄する</strong>（原因究明に必要）</li>
+                            <li><strong>原因を推測で発言する</strong>（憶測で答えない）</li>
+                            <li><strong>報告を遅らせる</strong>（被害拡大のリスク）</li>
+                        </ul>
+                        <h4 style="margin-top: 15px;">検食保存のルール</h4>
+                        <p>各メニュー50g以上を-20℃以下で2週間以上保存</p>
+                    </div>
+                </div>
+
+                <h2>異物混入対応フロー</h2>
+                <div class="steps">
+                    <div class="step">
+                        <div class="step-number">1</div>
+                        <div class="step-label">現物確保<br>写真撮影</div>
+                    </div>
+                    <div class="step">
+                        <div class="step-number">2</div>
+                        <div class="step-label">発見者へ<br>謝罪・対応</div>
+                    </div>
+                    <div class="step">
+                        <div class="step-number">3</div>
+                        <div class="step-label">原因調査<br>混入経路特定</div>
+                    </div>
+                    <div class="step">
+                        <div class="step-number">4</div>
+                        <div class="step-label">施設報告<br>報告書作成</div>
+                    </div>
+                    <div class="step">
+                        <div class="step-number">5</div>
+                        <div class="step-label">再発防止策<br>実施</div>
+                    </div>
+                </div>
+
+                <h2>災害発生時の対応</h2>
+                <div class="grid-2">
+                    <div class="card">
+                        <h4>地震発生時</h4>
+                        <ol>
+                            <li>身の安全確保（火を消す、机の下へ）</li>
+                            <li>スタッフの安否確認</li>
+                            <li>火元確認・ガス元栓を閉める</li>
+                            <li>施設の避難指示に従う</li>
+                            <li>本部への報告（安否・被害状況）</li>
+                            <li>食事提供の可否を判断</li>
+                        </ol>
+                    </div>
+                    <div class="card">
+                        <h4>停電時</h4>
+                        <ul>
+                            <li><strong>冷蔵庫の扉を開けない</strong>（数時間は温度維持可能）</li>
+                            <li>短時間（〜2時間）：ガス機器で調理継続</li>
+                            <li>長時間（2時間以上）：温度上昇した食材は廃棄、備蓄食品活用</li>
+                            <li>施設と復旧見込みを確認</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <h2>機器故障時の対応</h2>
+                <div class="grid-2">
+                    <div class="info-box">
+                        <h4>SVの判断ポイント</h4>
+                        <ol>
+                            <li>食事提供への影響度（次の食事に間に合うか？）</li>
+                            <li>代替手段の検討（他機器、近隣応援、外部調達）</li>
+                            <li>施設への連絡・相談（状況説明、代替案提示）</li>
+                            <li>修理手配（メンテナンス会社連絡）</li>
+                        </ol>
+                    </div>
+                    <div class="card">
+                        <h4>主要機器の代替対応</h4>
+                        <ul>
+                            <li><strong>スチコン故障</strong>：回転釜で蒸し調理、メニュー変更</li>
+                            <li><strong>冷蔵庫故障</strong>：他の冷蔵庫へ移動、近隣事業所へ避難</li>
+                            <li><strong>食洗機故障</strong>：手洗い洗浄（80℃以上ですすぎ）</li>
+                            <li><strong>ガス故障</strong>：電気調理機器活用、非加熱メニューへ</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="success-box" style="margin-top: 20px;">
+                    <h4 style="text-align: center;">研修資料 完了</h4>
+                    <p style="text-align: center;">全25章の研修資料をご覧いただきました。<br>SVとして必要な知識を身につけ、現場で活躍してください。</p>
+                </div>
+
+                <div class="nav-buttons">
+                    <button class="nav-btn" onclick="showSlide(15)">前へ</button>
+                    <button class="nav-btn" onclick="showSlide(17)">次へ</button>
+                </div>
+            </div>
+
+            <!-- Slide 18: 業界課題 -->
+            <div class="slide" id="slide-18">
+                <h1>第18章 給食業界の課題</h1>
+
+                <h2>業界が直面する主要課題</h2>
+                <div class="grid-3">
+                    <div class="card" style="border-top: 4px solid var(--danger);">
+                        <h4>人手不足</h4>
+                        <p><strong>深刻度：極めて高い</strong></p>
+                        <ul>
+                            <li>調理師の有効求人倍率：約3倍</li>
+                            <li>早朝勤務の人材が特に不足</li>
+                            <li>地方での確保がさらに困難</li>
+                        </ul>
+                    </div>
+                    <div class="card" style="border-top: 4px solid var(--warning);">
+                        <h4>コスト上昇</h4>
+                        <p><strong>深刻度：極めて高い</strong></p>
+                        <ul>
+                            <li>食材費：+15〜25%</li>
+                            <li>人件費：+5〜10%</li>
+                            <li>光熱費：+20〜40%</li>
+                        </ul>
+                    </div>
+                    <div class="card" style="border-top: 4px solid var(--primary);">
+                        <h4>価格転嫁困難</h4>
+                        <p><strong>深刻度：高い</strong></p>
+                        <ul>
+                            <li>学校給食：保護者負担で値上げ困難</li>
+                            <li>病院給食：診療報酬で規定</li>
+                            <li>長期契約：期間中の改定困難</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <h2>人手不足の構造的要因</h2>
+                <div class="grid-3">
+                    <div class="card">
+                        <h4>1. 労働条件の厳しさ</h4>
+                        <ul>
+                            <li>早朝出勤（5-6時）</li>
+                            <li>立ち仕事、体力的負担</li>
+                            <li>土日祝の勤務（病院・施設）</li>
+                            <li>賃金水準が他業種比で低め</li>
+                        </ul>
+                    </div>
+                    <div class="card">
+                        <h4>2. 労働人口の減少</h4>
+                        <ul>
+                            <li>少子高齢化による労働力人口減</li>
+                            <li>他業種との人材獲得競争</li>
+                        </ul>
+                    </div>
+                    <div class="card">
+                        <h4>3. イメージの問題</h4>
+                        <ul>
+                            <li>「きつい」「汚い」のイメージ</li>
+                            <li>キャリアパスが見えにくい</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <h2>分野別の人材確保難易度</h2>
+                <table>
+                    <tr>
+                        <th>分野</th>
+                        <th>難易度</th>
+                        <th>理由</th>
+                    </tr>
+                    <tr>
+                        <td><span class="badge badge-danger">病院給食</span></td>
+                        <td>極めて高い</td>
+                        <td>365日稼働、早朝・夜勤あり</td>
+                    </tr>
+                    <tr>
+                        <td><span class="badge badge-danger">高齢者施設</span></td>
+                        <td>極めて高い</td>
+                        <td>365日稼働、嚥下対応の専門性</td>
+                    </tr>
+                    <tr>
+                        <td><span class="badge badge-warning">学校給食</span></td>
+                        <td>中程度</td>
+                        <td>土日祝休み、夏休みあり</td>
+                    </tr>
+                    <tr>
+                        <td><span class="badge badge-info">事業所給食</span></td>
+                        <td>中程度</td>
+                        <td>土日祝休みが多い</td>
+                    </tr>
+                </table>
+
+                <h2>2023年ホーユー問題の教訓</h2>
+                <div class="danger-box">
+                    <h4>事件の概要</h4>
+                    <p>2023年9月、広島県の給食会社「ホーユー」が突然の事業停止。約150の学校・病院・福祉施設に影響。</p>
+                    <p><strong>原因：</strong>食材費・人件費の高騰 → 価格転嫁ができず → 資金繰り悪化</p>
+                </div>
+                <div class="grid-2" style="margin-top: 15px;">
+                    <div class="warning-box">
+                        <h4>業界への影響</h4>
+                        <ul>
+                            <li>給食会社への信頼性低下</li>
+                            <li>入札審査で財務状況重視</li>
+                            <li>適正価格への理解が進む</li>
+                        </ul>
+                    </div>
+                    <div class="success-box">
+                        <h4>教訓</h4>
+                        <ul>
+                            <li>「安ければ良い」ではなく持続可能な価格設定が必要</li>
+                            <li>発注者は受託企業の財務状況をチェックすべき</li>
+                            <li>適正価格の啓発が必要</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <h2>人手不足への対応策</h2>
+                <div class="grid-3">
+                    <div class="card">
+                        <h4 style="color: var(--primary);">待遇改善</h4>
+                        <ul>
+                            <li>賃金アップ</li>
+                            <li>福利厚生の充実</li>
+                            <li>休日数の増加</li>
+                        </ul>
+                    </div>
+                    <div class="card">
+                        <h4 style="color: var(--secondary);">省人化・効率化</h4>
+                        <ul>
+                            <li>調理機器の自動化</li>
+                            <li>クックチル・クックフリーズ導入</li>
+                            <li>完全調理品・半調理品の活用</li>
+                        </ul>
+                    </div>
+                    <div class="card">
+                        <h4 style="color: var(--success);">採用の多様化</h4>
+                        <ul>
+                            <li>シニア人材の活用</li>
+                            <li>外国人労働者の採用</li>
+                            <li>主婦層への働きかけ</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <h2>少子高齢化の影響</h2>
+                <div class="grid-2">
+                    <div class="danger-box">
+                        <h4>縮小する市場</h4>
+                        <ul>
+                            <li><strong>学校給食</strong>：児童生徒数の減少</li>
+                            <li><strong>保育園給食</strong>：出生数の減少</li>
+                            <li><strong>病院給食</strong>：病床数削減、在院日数短縮</li>
+                        </ul>
+                    </div>
+                    <div class="success-box">
+                        <h4>拡大する市場</h4>
+                        <ul>
+                            <li><strong>高齢者施設給食</strong>：施設数増加、利用者増</li>
+                            <li><strong>在宅配食</strong>：高齢単身世帯増加</li>
+                            <li><strong>冷凍宅配食</strong>：利便性需要</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="nav-buttons">
+                    <button class="nav-btn" onclick="showSlide(7)">前へ</button>
+                    <button class="nav-btn" onclick="showSlide(9)">次へ</button>
+                </div>
+            </div>
+
+            <!-- Slide 19: トレンドと将来展望 -->
+            <div class="slide" id="slide-19">
+                <h1>第19章 業界トレンドと将来展望</h1>
+
+                <h2>主要トレンド一覧</h2>
+                <div class="grid-2">
+                    <div class="card">
+                        <h4>技術・効率化</h4>
+                        <ul>
+                            <li>DX推進（システム化）</li>
+                            <li>調理の自動化</li>
+                            <li>クックチル・クックフリーズ普及</li>
+                        </ul>
+                    </div>
+                    <div class="card">
+                        <h4>市場・需要</h4>
+                        <ul>
+                            <li>高齢者市場の成長</li>
+                            <li>冷凍宅配食の拡大</li>
+                            <li>健康経営食堂</li>
+                        </ul>
+                    </div>
+                    <div class="card">
+                        <h4>食・健康</h4>
+                        <ul>
+                            <li>治療食・嚥下食需要増</li>
+                            <li>アレルギー対応強化</li>
+                            <li>食育の重視</li>
+                        </ul>
+                    </div>
+                    <div class="card">
+                        <h4>経営・業界</h4>
+                        <ul>
+                            <li>M&Aによる業界再編</li>
+                            <li>SDGs・サステナビリティ</li>
+                            <li>価格適正化の動き</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <h2>トレンド1：DX・デジタル化</h2>
+                <div class="grid-2">
+                    <div class="card">
+                        <h4>給食DXの領域</h4>
+                        <ul>
+                            <li><strong>献立管理</strong>：クラウド型システム、AI献立提案</li>
+                            <li><strong>発注・在庫</strong>：自動発注、食材ロス可視化</li>
+                            <li><strong>衛生管理</strong>：IoT温度管理、タブレット記録</li>
+                            <li><strong>顧客サービス</strong>：アプリ、キャッシュレス決済</li>
+                        </ul>
+                    </div>
+                    <div class="card">
+                        <h4>DXのメリット</h4>
+                        <table>
+                            <tr><td>効率化</td><td>作業時間削減、人件費抑制</td></tr>
+                            <tr><td>品質向上</td><td>ミス削減、記録の正確性</td></tr>
+                            <tr><td>コスト削減</td><td>食材ロス削減、在庫適正化</td></tr>
+                            <tr><td>コンプライアンス</td><td>記録自動化、監査対応</td></tr>
+                        </table>
+                    </div>
+                </div>
+
+                <h2>トレンド2：調理の効率化・自動化</h2>
+                <div class="grid-3">
+                    <div class="card" style="border-top: 4px solid var(--warning);">
+                        <h4>クックサーブ（従来）</h4>
+                        <p>調理 → すぐに提供</p>
+                        <p><small>◯ できたての味<br>✕ 人員が必要、ピーク負担大</small></p>
+                    </div>
+                    <div class="card" style="border-top: 4px solid var(--primary);">
+                        <h4>クックチル</h4>
+                        <p>調理 → 急速冷却 → 冷蔵保管 → 再加熱</p>
+                        <p><small>◯ 計画生産、ピーク分散<br>✕ 設備投資必要</small></p>
+                    </div>
+                    <div class="card" style="border-top: 4px solid var(--success);">
+                        <h4>クックフリーズ</h4>
+                        <p>調理 → 急速冷凍 → 冷凍保管 → 再加熱</p>
+                        <p><small>◯ 長期保存、配送効率化<br>✕ 設備投資大</small></p>
+                    </div>
+                </div>
+
+                <h2>トレンド3：高齢者市場の成長</h2>
+                <div class="grid-2">
+                    <div class="info-box">
+                        <h4>成長の背景</h4>
+                        <ul>
+                            <li>高齢化率の上昇</li>
+                            <li>高齢者施設（特養・老健・有料）の増加</li>
+                            <li>在宅高齢者の増加 → 配食サービス需要</li>
+                            <li>嚥下調整食の専門性ニーズ</li>
+                        </ul>
+                    </div>
+                    <div class="success-box">
+                        <h4>成長セグメント</h4>
+                        <table>
+                            <tr><td>高齢者施設給食</td><td>高成長（2028年に病院給食を逆転）</td></tr>
+                            <tr><td>在宅配食サービス</td><td>高成長</td></tr>
+                            <tr><td>冷凍宅配食</td><td>急成長</td></tr>
+                            <tr><td>嚥下調整食</td><td>高成長</td></tr>
+                        </table>
+                    </div>
+                </div>
+
+                <h2>トレンド4：M&A・業界再編</h2>
+                <div class="card">
+                    <h4>再編の構図</h4>
+                    <div class="flowchart" style="flex-direction: row; flex-wrap: wrap; justify-content: center;">
+                        <div class="flow-step" style="background: var(--primary);">大手企業<br><small>日清医療、エームサービス、LEOC</small></div>
+                        <div class="flow-arrow">← M&A →</div>
+                        <div class="flow-step" style="background: var(--warning);">中堅企業<br><small>スケール追求・生き残り</small></div>
+                        <div class="flow-arrow">← 淘汰 →</div>
+                        <div class="flow-step" style="background: var(--secondary);">中小企業<br><small>後継者不在・財務悪化</small></div>
+                    </div>
+                    <p style="margin-top: 15px;"><strong>背景：</strong>スケールメリット追求、人材確保力強化、後継者不在問題、財務基盤強化</p>
+                </div>
+
+                <h2>2028年の業界予測</h2>
+                <div class="grid-2">
+                    <div class="card">
+                        <h4>市場構造の変化</h4>
+                        <p><strong>市場規模：5兆1,254億円</strong>（+7% vs 2023年）</p>
+                        <ul>
+                            <li>高齢者施設給食 > 病院給食（逆転）</li>
+                            <li>事業所給食は安定成長</li>
+                            <li>学校・保育園は横ばい〜微減</li>
+                            <li>在宅配食・冷凍宅配食が急成長</li>
+                        </ul>
+                    </div>
+                    <div class="card">
+                        <h4>業界・技術の変化</h4>
+                        <ul>
+                            <li>上位集中度のさらなる上昇</li>
+                            <li>中小企業の淘汰・統合</li>
+                            <li>DX・自動化の普及</li>
+                            <li>クックチル・クックフリーズの標準化</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <h2>ハーベストにとっての成長機会</h2>
+                <div class="grid-3">
+                    <div class="success-box">
+                        <h4>学校給食</h4>
+                        <ul>
+                            <li>横浜市中学校給食のような大型案件増加</li>
+                            <li>民設民営方式の認知度向上</li>
+                            <li>老朽化施設の建て替え需要</li>
+                        </ul>
+                    </div>
+                    <div class="success-box">
+                        <h4>ヘルスケア</h4>
+                        <ul>
+                            <li>高齢者施設の新規開設への参入</li>
+                            <li>嚥下調整食のノウハウを活かした差別化</li>
+                            <li>在宅配食市場への展開可能性</li>
+                        </ul>
+                    </div>
+                    <div class="success-box">
+                        <h4>事業全般</h4>
+                        <ul>
+                            <li>多角経営（ヨシケイ含む）による安定性</li>
+                            <li>65年の歴史を活かした信頼獲得</li>
+                            <li>ISO認証を活かした入札優位性</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="nav-buttons">
+                    <button class="nav-btn" onclick="showSlide(8)">前へ</button>
+                    <button class="nav-btn" onclick="showSlide(10)">次へ</button>
+                </div>
+            </div>
+
+            <!-- Slide 20: 入社検討ポイント -->
+            <div class="slide" id="slide-20">
+                <h1>第20章 入社検討ポイント・面接準備</h1>
+
+                <h2>なぜハーベストを選ぶのか</h2>
+                <div class="grid-2">
+                    <div class="card" style="border-left: 5px solid var(--primary);">
+                        <h4>1. 65年以上の歴史と安定性</h4>
+                        <p>老舗企業としての信頼と実績</p>
+                    </div>
+                    <div class="card" style="border-left: 5px solid var(--secondary);">
+                        <h4>2. 学校給食（民設民営）での独自ポジション</h4>
+                        <p>他社にない強み、成長分野</p>
+                    </div>
+                    <div class="card" style="border-left: 5px solid var(--success);">
+                        <h4>3. 多角経営による安定性</h4>
+                        <p>コントラクト + ヘルスケア + 学校 + ヨシケイ</p>
+                    </div>
+                    <div class="card" style="border-left: 5px solid var(--warning);">
+                        <h4>4. 全国展開 × 地域密着</h4>
+                        <p>約1,000拠点、様々な勤務地選択肢</p>
+                    </div>
+                </div>
+
+                <h2>他社との比較</h2>
+                <table>
+                    <tr>
+                        <th>項目</th>
+                        <th>ハーベスト</th>
+                        <th>大手（日清医療等）</th>
+                        <th>中小企業</th>
+                    </tr>
+                    <tr>
+                        <td>規模</td>
+                        <td>中堅（上位15位）</td>
+                        <td>大規模</td>
+                        <td>小規模</td>
+                    </tr>
+                    <tr>
+                        <td>安定性</td>
+                        <td>高い（65年の歴史）</td>
+                        <td>非常に高い</td>
+                        <td>企業による</td>
+                    </tr>
+                    <tr>
+                        <td>成長機会</td>
+                        <td>中〜高</td>
+                        <td>競争激しい</td>
+                        <td>企業による</td>
+                    </tr>
+                    <tr>
+                        <td>独自性</td>
+                        <td><strong>学校給食民設民営</strong></td>
+                        <td>病院・福祉特化</td>
+                        <td>地域密着</td>
+                    </tr>
+                    <tr>
+                        <td>多様性</td>
+                        <td>高い（5事業）</td>
+                        <td>専門特化</td>
+                        <td>限定的</td>
+                    </tr>
+                </table>
+
+                <h2>志望動機の構成</h2>
+                <div class="steps">
+                    <div class="step">
+                        <div class="step-number">1</div>
+                        <div class="step-label">なぜ給食業界か<br><small>社会貢献、安定性、成長市場</small></div>
+                    </div>
+                    <div class="step">
+                        <div class="step-number">2</div>
+                        <div class="step-label">なぜハーベストか<br><small>歴史、民設民営、多角経営</small></div>
+                    </div>
+                    <div class="step">
+                        <div class="step-number">3</div>
+                        <div class="step-label">自分が貢献できること<br><small>経験、資格、意欲</small></div>
+                    </div>
+                </div>
+
+                <h2>想定質問と回答ポイント</h2>
+                <div class="grid-2">
+                    <div class="info-box">
+                        <h4>Q: 給食業界の課題は？</h4>
+                        <p><strong>回答ポイント：</strong></p>
+                        <ul>
+                            <li>人手不足が最大の課題</li>
+                            <li>コスト上昇と価格転嫁の困難</li>
+                            <li>2023年ホーユー問題への言及</li>
+                            <li>高齢者市場の成長にも触れる</li>
+                        </ul>
+                    </div>
+                    <div class="info-box">
+                        <h4>Q: ハーベストの強みは？</h4>
+                        <p><strong>回答ポイント：</strong></p>
+                        <ul>
+                            <li>学校給食の民設民営方式での豊富な実績</li>
+                            <li>多角経営による安定性</li>
+                            <li>ISO9001・ISO22000認証の品質管理体制</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <h2>逆質問の例</h2>
+                <div class="grid-3">
+                    <div class="card">
+                        <h4>入社後について</h4>
+                        <ul>
+                            <li>配属先の決まり方</li>
+                            <li>1日の業務の流れ</li>
+                            <li>新人教育・研修制度</li>
+                        </ul>
+                    </div>
+                    <div class="card">
+                        <h4>キャリアについて</h4>
+                        <ul>
+                            <li>キャリアパス</li>
+                            <li>複数事業分野の経験</li>
+                            <li>管理職への登用基準</li>
+                        </ul>
+                    </div>
+                    <div class="card">
+                        <h4>会社の方針</h4>
+                        <ul>
+                            <li>今後の事業展開</li>
+                            <li>学校給食事業の成長戦略</li>
+                            <li>ヘルスケア事業の強化</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <h2>面接前チェックリスト</h2>
+                <div class="grid-2">
+                    <div class="warning-box">
+                        <h4>知識面</h4>
+                        <ul>
+                            <li>会社基本情報（設立年、売上、従業員数）</li>
+                            <li>5つの事業内容を説明できる</li>
+                            <li>ハーベストの強みを3つ言える</li>
+                            <li>給食業界の課題を説明できる</li>
+                        </ul>
+                    </div>
+                    <div class="success-box">
+                        <h4>準備面</h4>
+                        <ul>
+                            <li>志望動機を1分で話せる</li>
+                            <li>自己PRを準備した</li>
+                            <li>逆質問を3つ以上用意した</li>
+                            <li>服装・身だしなみを確認した</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <h2>キャリアパスの例（栄養士）</h2>
+                <div class="timeline">
+                    <div class="timeline-item">
+                        <div class="timeline-time">1-3年目</div>
+                        <p><strong>事業所配属（現場栄養士）</strong> - 献立作成、栄養管理、現場オペレーション習得</p>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-time">3-5年目</div>
+                        <p><strong>複数事業所経験</strong> - 学校、病院、施設など、専門性の深化</p>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-time">5-10年目</div>
+                        <p><strong>エリア担当 / スーパーバイザー</strong> - 複数事業所の管理、後輩指導</p>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-time">10年目以降</div>
+                        <p><strong>マネージャー / 本社スタッフ</strong> - 事業部門の管理、商品開発、教育</p>
+                    </div>
+                </div>
+
+                <div class="success-box" style="margin-top: 20px; text-align: center;">
+                    <h4>面接当日の心構え</h4>
+                    <p><strong>笑顔で明るく</strong> / <strong>はきはきと話す</strong> / <strong>質問をよく聞いてから答える</strong></p>
+                    <p><strong>わからないことは正直に「勉強します」</strong> / <strong>「食」への熱意を伝える</strong></p>
+                </div>
+
+                <div class="nav-buttons">
+                    <button class="nav-btn" onclick="showSlide(9)">前へ</button>
+                    <button class="nav-btn" onclick="showSlide(11)">次へ</button>
+                </div>
+            </div>
+
+            <!-- Slide 21: 市場規模と将来予測 -->
+            <div class="slide" id="slide-21">
+                <h1>第21章 市場規模と将来予測</h1>
+
+                <h2>市場規模サマリー（2023年度）</h2>
+                <div class="grid-2">
+                    <div class="card" style="border-top: 4px solid var(--primary);">
+                        <h4>給食市場全体（6分野計）</h4>
+                        <p style="font-size: 2rem; color: var(--primary); font-weight: bold; text-align: center;">約4兆7,915億円</p>
+                        <p style="text-align: center;">前年比 +3.9%</p>
+                    </div>
+                    <div class="card" style="border-top: 4px solid var(--secondary);">
+                        <h4>集団給食市場</h4>
+                        <p style="font-size: 2rem; color: var(--secondary); font-weight: bold; text-align: center;">約3兆1,741億円</p>
+                        <p style="text-align: center;">前年比 +6.2%</p>
+                    </div>
+                </div>
+
+                <h2>分野別市場規模（2023年）</h2>
+                <table>
+                    <tr><th>分野</th><th>市場規模</th><th>前年比</th><th>構成比</th></tr>
+                    <tr><td><strong>事業所給食</strong></td><td>1兆5,884億円</td><td style="color: var(--success);">+10.3%</td><td>約50%</td></tr>
+                    <tr><td>病院給食</td><td>7,513億円</td><td style="color: var(--success);">+2.8%</td><td>約24%</td></tr>
+                    <tr><td>学校給食</td><td>4,832億円</td><td style="color: var(--success);">+4.0%</td><td>約15%</td></tr>
+                    <tr><td>保育所給食</td><td>3,512億円</td><td style="color: var(--danger);">-0.7%</td><td>約11%</td></tr>
+                </table>
+
+                <h2>将来予測</h2>
+                <div class="diagram-box">
+                    <h4>市場規模成長予測</h4>
+                    <table>
+                        <tr><th>年度</th><th>市場規模</th><th>対2023年比</th></tr>
+                        <tr><td>2023年度</td><td>4兆7,915億円</td><td>基準</td></tr>
+                        <tr><td>2026年度</td><td><strong>5兆円超</strong></td><td>+5%程度</td></tr>
+                        <tr><td>2028年度</td><td><strong>5兆1,254億円</strong></td><td><strong>+7.0%</strong></td></tr>
+                    </table>
+                </div>
+
+                <h2>分野別将来予測</h2>
+                <div class="grid-2">
+                    <div class="success-box">
+                        <h4>成長する分野</h4>
+                        <ul>
+                            <li><strong>高齢者施設給食</strong> - 高齢化、施設数増加で大幅増</li>
+                            <li><strong>事業所給食</strong> - 出社回帰、福利厚生強化で増加</li>
+                            <li><strong>弁当給食</strong> - 在宅高齢者向け配食が成長</li>
+                        </ul>
+                    </div>
+                    <div class="warning-box">
+                        <h4>横ばい・減少の分野</h4>
+                        <ul>
+                            <li><strong>学校給食</strong> - 少子化で横ばい</li>
+                            <li><strong>病院給食</strong> - 病床数削減、在院日数短縮</li>
+                            <li><strong>保育所給食</strong> - 少子化で減少</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <h2>注目：2028年に「逆転」が起きる</h2>
+                <div class="danger-box">
+                    <h4>高齢者施設給食 ＞ 病院給食</h4>
+                    <p>2028年には高齢者施設給食の市場規模が病院給食を上回る見込み</p>
+                    <ul>
+                        <li>日本の高齢化率：約30%（2025年）</li>
+                        <li>有料老人ホーム・サ高住の増加</li>
+                        <li>病院の機能分化・病床削減政策</li>
+                    </ul>
+                </div>
+
+                <h2>コロナ禍からの回復</h2>
+                <table>
+                    <tr><th>時期</th><th>状況</th></tr>
+                    <tr><td>2020年春</td><td>コロナ禍で大幅落ち込み（特に事業所給食）</td></tr>
+                    <tr><td>2021年度〜</td><td>行動制限緩和で回復基調</td></tr>
+                    <tr><td>2023年度</td><td><strong>6分野すべてが前年比プラス</strong></td></tr>
+                    <tr><td>2024年度〜</td><td>引き続きプラス成長予測</td></tr>
+                </table>
+
+                <h2>業界売上の集中度</h2>
+                <div class="info-box">
+                    <h4>市場シェア構造</h4>
+                    <ul>
+                        <li><strong>上位5社で約40%のシェア</strong>（寡占傾向）</li>
+                        <li>残りは中堅・中小企業が多数</li>
+                        <li>M&Aによる業界再編が進行中</li>
+                    </ul>
+                </div>
+
+                <div class="nav-buttons">
+                    <button class="nav-btn" onclick="showSlide(1)">前へ</button>
+                    <button class="nav-btn" onclick="showSlide(3)">次へ</button>
+                </div>
+            </div>
+
+            <!-- Slide 22: 業界構造とビジネスモデル -->
+            <div class="slide" id="slide-22">
+                <h1>第22章 業界構造とビジネスモデル</h1>
+
+                <h2>委託給食の仕組み</h2>
+                <div class="diagram-box">
+                    <h4>委託給食のビジネスモデル</h4>
+                    <div class="grid-2">
+                        <div class="card">
+                            <h4>施設側が提供</h4>
+                            <ul>
+                                <li>厨房・食堂スペース</li>
+                                <li>設備・什器</li>
+                                <li>委託費の支払い</li>
+                            </ul>
+                        </div>
+                        <div class="card">
+                            <h4>給食会社が提供</h4>
+                            <ul>
+                                <li>人材派遣・管理</li>
+                                <li>食材調達</li>
+                                <li>調理・運営ノウハウ</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <h2>直営 vs 委託の比較</h2>
+                <table>
+                    <tr><th>項目</th><th>直営</th><th>委託</th></tr>
+                    <tr><td><strong>運営主体</strong></td><td>施設自身</td><td>給食会社</td></tr>
+                    <tr><td><strong>人材確保</strong></td><td>施設の責任</td><td>給食会社の責任</td></tr>
+                    <tr><td><strong>コスト</strong></td><td>固定費が高い</td><td>変動費化しやすい</td></tr>
+                    <tr><td><strong>専門性</strong></td><td>限定的</td><td>高い</td></tr>
+                    <tr><td><strong>トレンド</strong></td><td>減少傾向</td><td><strong>増加傾向</strong></td></tr>
+                </table>
+
+                <h2>契約形態の種類</h2>
+                <div class="grid-2">
+                    <div class="card" style="border-left: 4px solid var(--primary);">
+                        <h4>1. 管理費契約</h4>
+                        <ul>
+                            <li>食材費：実費精算（施設負担）</li>
+                            <li>管理費：月額固定</li>
+                            <li>リスク：食材費変動は施設負担</li>
+                            <li><strong>適用：病院、福祉施設に多い</strong></li>
+                        </ul>
+                    </div>
+                    <div class="card" style="border-left: 4px solid var(--secondary);">
+                        <h4>2. 食単価契約</h4>
+                        <ul>
+                            <li>1食あたり○○○円 × 提供食数</li>
+                            <li>リスク：食材費変動は給食会社負担</li>
+                            <li><strong>適用：学校給食、事業所に多い</strong></li>
+                        </ul>
+                    </div>
+                </div>
+
+                <h2>収益構造（コスト構成）</h2>
+                <div class="diagram-box">
+                    <h4>売上に対するコスト構成</h4>
+                    <div class="progress-container">
+                        <div class="progress-item">
+                            <div class="progress-label"><span><strong>食材費</strong></span><span>約40%</span></div>
+                            <div class="progress-bar"><div class="progress-fill" style="width: 40%; background: var(--danger);"></div></div>
+                        </div>
+                        <div class="progress-item">
+                            <div class="progress-label"><span><strong>人件費</strong></span><span>約35-40%</span></div>
+                            <div class="progress-bar"><div class="progress-fill" style="width: 37%; background: var(--warning);"></div></div>
+                        </div>
+                        <div class="progress-item">
+                            <div class="progress-label"><span><strong>その他経費</strong></span><span>約15-20%</span></div>
+                            <div class="progress-bar"><div class="progress-fill" style="width: 17%; background: var(--secondary);"></div></div>
+                        </div>
+                        <div class="progress-item">
+                            <div class="progress-label"><span><strong>営業利益</strong></span><span>約5-10%</span></div>
+                            <div class="progress-bar"><div class="progress-fill" style="width: 7%; background: var(--success);"></div></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="warning-box">
+                    <h4>収益性の特徴</h4>
+                    <ul>
+                        <li><strong>薄利多売</strong> - 利益率5-10%と低い</li>
+                        <li><strong>規模の経済</strong> - 大量仕入れでコスト削減</li>
+                        <li><strong>固定客</strong> - 契約期間中は安定収入</li>
+                        <li><strong>参入障壁</strong> - 実績・信用が重要</li>
+                    </ul>
+                </div>
+
+                <h2>バリューチェーン</h2>
+                <div class="flowchart">
+                    <div class="flow-step">メニュー開発（栄養士）</div>
+                    <div class="flow-arrow">↓</div>
+                    <div class="flow-step">食材調達（本部・エリア）</div>
+                    <div class="flow-arrow">↓</div>
+                    <div class="flow-step">調理（調理師・パート）</div>
+                    <div class="flow-arrow">↓</div>
+                    <div class="flow-step">配膳・提供（現場スタッフ）</div>
+                    <div class="flow-arrow">↓</div>
+                    <div class="flow-step">清掃・片付け（現場スタッフ）</div>
+                </div>
+
+                <h2>顧客獲得の流れ</h2>
+                <div class="grid-2">
+                    <div class="card">
+                        <h4>公共施設（入札・コンペ）</h4>
+                        <ol>
+                            <li>発注者（自治体等）が入札公告</li>
+                            <li>複数の給食会社が参加</li>
+                            <li>価格・実績・提案内容で評価</li>
+                            <li>落札者決定→契約</li>
+                        </ol>
+                    </div>
+                    <div class="card">
+                        <h4>民間施設（紹介・営業）</h4>
+                        <ol>
+                            <li>既存顧客からの紹介</li>
+                            <li>営業活動</li>
+                            <li>商談→提案→見積</li>
+                            <li>契約締結</li>
+                        </ol>
+                    </div>
+                </div>
+
+                <h2>契約期間の目安</h2>
+                <table>
+                    <tr><th>施設タイプ</th><th>一般的な契約期間</th></tr>
+                    <tr><td>学校給食</td><td>1〜3年（入札）</td></tr>
+                    <tr><td>病院</td><td>1〜3年</td></tr>
+                    <tr><td>企業食堂</td><td>1〜5年</td></tr>
+                    <tr><td>福祉施設</td><td>1〜3年</td></tr>
+                </table>
+
+                <div class="nav-buttons">
+                    <button class="nav-btn" onclick="showSlide(2)">前へ</button>
+                    <button class="nav-btn" onclick="showSlide(4)">次へ</button>
+                </div>
+            </div>
+
+            <!-- Slide 23: 主要プレイヤー（競合企業） -->
+            <div class="slide" id="slide-23">
+                <h1>第23章 主要プレイヤー（競合企業）</h1>
+
+                <h2>業界売上高ランキング TOP20</h2>
+                <table>
+                    <tr><th>順位</th><th>企業名</th><th>売上高</th><th>主な強み</th></tr>
+                    <tr style="background: linear-gradient(135deg, #fff9c4, #fff59d);"><td><strong>1</strong></td><td><strong>日清医療食品</strong></td><td>3,670億円</td><td>病院・福祉特化、圧倒的No.1</td></tr>
+                    <tr><td>2</td><td>エームサービス</td><td>1,420億円</td><td>社員食堂、三井物産100%子会社</td></tr>
+                    <tr><td>3</td><td>グリーンハウス</td><td>1,268億円</td><td>海外展開、大手企業本社食堂</td></tr>
+                    <tr><td>4</td><td>シダックス</td><td>1,100億円</td><td>学校給食、唯一の上場企業</td></tr>
+                    <tr><td>5</td><td>西洋フード・コンパス</td><td>912億円</td><td>外資系（英コンパス社）</td></tr>
+                    <tr><td>6</td><td>LEOC</td><td>900億円</td><td>病院・介護、人材育成</td></tr>
+                    <tr><td>7</td><td>富士産業</td><td>868億円</td><td>病院・福祉中心</td></tr>
+                    <tr><td>8</td><td>魚国総本社</td><td>663億円</td><td>関西基盤、老舗企業</td></tr>
+                    <tr><td>9</td><td>メフォス</td><td>598億円</td><td>三菱商事系、学校・社食</td></tr>
+                    <tr><td>10</td><td>NGFホールディングス</td><td>536億円</td><td>日本ゼネラルフードG</td></tr>
+                    <tr><td>11</td><td>一冨士フードサービス</td><td>約450億円</td><td>日清医療食品子会社</td></tr>
+                    <tr><td>12</td><td>ニッコクトラスト</td><td>約340億円</td><td>産業給食老舗</td></tr>
+                    <tr style="background: linear-gradient(135deg, #c8e6c9, #a5d6a7);"><td><strong>13</strong></td><td><strong>★ハーベスト</strong></td><td><strong>347億円</strong></td><td><strong>学校給食・ヨシケイ</strong></td></tr>
+                    <tr><td>14</td><td>東洋食品</td><td>約300億円</td><td>学校給食特化</td></tr>
+                    <tr><td>15</td><td>葉隠勇進（ソシオG）</td><td>約280億円</td><td>学校給食、関東圏</td></tr>
+                </table>
+
+                <h2>分野別の強豪企業</h2>
+                <div class="grid-3">
+                    <div class="card" style="border-top: 4px solid var(--danger);">
+                        <h4>病院・福祉施設</h4>
+                        <ol>
+                            <li><strong>日清医療食品</strong></li>
+                            <li>LEOC</li>
+                            <li>富士産業</li>
+                            <li>メフォス</li>
+                        </ol>
+                    </div>
+                    <div class="card" style="border-top: 4px solid var(--primary);">
+                        <h4>事業所給食（社食）</h4>
+                        <ol>
+                            <li><strong>エームサービス</strong></li>
+                            <li>グリーンハウス</li>
+                            <li>魚国総本社</li>
+                            <li>一富士フード</li>
+                        </ol>
+                    </div>
+                    <div class="card" style="border-top: 4px solid var(--success);">
+                        <h4>学校給食</h4>
+                        <ol>
+                            <li><strong>シダックス</strong></li>
+                            <li>東洋食品</li>
+                            <li>葉隠勇進</li>
+                            <li><strong>ハーベスト</strong></li>
+                        </ol>
+                    </div>
+                </div>
+
+                <h2>主要企業詳細</h2>
+
+                <h3>日清医療食品（業界1位）</h3>
+                <div class="info-box">
+                    <table>
+                        <tr><td><strong>売上高</strong></td><td>3,670億円</td><td><strong>契約施設</strong></td><td>5,500ヵ所以上</td></tr>
+                        <tr><td><strong>提供食数</strong></td><td>1日130万食以上</td><td><strong>グループ</strong></td><td>ワタキューセイモア</td></tr>
+                    </table>
+                    <p><strong>強み：</strong>病院・福祉施設で圧倒的シェアNo.1、嚥下調整食の技術力</p>
+                </div>
+
+                <h3>エームサービス（業界2位）</h3>
+                <div class="info-box">
+                    <table>
+                        <tr><td><strong>売上高</strong></td><td>1,420億円</td><td><strong>事業所数</strong></td><td>約3,900ヵ所</td></tr>
+                        <tr><td><strong>親会社</strong></td><td>三井物産100%子会社</td><td><strong>年間休日</strong></td><td>122日（業界トップ）</td></tr>
+                    </table>
+                    <p><strong>強み：</strong>社員食堂運営、くるみん認定取得、ワークライフバランス重視</p>
+                </div>
+
+                <h3>LEOC（業界6位）</h3>
+                <div class="info-box">
+                    <table>
+                        <tr><td><strong>売上高</strong></td><td>約900億円</td><td><strong>事業所数</strong></td><td>約2,800ヵ所</td></tr>
+                        <tr><td><strong>特徴</strong></td><td colspan="3">LEOC大学・LEOC大学院の人材育成制度、定年後雇用に積極的</td></tr>
+                    </table>
+                    <p><strong>強み：</strong>人材育成への投資、病院・介護施設に強み、成長企業</p>
+                </div>
+
+                <h2>ハーベストのポジション</h2>
+                <div class="success-box">
+                    <h4>業界13位前後（売上347億円）</h4>
+                    <ul>
+                        <li><strong>売上規模：</strong>中堅（上位15位圏内）</li>
+                        <li><strong>強み：</strong>学校給食（民設民営）、多角化（ヨシケイ）</li>
+                        <li><strong>差別化：</strong>調理から施設建設まで一貫対応</li>
+                        <li><strong>学校給食分野：</strong>上位プレイヤー</li>
+                    </ul>
+                </div>
+
+                <h2>最近のM&A動向</h2>
+                <table>
+                    <tr><th>時期</th><th>買い手</th><th>売り手</th><th>内容</th></tr>
+                    <tr><td>2024年2月</td><td>コロワイド</td><td>ソシオフードサービス</td><td>給食受託事業子会社化</td></tr>
+                    <tr><td>2024年8月</td><td>NGFホールディングス</td><td>東京ケータリングHD</td><td>全株式取得</td></tr>
+                </table>
+                <div class="warning-box">
+                    <p><strong>今後の予測：</strong>大手による中堅・中小の買収継続、業界上位への集約が進む</p>
+                </div>
+
+                <div class="nav-buttons">
+                    <button class="nav-btn" onclick="showSlide(3)">前へ</button>
+                    <button class="nav-btn" onclick="showSlide(5)">次へ</button>
+                </div>
+            </div>
+
+            <!-- Slide 24: 競合比較（働き方・給与・企業文化） -->
+            <div class="slide" id="slide-24">
+                <h1>第24章 競合比較（働き方・給与・企業文化）</h1>
+
+                <h2>主要企業の待遇比較</h2>
+                <table>
+                    <tr><th>企業名</th><th>年間休日</th><th>月給目安</th><th>残業/月</th><th>特徴</th></tr>
+                    <tr><td>エームサービス</td><td><strong>122日</strong></td><td>25〜40万円</td><td>25時間</td><td>業界トップの休日数</td></tr>
+                    <tr><td>LEOC</td><td>115日</td><td>22〜35万円</td><td>21時間</td><td>定年後雇用に強み</td></tr>
+                    <tr><td>グリーンハウス</td><td>115日</td><td>22〜32万円</td><td>25時間</td><td>海外展開に積極的</td></tr>
+                    <tr><td>メフォス</td><td>112日</td><td>21〜30万円</td><td>28時間</td><td>三菱商事系の安定</td></tr>
+                    <tr><td>日清医療食品</td><td>110日</td><td>21〜30万円</td><td>37時間</td><td>業界最大手、安定</td></tr>
+                    <tr><td>富士産業</td><td>110日</td><td>20〜28万円</td><td>30時間</td><td>病院・福祉特化</td></tr>
+                    <tr style="background: linear-gradient(135deg, #c8e6c9, #a5d6a7);"><td><strong>★ハーベスト</strong></td><td>107日</td><td>20〜30万円</td><td>25時間</td><td>ヨシケイ事業の独自性</td></tr>
+                </table>
+
+                <h2>職種別年収比較（目安）</h2>
+                <div class="grid-2">
+                    <div class="card">
+                        <h4>栄養士</h4>
+                        <ol>
+                            <li>グリーンハウス 332万円</li>
+                            <li>日清医療食品 329万円</li>
+                            <li>LEOC 325万円</li>
+                        </ol>
+                        <p>業界平均：300〜330万円</p>
+                    </div>
+                    <div class="card">
+                        <h4>管理栄養士</h4>
+                        <ol>
+                            <li>LEOC 365万円</li>
+                            <li>富士産業 355万円</li>
+                            <li>日清医療食品 346万円</li>
+                        </ol>
+                        <p>業界平均：330〜360万円</p>
+                    </div>
+                </div>
+
+                <div class="info-box">
+                    <h4>スーパーバイザー（SV）年収</h4>
+                    <ul>
+                        <li>日清医療食品：528万円（平均）</li>
+                        <li>エームサービス：480〜550万円</li>
+                        <li>LEOC：450〜520万円</li>
+                        <li><strong>業界平均：400〜550万円</strong></li>
+                    </ul>
+                </div>
+
+                <h2>企業別の強み・特徴</h2>
+                <div class="grid-2">
+                    <div class="card" style="border-left: 4px solid #1565c0;">
+                        <h4>日清医療食品</h4>
+                        <p><strong>強み：</strong></p>
+                        <ul>
+                            <li>業界最大手の安定性</li>
+                            <li>病院・福祉施設で圧倒的シェア</li>
+                            <li>嚥下調整食の技術力</li>
+                            <li>全国どこでも働ける</li>
+                        </ul>
+                        <p><strong>課題：</strong>残業多め、配属先により環境差</p>
+                    </div>
+                    <div class="card" style="border-left: 4px solid #43a047;">
+                        <h4>エームサービス</h4>
+                        <p><strong>強み：</strong></p>
+                        <ul>
+                            <li>ワークライフバランス重視</li>
+                            <li>三井グループの安定性</li>
+                            <li>くるみん認定（育児支援）</li>
+                            <li>年間休日122日（業界トップ）</li>
+                        </ul>
+                        <p><strong>課題：</strong>給与は特別高くない</p>
+                    </div>
+                    <div class="card" style="border-left: 4px solid #fb8c00;">
+                        <h4>LEOC</h4>
+                        <p><strong>強み：</strong></p>
+                        <ul>
+                            <li>LEOC大学（人材育成制度）</li>
+                            <li>定年後も働ける環境</li>
+                            <li>管理栄養士の待遇が良い</li>
+                            <li>残業が少なめ</li>
+                        </ul>
+                        <p><strong>課題：</strong>急成長による組織変化</p>
+                    </div>
+                    <div class="card" style="border-left: 4px solid #7b1fa2;">
+                        <h4>ハーベスト</h4>
+                        <p><strong>強み：</strong></p>
+                        <ul>
+                            <li>ヨシケイ事業という独自性</li>
+                            <li>学校給食の専門性</li>
+                            <li>中堅企業の風通しの良さ</li>
+                            <li>65年以上の歴史と安定経営</li>
+                        </ul>
+                        <p><strong>課題：</strong>年間休日がやや少ない</p>
+                    </div>
+                </div>
+
+                <h2>タイプ別おすすめ企業</h2>
+                <table>
+                    <tr><th>あなたのタイプ</th><th>おすすめ企業</th></tr>
+                    <tr><td>休みを大切にしたい</td><td>エームサービス（年間休日122日）</td></tr>
+                    <tr><td>最大手で安定したい</td><td>日清医療食品（業界1位）</td></tr>
+                    <tr><td>スキルアップしたい</td><td>LEOC（LEOC大学）</td></tr>
+                    <tr><td>病院・福祉で専門性</td><td>日清医療食品、LEOC</td></tr>
+                    <tr><td>社員食堂をやりたい</td><td>エームサービス、グリーンハウス</td></tr>
+                    <tr><td>学校給食をやりたい</td><td>シダックス、<strong>ハーベスト</strong></td></tr>
+                    <tr><td>地域密着で働きたい</td><td><strong>ハーベスト</strong></td></tr>
+                    <tr><td>多角的な経験をしたい</td><td><strong>ハーベスト</strong>（給食〜ヨシケイ）</td></tr>
+                </table>
+
+                <h2>「なぜハーベストか」回答例</h2>
+                <div class="success-box">
+                    <h4>面接での回答例</h4>
+                    <p><strong>ヨシケイ事業に注目：</strong>「給食事業だけでなく、ヨシケイ事業という独自の強みを持っている点に魅力を感じました。食を通じて施設だけでなく一般家庭にもサービスを届けている幅広さは、他社にはない特徴だと思います。」</p>
+                    <p><strong>学校給食に注目：</strong>「ハーベストネクストが手がける民設民営方式の学校給食に関心を持ちました。設計から運営まで一貫対応できる技術力と、横浜市など大規模プロジェクトの実績は御社ならではの強みだと感じています。」</p>
+                </div>
+
+                <div class="warning-box">
+                    <h4>業界共通の課題（どの会社でも）</h4>
+                    <ul>
+                        <li>人手不足（どの会社も採用に苦労）</li>
+                        <li>早朝・土日勤務がある（配属先による）</li>
+                        <li>給与水準は他業界と比べて高くない</li>
+                        <li>「配属先次第」で環境が大きく変わる</li>
+                    </ul>
+                </div>
+
+                <div class="nav-buttons">
+                    <button class="nav-btn" onclick="showSlide(4)">前へ</button>
+                    <button class="nav-btn" onclick="showSlide(6)">次へ</button>
+                </div>
+            </div>
+
+        </main>
+    </div>
+
+    <script>
+        let currentSlide = 0;
+        const totalSlides = 25;
+
+        // 新しいスライド番号 → 古いスライドID（DOM内のslide-X）のマッピング
+        const slideMapping = {
+            0: 0,    // 目次
+            1: 1,    // 給食業界入門
+            2: 21,   // 市場規模と将来予測
+            3: 22,   // 業界構造とビジネスモデル
+            4: 23,   // 主要プレイヤー
+            5: 24,   // 競合比較
+            6: 2,    // ハーベスト会社紹介
+            7: 3,    // 給食関連法規
+            8: 18,   // 業界課題
+            9: 19,   // トレンドと将来展望
+            10: 20,  // 入社検討ポイント
+            11: 12,  // SV現場研修ガイド
+            12: 13,  // ヘルスケア事業ガイド
+            13: 14,  // SV着任後ガイド
+            14: 15,  // SV実務マニュアル
+            15: 16,  // 新規営業ガイド
+            16: 17,  // 緊急時対応マニュアル
+            17: 4,   // 衛生管理基礎
+            18: 5,   // 給食オペレーション
+            19: 6,   // 栄養管理基礎
+            20: 7,   // 原価管理入門
+            21: 8,   // 労務管理の基本
+            22: 9,   // クライアント対応術
+            23: 10,  // トラブル対応マニュアル
+            24: 11   // 給食システム入門
+        };
+
+        function showSlide(n) {
+            const navItems = document.querySelectorAll('.nav-item');
+            const allSlides = document.querySelectorAll('.slide');
+
+            // すべてのスライドとナビを非アクティブに
+            allSlides.forEach(slide => slide.classList.remove('active'));
+            navItems.forEach(item => item.classList.remove('active'));
+
+            currentSlide = n;
+
+            // マッピングを使って正しいスライドを表示
+            const targetSlideId = 'slide-' + slideMapping[n];
+            const targetSlide = document.getElementById(targetSlideId);
+            if (targetSlide) {
+                targetSlide.classList.add('active');
+            }
+            navItems[n].classList.add('active');
+
+            window.scrollTo(0, 0);
+        }
+
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowRight' && currentSlide < totalSlides - 1) {
+                showSlide(currentSlide + 1);
+            } else if (e.key === 'ArrowLeft' && currentSlide > 0) {
+                showSlide(currentSlide - 1);
+            }
+        });
+    </script>
+</body>
+</html>

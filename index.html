@@ -1,0 +1,2809 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>給食業界 調査資料 - ハーベスト株式会社 入社検討用</title>
+    <style>
+        :root {
+            --primary: #2563eb;
+            --primary-dark: #1d4ed8;
+            --secondary: #059669;
+            --accent: #f59e0b;
+            --bg: #f8fafc;
+            --card-bg: #ffffff;
+            --text: #1e293b;
+            --text-light: #64748b;
+            --border: #e2e8f0;
+            --harvest-green: #22c55e;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Hiragino Kaku Gothic ProN', 'Hiragino Sans', Meiryo, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.8;
+        }
+
+        /* Header */
+        header {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+            color: white;
+            padding: 2rem;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1);
+        }
+
+        header h1 {
+            font-size: 1.75rem;
+            font-weight: 700;
+        }
+
+        header p {
+            opacity: 0.9;
+            margin-top: 0.5rem;
+        }
+
+        /* Layout */
+        .container {
+            display: flex;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        /* Sidebar */
+        .sidebar {
+            width: 280px;
+            background: var(--card-bg);
+            height: calc(100vh - 100px);
+            position: sticky;
+            top: 100px;
+            overflow-y: auto;
+            border-right: 1px solid var(--border);
+            padding: 1rem 0;
+        }
+
+        .sidebar-section {
+            padding: 0.5rem 1rem;
+        }
+
+        .sidebar-title {
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: var(--text-light);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-bottom: 0.5rem;
+        }
+
+        .sidebar a {
+            display: block;
+            padding: 0.5rem 1rem;
+            color: var(--text);
+            text-decoration: none;
+            border-radius: 0.375rem;
+            font-size: 0.875rem;
+            transition: all 0.2s;
+        }
+
+        .sidebar a:hover {
+            background: var(--bg);
+            color: var(--primary);
+        }
+
+        .sidebar a.active {
+            background: var(--primary);
+            color: white;
+        }
+
+        /* Main Content */
+        main {
+            flex: 1;
+            padding: 2rem;
+            max-width: 900px;
+        }
+
+        section {
+            background: var(--card-bg);
+            border-radius: 1rem;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        }
+
+        h2 {
+            color: var(--primary);
+            font-size: 1.5rem;
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.75rem;
+            border-bottom: 3px solid var(--primary);
+        }
+
+        h3 {
+            color: var(--text);
+            font-size: 1.25rem;
+            margin: 1.5rem 0 1rem;
+        }
+
+        h4 {
+            color: var(--text);
+            font-size: 1.1rem;
+            margin: 1.25rem 0 0.75rem;
+        }
+
+        p {
+            margin-bottom: 1rem;
+        }
+
+        /* Summary Cards */
+        .summary-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin: 1.5rem 0;
+        }
+
+        .summary-card {
+            background: linear-gradient(135deg, var(--bg) 0%, white 100%);
+            border: 1px solid var(--border);
+            border-radius: 0.75rem;
+            padding: 1.25rem;
+            text-align: center;
+        }
+
+        .summary-card .label {
+            font-size: 0.875rem;
+            color: var(--text-light);
+            margin-bottom: 0.25rem;
+        }
+
+        .summary-card .value {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary);
+        }
+
+        .summary-card .value.accent {
+            color: var(--accent);
+        }
+
+        .summary-card .value.green {
+            color: var(--harvest-green);
+        }
+
+        /* Tables */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1rem 0;
+            font-size: 0.9rem;
+        }
+
+        th, td {
+            padding: 0.75rem 1rem;
+            text-align: left;
+            border-bottom: 1px solid var(--border);
+        }
+
+        th {
+            background: var(--bg);
+            font-weight: 600;
+            color: var(--text);
+        }
+
+        tr:hover {
+            background: var(--bg);
+        }
+
+        /* Info Box */
+        .info-box {
+            background: #eff6ff;
+            border-left: 4px solid var(--primary);
+            padding: 1rem 1.25rem;
+            border-radius: 0 0.5rem 0.5rem 0;
+            margin: 1rem 0;
+        }
+
+        .info-box.success {
+            background: #ecfdf5;
+            border-left-color: var(--secondary);
+        }
+
+        .info-box.warning {
+            background: #fffbeb;
+            border-left-color: var(--accent);
+        }
+
+        .info-box.highlight {
+            background: #f0fdf4;
+            border-left-color: var(--harvest-green);
+        }
+
+        /* Chart Bars */
+        .chart-bar {
+            margin: 0.5rem 0;
+        }
+
+        .chart-bar .label {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.875rem;
+            margin-bottom: 0.25rem;
+        }
+
+        .chart-bar .bar {
+            height: 24px;
+            background: var(--bg);
+            border-radius: 4px;
+            overflow: hidden;
+        }
+
+        .chart-bar .fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--primary) 0%, var(--primary-dark) 100%);
+            border-radius: 4px;
+            display: flex;
+            align-items: center;
+            padding-left: 0.5rem;
+            color: white;
+            font-size: 0.75rem;
+            font-weight: 600;
+        }
+
+        .chart-bar .fill.green {
+            background: linear-gradient(90deg, var(--secondary) 0%, #047857 100%);
+        }
+
+        .chart-bar .fill.orange {
+            background: linear-gradient(90deg, var(--accent) 0%, #d97706 100%);
+        }
+
+        /* Lists */
+        ul, ol {
+            margin: 1rem 0;
+            padding-left: 1.5rem;
+        }
+
+        li {
+            margin-bottom: 0.5rem;
+        }
+
+        /* Feature Cards */
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1rem;
+            margin: 1.5rem 0;
+        }
+
+        .feature-card {
+            background: var(--bg);
+            border-radius: 0.75rem;
+            padding: 1.25rem;
+            border: 1px solid var(--border);
+        }
+
+        .feature-card h4 {
+            color: var(--primary);
+            margin: 0 0 0.5rem;
+            font-size: 1rem;
+        }
+
+        .feature-card p {
+            font-size: 0.875rem;
+            color: var(--text-light);
+            margin: 0;
+        }
+
+        /* Badges */
+        .badge {
+            display: inline-block;
+            padding: 0.25rem 0.75rem;
+            border-radius: 9999px;
+            font-size: 0.75rem;
+            font-weight: 600;
+        }
+
+        .badge.primary {
+            background: #dbeafe;
+            color: var(--primary);
+        }
+
+        .badge.success {
+            background: #d1fae5;
+            color: var(--secondary);
+        }
+
+        .badge.warning {
+            background: #fef3c7;
+            color: #b45309;
+        }
+
+        /* Process Steps */
+        .process-steps {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            margin: 1.5rem 0;
+        }
+
+        .step {
+            display: flex;
+            gap: 1rem;
+            align-items: flex-start;
+        }
+
+        .step-number {
+            width: 32px;
+            height: 32px;
+            background: var(--primary);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            flex-shrink: 0;
+        }
+
+        .step-content {
+            flex: 1;
+        }
+
+        .step-content h4 {
+            margin: 0 0 0.25rem;
+            font-size: 1rem;
+        }
+
+        .step-content p {
+            margin: 0;
+            font-size: 0.875rem;
+            color: var(--text-light);
+        }
+
+        /* Highlight Box */
+        .highlight-box {
+            background: linear-gradient(135deg, #ecfdf5 0%, #d1fae5 100%);
+            border: 2px solid var(--harvest-green);
+            border-radius: 1rem;
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+        }
+
+        .highlight-box h3 {
+            color: var(--secondary);
+            margin-top: 0;
+        }
+
+        /* Comparison Table */
+        .comparison-highlight {
+            background: #fef3c7;
+            font-weight: 600;
+        }
+
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .sidebar {
+                display: none;
+            }
+        }
+
+        @media (max-width: 768px) {
+            header {
+                padding: 1.5rem 1rem;
+            }
+
+            header h1 {
+                font-size: 1.25rem;
+            }
+
+            main {
+                padding: 1rem;
+            }
+
+            section {
+                padding: 1.5rem;
+            }
+
+            .summary-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+
+            table {
+                font-size: 0.8rem;
+            }
+
+            th, td {
+                padding: 0.5rem;
+            }
+        }
+
+        /* TOC Mobile */
+        .toc-mobile {
+            display: none;
+            background: var(--card-bg);
+            padding: 1rem;
+            margin-bottom: 1rem;
+            border-radius: 0.75rem;
+        }
+
+        @media (max-width: 1024px) {
+            .toc-mobile {
+                display: block;
+            }
+        }
+
+        .toc-mobile select {
+            width: 100%;
+            padding: 0.75rem;
+            border: 1px solid var(--border);
+            border-radius: 0.5rem;
+            font-size: 1rem;
+        }
+
+        /* Scroll behavior */
+        html {
+            scroll-behavior: smooth;
+        }
+
+        /* Print styles */
+        @media print {
+            .sidebar, header {
+                display: none;
+            }
+            main {
+                max-width: 100%;
+            }
+            section {
+                break-inside: avoid;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>給食業界 調査資料</h1>
+        <p>ハーベスト株式会社 入社検討用 | 作成日: 2026年1月8日</p>
+    </header>
+
+    <div class="container">
+        <nav class="sidebar">
+            <div class="sidebar-section">
+                <div class="sidebar-title">業界を理解する</div>
+                <a href="#overview">業界概要</a>
+                <a href="#market">市場規模</a>
+                <a href="#structure">業界構造</a>
+            </div>
+            <div class="sidebar-section">
+                <div class="sidebar-title">競合を知る</div>
+                <a href="#players">主要プレイヤー</a>
+                <a href="#comparison">競合比較</a>
+            </div>
+            <div class="sidebar-section">
+                <div class="sidebar-title">ハーベストを深掘り</div>
+                <a href="#harvest-overview">会社概要</a>
+                <a href="#harvest-business">事業内容</a>
+            </div>
+            <div class="sidebar-section">
+                <div class="sidebar-title">専門知識</div>
+                <a href="#regulations">法規制・衛生基準</a>
+                <a href="#challenges">業界課題</a>
+                <a href="#trends">トレンド</a>
+            </div>
+            <div class="sidebar-section">
+                <div class="sidebar-title">面接準備</div>
+                <a href="#interview">入社検討ポイント</a>
+            </div>
+            <div class="sidebar-section">
+                <div class="sidebar-title">SV職ガイド</div>
+                <a href="#sv-training">現場研修ガイド</a>
+                <a href="#sv-healthcare">ヘルスケア事業ガイド</a>
+                <a href="#sv-start">着任後90日間</a>
+                <a href="#sv-manual">実務マニュアル</a>
+                <a href="#sv-sales">新規営業ガイド</a>
+                <a href="#sv-emergency">緊急時対応</a>
+            </div>
+        </nav>
+
+        <main>
+            <!-- Mobile TOC -->
+            <div class="toc-mobile">
+                <select onchange="if(this.value) window.location.hash = this.value;">
+                    <option value="">目次を選択...</option>
+                    <option value="#overview">業界概要</option>
+                    <option value="#market">市場規模</option>
+                    <option value="#structure">業界構造</option>
+                    <option value="#players">主要プレイヤー</option>
+                    <option value="#comparison">競合比較</option>
+                    <option value="#harvest-overview">ハーベスト会社概要</option>
+                    <option value="#harvest-business">ハーベスト事業内容</option>
+                    <option value="#regulations">法規制・衛生基準</option>
+                    <option value="#challenges">業界課題</option>
+                    <option value="#trends">トレンド</option>
+                    <option value="#interview">入社検討ポイント</option>
+                    <option value="#sv-training">SV現場研修ガイド</option>
+                    <option value="#sv-healthcare">SVヘルスケア事業ガイド</option>
+                    <option value="#sv-start">SV着任後ガイド</option>
+                    <option value="#sv-manual">SV実務マニュアル</option>
+                    <option value="#sv-sales">SV新規営業ガイド</option>
+                    <option value="#sv-emergency">SV緊急時対応</option>
+                </select>
+            </div>
+
+            <!-- Quick Summary -->
+            <section id="summary">
+                <h2>クイックサマリー</h2>
+
+                <h3>給食業界</h3>
+                <div class="summary-grid">
+                    <div class="summary-card">
+                        <div class="label">市場規模（2023年）</div>
+                        <div class="value">約4.8兆円</div>
+                    </div>
+                    <div class="summary-card">
+                        <div class="label">将来予測（2028年）</div>
+                        <div class="value accent">5.1兆円</div>
+                    </div>
+                    <div class="summary-card">
+                        <div class="label">成長分野</div>
+                        <div class="value green">高齢者施設給食</div>
+                    </div>
+                    <div class="summary-card">
+                        <div class="label">主な課題</div>
+                        <div class="value" style="font-size: 1rem;">人手不足・コスト上昇</div>
+                    </div>
+                </div>
+
+                <h3>ハーベスト株式会社</h3>
+                <div class="summary-grid">
+                    <div class="summary-card">
+                        <div class="label">設立</div>
+                        <div class="value">1960年</div>
+                    </div>
+                    <div class="summary-card">
+                        <div class="label">売上高</div>
+                        <div class="value">347億円</div>
+                    </div>
+                    <div class="summary-card">
+                        <div class="label">従業員数</div>
+                        <div class="value">10,000名</div>
+                    </div>
+                    <div class="summary-card">
+                        <div class="label">拠点数</div>
+                        <div class="value green">約1,000ヶ所</div>
+                    </div>
+                </div>
+
+                <div class="info-box highlight">
+                    <strong>ハーベストの特徴:</strong> 業界順位 上位15位 / 学校給食・ヨシケイ事業に強み / 65年以上の歴史
+                </div>
+            </section>
+
+            <!-- 業界概要 -->
+            <section id="overview">
+                <h2>01. 給食業界の概要</h2>
+
+                <h3>給食事業とは</h3>
+                <p>給食事業は、企業・学校・病院・福祉施設などの<strong>顧客施設内</strong>において、食堂運営や食事提供を行うサービス事業です。正式には「<strong>コントラクトフードサービス</strong>」（Contract Food Service：契約給食）と呼ばれ、施設と給食会社の間で契約を結び、継続的に食事サービスを提供します。</p>
+
+                <p>一般的な飲食店（レストラン・ファストフードなど）との大きな違いは以下の点にあります：</p>
+                <ul>
+                    <li><strong>顧客が固定されている</strong>：施設の利用者（社員、患者、生徒など）が主な対象</li>
+                    <li><strong>立地が決まっている</strong>：顧客施設内で営業するため、場所を選べない</li>
+                    <li><strong>メニューに制約がある</strong>：栄養バランス、アレルギー対応、コストなど様々な制約</li>
+                    <li><strong>価格が抑えられている</strong>：福利厚生の一環であり、低価格での提供が求められる</li>
+                    <li><strong>安定した需要がある</strong>：毎日決まった人数の食事を提供する</li>
+                </ul>
+
+                <h3>運営形態の分類</h3>
+                <table>
+                    <tr>
+                        <th>形態</th>
+                        <th>説明</th>
+                        <th>メリット</th>
+                        <th>デメリット</th>
+                        <th>トレンド</th>
+                    </tr>
+                    <tr>
+                        <td><strong>委託給食</strong></td>
+                        <td>外部の専門給食会社に運営を全面的に委託する形態</td>
+                        <td>・専門ノウハウの活用<br>・人材確保が容易<br>・コスト管理がしやすい<br>・衛生管理が高度</td>
+                        <td>・施設のこだわりが反映しにくい<br>・委託費用が発生</td>
+                        <td><span class="badge success">増加傾向</span></td>
+                    </tr>
+                    <tr>
+                        <td>直営給食</td>
+                        <td>施設が自ら調理員を雇用し、調理・提供を行う形態</td>
+                        <td>・施設の理念を反映しやすい<br>・柔軟な対応が可能</td>
+                        <td>・人材確保が困難<br>・ノウハウ不足<br>・コスト高</td>
+                        <td><span class="badge warning">減少傾向</span></td>
+                    </tr>
+                    <tr>
+                        <td>準委託（一部委託）</td>
+                        <td>調理は委託会社、管理栄養士は施設職員など、一部を委託する形態</td>
+                        <td>・施設の関与を維持<br>・専門性も活用</td>
+                        <td>・責任の所在が曖昧になりやすい</td>
+                        <td><span class="badge primary">横ばい</span></td>
+                    </tr>
+                </table>
+
+                <h4>委託化率の推移</h4>
+                <p>給食の外部委託は年々進んでおり、特に以下の分野で委託化率が高くなっています：</p>
+                <div class="chart-bar">
+                    <div class="label"><span>事業所給食（社員食堂）</span><span>約80%が委託</span></div>
+                    <div class="bar"><div class="fill" style="width: 80%"></div></div>
+                </div>
+                <div class="chart-bar">
+                    <div class="label"><span>病院給食</span><span>約70%が委託</span></div>
+                    <div class="bar"><div class="fill" style="width: 70%"></div></div>
+                </div>
+                <div class="chart-bar">
+                    <div class="label"><span>高齢者施設給食</span><span>約60%が委託</span></div>
+                    <div class="bar"><div class="fill" style="width: 60%"></div></div>
+                </div>
+                <div class="chart-bar">
+                    <div class="label"><span>学校給食</span><span>約50%が委託</span></div>
+                    <div class="bar"><div class="fill" style="width: 50%"></div></div>
+                </div>
+                <div class="chart-bar">
+                    <div class="label"><span>保育所給食</span><span>約40%が委託</span></div>
+                    <div class="bar"><div class="fill" style="width: 40%"></div></div>
+                </div>
+
+                <div class="info-box">
+                    <strong>委託化が進む理由:</strong>
+                    <ul style="margin-top: 0.5rem; margin-bottom: 0;">
+                        <li><strong>人材確保の難しさ</strong>：調理師・栄養士の採用が困難、離職率も高い</li>
+                        <li><strong>コスト削減ニーズ</strong>：スケールメリットを活かした食材調達、効率的な人員配置</li>
+                        <li><strong>専門ノウハウの活用</strong>：献立作成、調理技術、イベント対応など</li>
+                        <li><strong>衛生管理の高度化</strong>：HACCP義務化への対応、食中毒リスクの軽減</li>
+                        <li><strong>コア業務への集中</strong>：病院なら医療、学校なら教育に注力できる</li>
+                    </ul>
+                </div>
+
+                <h3>給食の6分野（詳細）</h3>
+
+                <h4>1. 事業所給食（オフィス・工場の社員食堂）</h4>
+                <div class="info-box highlight">
+                    <strong>市場規模：約1兆5,884億円（最大の分野）</strong>
+                </div>
+                <p>企業・工場・官公庁などの社員食堂を運営します。福利厚生の一環として位置づけられ、従業員の健康維持・生産性向上に寄与します。</p>
+                <table>
+                    <tr>
+                        <th>項目</th>
+                        <th>内容</th>
+                    </tr>
+                    <tr>
+                        <td>対象者</td>
+                        <td>企業の従業員、工場作業員、官公庁職員</td>
+                    </tr>
+                    <tr>
+                        <td>1食あたり価格</td>
+                        <td>400〜600円程度（会社補助あり）</td>
+                    </tr>
+                    <tr>
+                        <td>提供形態</td>
+                        <td>カフェテリア方式（好きなものを選ぶ）、定食方式、弁当販売</td>
+                    </tr>
+                    <tr>
+                        <td>特徴・トレンド</td>
+                        <td>健康経営の推進、スマートミール認証取得、キャッシュレス決済導入</td>
+                    </tr>
+                    <tr>
+                        <td>課題</td>
+                        <td>テレワーク普及による利用者減、コンビニ・外食との競合</td>
+                    </tr>
+                </table>
+
+                <h4>2. 病院給食</h4>
+                <div class="info-box highlight">
+                    <strong>市場規模：約7,513億円</strong>
+                </div>
+                <p>病院・診療所の入院患者に対する食事を提供します。単なる栄養補給ではなく、<strong>「治療の一環」</strong>として位置づけられ、医師の指示に基づいた治療食の提供が求められます。</p>
+                <table>
+                    <tr>
+                        <th>項目</th>
+                        <th>内容</th>
+                    </tr>
+                    <tr>
+                        <td>対象者</td>
+                        <td>入院患者（急性期、回復期、療養型など）</td>
+                    </tr>
+                    <tr>
+                        <td>収入源</td>
+                        <td>入院時食事療養費（1食640円×3食＝1日1,920円）※患者負担は一部</td>
+                    </tr>
+                    <tr>
+                        <td>食種の例</td>
+                        <td>一般食、糖尿病食、腎臓病食、心臓病食、術後食、流動食など</td>
+                    </tr>
+                    <tr>
+                        <td>必要な資格者</td>
+                        <td>管理栄養士の配置が必須（栄養管理実施加算の要件）</td>
+                    </tr>
+                    <tr>
+                        <td>特徴</td>
+                        <td>個人対応が多い、禁忌食材の管理、温冷配膳車の使用</td>
+                    </tr>
+                    <tr>
+                        <td>課題</td>
+                        <td>診療報酬改定の影響、病床数減少、高度な専門性の要求</td>
+                    </tr>
+                </table>
+
+                <h4>3. 高齢者施設給食</h4>
+                <div class="info-box highlight">
+                    <strong>市場規模：約7,200億円　<span class="badge success">最も成長が期待される分野</span></strong>
+                </div>
+                <p>特別養護老人ホーム（特養）、介護老人保健施設（老健）、有料老人ホーム、サービス付き高齢者向け住宅（サ高住）などの入所者に食事を提供します。高齢化の進行により、2028年には病院給食を上回る市場規模になると予測されています。</p>
+                <table>
+                    <tr>
+                        <th>施設種類</th>
+                        <th>特徴</th>
+                        <th>入所者の状態</th>
+                    </tr>
+                    <tr>
+                        <td>特別養護老人ホーム（特養）</td>
+                        <td>要介護3以上が対象、終の棲家</td>
+                        <td>重度の要介護状態</td>
+                    </tr>
+                    <tr>
+                        <td>介護老人保健施設（老健）</td>
+                        <td>在宅復帰を目指すリハビリ施設</td>
+                        <td>リハビリ中、回復期</td>
+                    </tr>
+                    <tr>
+                        <td>有料老人ホーム</td>
+                        <td>民間運営、サービス内容は様々</td>
+                        <td>自立〜要介護まで幅広い</td>
+                    </tr>
+                    <tr>
+                        <td>サービス付き高齢者向け住宅</td>
+                        <td>バリアフリー賃貸住宅</td>
+                        <td>比較的自立した高齢者</td>
+                    </tr>
+                    <tr>
+                        <td>グループホーム</td>
+                        <td>認知症高齢者向け共同生活</td>
+                        <td>認知症のある要介護者</td>
+                    </tr>
+                </table>
+                <p><strong>高齢者施設給食の特徴：</strong></p>
+                <ul>
+                    <li>嚥下機能に合わせた食形態（常食→軟菜食→ミキサー食→ゼリー食）</li>
+                    <li>入所者にとって「食事が一番の楽しみ」であることが多い</li>
+                    <li>季節の行事食、選択メニュー、おやつの提供</li>
+                    <li>食べ残しの把握、体重管理、栄養ケアマネジメント</li>
+                </ul>
+
+                <h4>4. 学校給食</h4>
+                <div class="info-box highlight">
+                    <strong>市場規模：約4,832億円</strong>
+                </div>
+                <p>小学校・中学校・高校において児童・生徒に給食を提供します。学校給食法に基づき、教育の一環として「<strong>食育</strong>」の役割を担います。</p>
+                <table>
+                    <tr>
+                        <th>項目</th>
+                        <th>内容</th>
+                    </tr>
+                    <tr>
+                        <td>対象者</td>
+                        <td>小学生・中学生（一部高校生）</td>
+                    </tr>
+                    <tr>
+                        <td>1食あたり価格</td>
+                        <td>小学校：約250円、中学校：約290円（保護者負担は食材費のみ）</td>
+                    </tr>
+                    <tr>
+                        <td>運営形態</td>
+                        <td>自校式（学校内で調理）、センター方式（給食センターで一括調理）</td>
+                    </tr>
+                    <tr>
+                        <td>委託形態</td>
+                        <td>調理業務委託、民設民営（PFI/DBO）、指定管理者制度</td>
+                    </tr>
+                    <tr>
+                        <td>食育の目標</td>
+                        <td>食事の重要性、正しい食習慣、社交性、食文化の理解、生産への感謝</td>
+                    </tr>
+                    <tr>
+                        <td>課題</td>
+                        <td>少子化による児童生徒数減少、アレルギー対応の複雑化、給食費無償化の動き</td>
+                    </tr>
+                </table>
+
+                <h4>5. 幼稚園・保育所給食</h4>
+                <div class="info-box highlight">
+                    <strong>市場規模：約3,512億円</strong>
+                </div>
+                <p>保育園・幼稚園・こども園において乳幼児に給食を提供します。成長期の子どもの発達を支える重要な役割を担います。</p>
+                <table>
+                    <tr>
+                        <th>項目</th>
+                        <th>内容</th>
+                    </tr>
+                    <tr>
+                        <td>対象者</td>
+                        <td>0歳〜就学前の乳幼児</td>
+                    </tr>
+                    <tr>
+                        <td>提供内容</td>
+                        <td>離乳食（初期・中期・後期・完了期）、幼児食、おやつ</td>
+                    </tr>
+                    <tr>
+                        <td>特に重要な点</td>
+                        <td>食物アレルギー対応（除去食、代替食）、誤嚥・窒息防止</td>
+                    </tr>
+                    <tr>
+                        <td>食育活動</td>
+                        <td>野菜の栽培、クッキング体験、食材に触れる活動</td>
+                    </tr>
+                    <tr>
+                        <td>課題</td>
+                        <td>少子化の影響、アレルギー児の増加、保護者の要望多様化</td>
+                    </tr>
+                </table>
+
+                <h4>6. 弁当給食（配食サービス）</h4>
+                <div class="info-box highlight">
+                    <strong>市場規模：約8,900億円（宅配・配食市場全体）</strong>
+                </div>
+                <p>在宅の高齢者、オフィスワーカーなどに弁当を配達するサービスです。少子高齢化、共働き世帯の増加により成長している分野です。</p>
+                <table>
+                    <tr>
+                        <th>項目</th>
+                        <th>内容</th>
+                    </tr>
+                    <tr>
+                        <td>対象者</td>
+                        <td>在宅高齢者、オフィスワーカー、一般家庭</td>
+                    </tr>
+                    <tr>
+                        <td>サービス形態</td>
+                        <td>日替わり弁当配達、週単位の宅配食材、冷凍弁当宅配</td>
+                    </tr>
+                    <tr>
+                        <td>代表的サービス</td>
+                        <td>ヨシケイ（食材宅配）、ワタミの宅食、セブンミール、など</td>
+                    </tr>
+                    <tr>
+                        <td>高齢者向けの特徴</td>
+                        <td>安否確認サービス、塩分・カロリー調整食、咀嚼配慮食</td>
+                    </tr>
+                    <tr>
+                        <td>課題</td>
+                        <td>配送コスト、品質維持、競合激化</td>
+                    </tr>
+                </table>
+
+                <h3>業界の特徴（詳細）</h3>
+                <table>
+                    <tr>
+                        <th>特徴</th>
+                        <th>内容</th>
+                        <th>具体的な数値・事例</th>
+                    </tr>
+                    <tr>
+                        <td><strong>労働集約型産業</strong></td>
+                        <td>機械化が難しく、多くの人手を必要とする</td>
+                        <td>人件費比率35〜40%、1事業所あたり5〜30名のスタッフ</td>
+                    </tr>
+                    <tr>
+                        <td><strong>薄利多売のビジネスモデル</strong></td>
+                        <td>1食あたりの利益は少ないが、大量に提供することで収益確保</td>
+                        <td>営業利益率5〜10%、1食あたり利益は数十円程度</td>
+                    </tr>
+                    <tr>
+                        <td><strong>景気変動に強い（ディフェンシブ）</strong></td>
+                        <td>景気に関係なく人は食事をするため、需要が安定</td>
+                        <td>リーマンショック時も業界全体では微減程度</td>
+                    </tr>
+                    <tr>
+                        <td><strong>参入障壁が低い</strong></td>
+                        <td>特別な許認可は不要（飲食店営業許可のみ）</td>
+                        <td>全国に数千社の給食会社が存在</td>
+                    </tr>
+                    <tr>
+                        <td><strong>スイッチングコストが高い</strong></td>
+                        <td>一度契約すると変更しにくい（人員、オペレーションなど）</td>
+                        <td>契約期間は通常1〜3年、自動更新が多い</td>
+                    </tr>
+                    <tr>
+                        <td><strong>地域密着性が高い</strong></td>
+                        <td>食材調達、人材採用は地元中心</td>
+                        <td>地場の給食会社も一定のシェアを持つ</td>
+                    </tr>
+                </table>
+
+                <h3>給食業界で働く人々</h3>
+                <table>
+                    <tr>
+                        <th>職種</th>
+                        <th>役割</th>
+                        <th>必要な資格</th>
+                    </tr>
+                    <tr>
+                        <td><strong>管理栄養士</strong></td>
+                        <td>栄養管理、献立作成、栄養指導</td>
+                        <td>管理栄養士国家資格（必須）</td>
+                    </tr>
+                    <tr>
+                        <td><strong>栄養士</strong></td>
+                        <td>献立作成補助、食数管理、発注</td>
+                        <td>栄養士資格（必須）</td>
+                    </tr>
+                    <tr>
+                        <td><strong>調理師</strong></td>
+                        <td>調理業務全般、後輩指導</td>
+                        <td>調理師免許（推奨）</td>
+                    </tr>
+                    <tr>
+                        <td><strong>調理員（パート含む）</strong></td>
+                        <td>調理補助、盛付、洗浄、清掃</td>
+                        <td>資格不要</td>
+                    </tr>
+                    <tr>
+                        <td><strong>チーフ（現場責任者）</strong></td>
+                        <td>事業所の運営管理、シフト管理、クライアント対応</td>
+                        <td>資格不要（経験重視）</td>
+                    </tr>
+                    <tr>
+                        <td><strong>SV（スーパーバイザー）</strong></td>
+                        <td>複数事業所の統括管理、品質管理、人材育成</td>
+                        <td>資格不要（経験重視）</td>
+                    </tr>
+                    <tr>
+                        <td><strong>営業</strong></td>
+                        <td>新規顧客開拓、入札対応、契約交渉</td>
+                        <td>資格不要</td>
+                    </tr>
+                </table>
+            </section>
+
+            <!-- 市場規模 -->
+            <section id="market">
+                <h2>02. 市場規模と将来予測</h2>
+
+                <h3>現在の市場規模（2023年度）</h3>
+                <div class="summary-grid">
+                    <div class="summary-card">
+                        <div class="label">給食市場全体（6分野計）</div>
+                        <div class="value">約4兆7,915億円</div>
+                    </div>
+                    <div class="summary-card">
+                        <div class="label">前年比成長率</div>
+                        <div class="value green">+3.9%</div>
+                    </div>
+                    <div class="summary-card">
+                        <div class="label">給食会社数（推定）</div>
+                        <div class="value">約3,000社</div>
+                    </div>
+                    <div class="summary-card">
+                        <div class="label">従事者数（推定）</div>
+                        <div class="value">約50万人</div>
+                    </div>
+                </div>
+
+                <p>日本の給食市場は約4.8兆円規模であり、外食産業全体（約26兆円）の約18%を占めます。コロナ禍で一時的に縮小したものの、2023年度には回復基調となり、今後も緩やかな成長が見込まれています。</p>
+
+                <h3>分野別市場規模（2023年度）</h3>
+                <table>
+                    <tr>
+                        <th>分野</th>
+                        <th>市場規模</th>
+                        <th>構成比</th>
+                        <th>前年比</th>
+                        <th>成長要因/減少要因</th>
+                    </tr>
+                    <tr>
+                        <td><strong>事業所給食</strong></td>
+                        <td>1兆5,884億円</td>
+                        <td>33.2%</td>
+                        <td><span class="badge success">+10.3%</span></td>
+                        <td>コロナ後の出社回帰、社食の価値再認識</td>
+                    </tr>
+                    <tr>
+                        <td><strong>病院給食</strong></td>
+                        <td>7,513億円</td>
+                        <td>15.7%</td>
+                        <td><span class="badge success">+2.8%</span></td>
+                        <td>診療報酬改定、病床数は微減傾向</td>
+                    </tr>
+                    <tr>
+                        <td><strong>高齢者施設給食</strong></td>
+                        <td>7,200億円</td>
+                        <td>15.0%</td>
+                        <td><span class="badge success">+4.5%</span></td>
+                        <td>高齢化進行、施設数増加</td>
+                    </tr>
+                    <tr>
+                        <td><strong>学校給食</strong></td>
+                        <td>4,832億円</td>
+                        <td>10.1%</td>
+                        <td><span class="badge success">+4.0%</span></td>
+                        <td>給食費値上げ、委託化進行</td>
+                    </tr>
+                    <tr>
+                        <td><strong>保育所給食</strong></td>
+                        <td>3,512億円</td>
+                        <td>7.3%</td>
+                        <td><span class="badge warning">-0.7%</span></td>
+                        <td>少子化による園児数減少</td>
+                    </tr>
+                    <tr>
+                        <td><strong>弁当給食・その他</strong></td>
+                        <td>8,974億円</td>
+                        <td>18.7%</td>
+                        <td><span class="badge success">+3.2%</span></td>
+                        <td>在宅高齢者向け配食の増加</td>
+                    </tr>
+                </table>
+
+                <h4>市場規模の視覚化</h4>
+                <div class="chart-bar">
+                    <div class="label"><span>事業所給食</span><span>1兆5,884億円（最大）</span></div>
+                    <div class="bar"><div class="fill" style="width: 100%"></div></div>
+                </div>
+                <div class="chart-bar">
+                    <div class="label"><span>弁当給食・その他</span><span>8,974億円</span></div>
+                    <div class="bar"><div class="fill green" style="width: 56%"></div></div>
+                </div>
+                <div class="chart-bar">
+                    <div class="label"><span>病院給食</span><span>7,513億円</span></div>
+                    <div class="bar"><div class="fill" style="width: 47%"></div></div>
+                </div>
+                <div class="chart-bar">
+                    <div class="label"><span>高齢者施設給食</span><span>7,200億円</span></div>
+                    <div class="bar"><div class="fill green" style="width: 45%"></div></div>
+                </div>
+                <div class="chart-bar">
+                    <div class="label"><span>学校給食</span><span>4,832億円</span></div>
+                    <div class="bar"><div class="fill" style="width: 30%"></div></div>
+                </div>
+                <div class="chart-bar">
+                    <div class="label"><span>保育所給食</span><span>3,512億円</span></div>
+                    <div class="bar"><div class="fill orange" style="width: 22%"></div></div>
+                </div>
+
+                <h3>市場規模の推移（過去5年間）</h3>
+                <table>
+                    <tr>
+                        <th>年度</th>
+                        <th>市場規模</th>
+                        <th>前年比</th>
+                        <th>備考</th>
+                    </tr>
+                    <tr>
+                        <td>2019年度</td>
+                        <td>4兆8,500億円</td>
+                        <td>+2.1%</td>
+                        <td>コロナ前のピーク</td>
+                    </tr>
+                    <tr>
+                        <td>2020年度</td>
+                        <td>4兆2,800億円</td>
+                        <td><span class="badge warning">-11.8%</span></td>
+                        <td>コロナ禍で大幅減（特に事業所）</td>
+                    </tr>
+                    <tr>
+                        <td>2021年度</td>
+                        <td>4兆4,200億円</td>
+                        <td>+3.3%</td>
+                        <td>緊急事態宣言下も徐々に回復</td>
+                    </tr>
+                    <tr>
+                        <td>2022年度</td>
+                        <td>4兆6,100億円</td>
+                        <td>+4.3%</td>
+                        <td>行動制限緩和で回復加速</td>
+                    </tr>
+                    <tr class="comparison-highlight">
+                        <td>2023年度</td>
+                        <td>4兆7,915億円</td>
+                        <td><span class="badge success">+3.9%</span></td>
+                        <td>コロナ前水準に回復</td>
+                    </tr>
+                </table>
+
+                <div class="info-box">
+                    <strong>コロナ禍の影響分析：</strong>
+                    <ul style="margin-top: 0.5rem; margin-bottom: 0;">
+                        <li><strong>事業所給食</strong>：テレワーク普及で大幅減→出社回帰で回復中</li>
+                        <li><strong>学校給食</strong>：休校で一時停止→再開後は安定</li>
+                        <li><strong>病院・高齢者施設給食</strong>：入院・入所者への提供は継続、影響軽微</li>
+                        <li><strong>弁当給食</strong>：在宅需要増加で成長</li>
+                    </ul>
+                </div>
+
+                <h3>将来予測（2024年度〜2028年度）</h3>
+                <table>
+                    <tr>
+                        <th>年度</th>
+                        <th>市場規模（予測）</th>
+                        <th>対2023年比</th>
+                        <th>成長ドライバー</th>
+                    </tr>
+                    <tr>
+                        <td>2023年度</td>
+                        <td>4兆7,915億円</td>
+                        <td>基準</td>
+                        <td>-</td>
+                    </tr>
+                    <tr>
+                        <td>2024年度</td>
+                        <td>4兆8,900億円</td>
+                        <td>+2.1%</td>
+                        <td>高齢者施設の新規開設</td>
+                    </tr>
+                    <tr>
+                        <td>2025年度</td>
+                        <td>4兆9,800億円</td>
+                        <td>+3.9%</td>
+                        <td>大型学校給食案件の稼働</td>
+                    </tr>
+                    <tr>
+                        <td>2026年度</td>
+                        <td><strong>5兆500億円</strong></td>
+                        <td>+5.4%</td>
+                        <td>横浜市中学校給食など</td>
+                    </tr>
+                    <tr>
+                        <td>2027年度</td>
+                        <td>5兆850億円</td>
+                        <td>+6.1%</td>
+                        <td>委託化率の上昇</td>
+                    </tr>
+                    <tr class="comparison-highlight">
+                        <td>2028年度</td>
+                        <td><strong>5兆1,254億円</strong></td>
+                        <td><strong>+7.0%</strong></td>
+                        <td>高齢者施設が病院を逆転</td>
+                    </tr>
+                </table>
+
+                <h3>分野別の将来予測</h3>
+                <h4>成長分野</h4>
+                <div class="feature-grid">
+                    <div class="feature-card">
+                        <h4>高齢者施設給食 <span class="badge success">最注目</span></h4>
+                        <p><strong>2028年予測：8,100億円（+12.5%）</strong><br>
+                        高齢化率の上昇（2025年：30%超）に伴い、施設入所者が増加。2028年には病院給食を上回る見込み。特に有料老人ホーム、サ高住の増加が顕著。</p>
+                    </div>
+                    <div class="feature-card">
+                        <h4>弁当給食・配食 <span class="badge success">成長</span></h4>
+                        <p><strong>2028年予測：9,800億円（+9.2%）</strong><br>
+                        在宅高齢者向け配食サービスの拡大、冷凍宅配食の普及。共働き世帯の増加で一般家庭向けも成長。</p>
+                    </div>
+                </div>
+
+                <h4>安定分野</h4>
+                <div class="feature-grid">
+                    <div class="feature-card">
+                        <h4>事業所給食</h4>
+                        <p><strong>2028年予測：1兆6,500億円（+3.9%）</strong><br>
+                        出社回帰で回復も、テレワーク定着により成長は緩やか。健康経営食堂として付加価値向上が課題。</p>
+                    </div>
+                    <div class="feature-card">
+                        <h4>病院給食</h4>
+                        <p><strong>2028年予測：7,700億円（+2.5%）</strong><br>
+                        病床数は減少傾向だが、委託化率の上昇と診療報酬改定で微増。高齢者施設に逆転される見込み。</p>
+                    </div>
+                </div>
+
+                <h4>縮小リスクのある分野</h4>
+                <div class="feature-grid">
+                    <div class="feature-card">
+                        <h4>学校給食</h4>
+                        <p><strong>2028年予測：4,600億円（-4.8%）</strong><br>
+                        少子化による児童生徒数の減少が影響。ただし給食費無償化の動きや大型センター案件で一部相殺。</p>
+                    </div>
+                    <div class="feature-card">
+                        <h4>保育所給食</h4>
+                        <p><strong>2028年予測：3,200億円（-8.9%）</strong><br>
+                        少子化の影響を最も受ける分野。園児数の減少、保育園の統廃合が進む見込み。</p>
+                    </div>
+                </div>
+
+                <div class="info-box success">
+                    <strong>注目ポイント - 2028年の業界地図：</strong>
+                    <ul style="margin-top: 0.5rem; margin-bottom: 0;">
+                        <li><strong>高齢者施設給食が病院給食を逆転</strong>：高齢化率の上昇（30%超）と有料老人ホーム・サ高住の増加が背景</li>
+                        <li><strong>市場全体は5兆円を突破</strong>：緩やかながら成長継続</li>
+                        <li><strong>委託化率のさらなる上昇</strong>：直営から委託への切り替えが進む</li>
+                        <li><strong>業界再編の加速</strong>：M&Aによる大手集約と地場企業の淘汰</li>
+                    </ul>
+                </div>
+
+                <h3>地域別の市場特性</h3>
+                <table>
+                    <tr>
+                        <th>地域</th>
+                        <th>特徴</th>
+                        <th>主な給食会社</th>
+                    </tr>
+                    <tr>
+                        <td><strong>首都圏</strong></td>
+                        <td>最大市場、大手企業の本社食堂多数、競争激化</td>
+                        <td>エームサービス、グリーンハウス、西洋フード</td>
+                    </tr>
+                    <tr>
+                        <td><strong>関西圏</strong></td>
+                        <td>首都圏に次ぐ市場、地場企業も強い</td>
+                        <td>魚国総本社、一冨士フードサービス</td>
+                    </tr>
+                    <tr>
+                        <td><strong>中部圏</strong></td>
+                        <td>製造業の工場食堂需要</td>
+                        <td>メーキュー、トヨタ関連</td>
+                    </tr>
+                    <tr>
+                        <td><strong>地方圏</strong></td>
+                        <td>地場企業が強い、高齢者施設が成長</td>
+                        <td>各地域の地場企業</td>
+                    </tr>
+                </table>
+            </section>
+
+            <!-- 業界構造 -->
+            <section id="structure">
+                <h2>03. 業界構造とビジネスモデル</h2>
+
+                <h3>給食ビジネスの基本構造</h3>
+                <p>給食事業は、<strong>施設（クライアント）</strong>と<strong>給食会社（受託側）</strong>の間で契約を結び、給食会社が施設内で食事を提供するビジネスです。施設からの委託費用が主な収入源となります。</p>
+
+                <div class="info-box">
+                    <strong>給食ビジネスの関係者：</strong>
+                    <ul style="margin-top: 0.5rem; margin-bottom: 0;">
+                        <li><strong>施設（クライアント）</strong>：病院、学校、企業、福祉施設など。給食会社に業務を委託する発注者</li>
+                        <li><strong>給食会社</strong>：施設から業務を受託し、食事を提供する会社（ハーベストなど）</li>
+                        <li><strong>食材業者</strong>：給食会社に食材を納入する卸売業者・生産者</li>
+                        <li><strong>喫食者</strong>：実際に食事を食べる人（患者、生徒、社員など）</li>
+                    </ul>
+                </div>
+
+                <h3>契約形態の種類（詳細）</h3>
+                <table>
+                    <tr>
+                        <th>契約タイプ</th>
+                        <th>収入の計算方法</th>
+                        <th>リスク負担</th>
+                        <th>適用施設</th>
+                        <th>メリット・デメリット</th>
+                    </tr>
+                    <tr>
+                        <td><strong>管理費契約</strong></td>
+                        <td>食材費は実費精算（パススルー）<br>管理費は月額固定</td>
+                        <td>食材費リスク：施設<br>人件費リスク：給食会社</td>
+                        <td>病院、福祉施設</td>
+                        <td>【メリット】安定収入、食材費変動リスク小<br>【デメリット】利益増加の余地が少ない</td>
+                    </tr>
+                    <tr>
+                        <td><strong>食単価契約</strong></td>
+                        <td>1食あたりの金額を設定<br>月間収入＝単価×食数</td>
+                        <td>食材費リスク：給食会社<br>食数変動リスク：給食会社</td>
+                        <td>学校給食、事業所</td>
+                        <td>【メリット】コスト削減で利益増<br>【デメリット】食材高騰時のリスク大</td>
+                    </tr>
+                    <tr>
+                        <td><strong>準直営型（人材派遣型）</strong></td>
+                        <td>人員×時間×単価<br>人材派遣に近い形態</td>
+                        <td>施設側が指揮命令<br>業務責任は施設</td>
+                        <td>一部の病院、施設</td>
+                        <td>【メリット】リスク小、安定収入<br>【デメリット】付加価値を出しにくい</td>
+                    </tr>
+                    <tr>
+                        <td><strong>PFI/DBO方式</strong></td>
+                        <td>設計・建設から運営まで一括受託<br>長期契約（15〜20年）</td>
+                        <td>施設建設リスク：給食会社<br>長期運営リスク：給食会社</td>
+                        <td>学校給食センター</td>
+                        <td>【メリット】長期安定収入、参入障壁高い<br>【デメリット】初期投資大、リスク大</td>
+                    </tr>
+                </table>
+
+                <h4>契約形態の選ばれ方</h4>
+                <div class="feature-grid">
+                    <div class="feature-card">
+                        <h4>病院給食</h4>
+                        <p><strong>管理費契約が主流</strong><br>
+                        理由：患者の入退院で食数変動が大きく、治療食など個別対応が多いため、食材費は実費精算が合理的</p>
+                    </div>
+                    <div class="feature-card">
+                        <h4>学校給食</h4>
+                        <p><strong>食単価契約が主流</strong><br>
+                        理由：児童生徒数が比較的安定しており、献立も標準化しやすいため、単価×食数で計算しやすい</p>
+                    </div>
+                    <div class="feature-card">
+                        <h4>事業所給食</h4>
+                        <p><strong>食単価契約または売上歩合</strong><br>
+                        理由：利用者数が変動するため、実績に応じた契約が多い。一部は売上の一定割合を施設に支払う形態も</p>
+                    </div>
+                    <div class="feature-card">
+                        <h4>高齢者施設</h4>
+                        <p><strong>管理費契約が多い</strong><br>
+                        理由：入所者の状態に応じた個別対応が必要なため、病院給食に近い契約形態が採用される</p>
+                    </div>
+                </div>
+
+                <h3>収益構造（コスト構成）詳細</h3>
+                <p>給食事業のコスト構造は以下の通りです。<strong>食材費と人件費で売上の75〜80%</strong>を占めるため、利益率は低くなります。</p>
+
+                <div class="chart-bar">
+                    <div class="label"><span>食材費</span><span>約40%（35〜45%）</span></div>
+                    <div class="bar"><div class="fill orange" style="width: 40%"></div></div>
+                </div>
+                <div class="chart-bar">
+                    <div class="label"><span>人件費</span><span>約35〜40%</span></div>
+                    <div class="bar"><div class="fill" style="width: 38%"></div></div>
+                </div>
+                <div class="chart-bar">
+                    <div class="label"><span>その他経費</span><span>約15〜20%</span></div>
+                    <div class="bar"><div class="fill" style="width: 17%; background: #94a3b8"></div></div>
+                </div>
+                <div class="chart-bar">
+                    <div class="label"><span>営業利益</span><span>約5〜10%</span></div>
+                    <div class="bar"><div class="fill green" style="width: 8%"></div></div>
+                </div>
+
+                <table>
+                    <tr>
+                        <th>コスト項目</th>
+                        <th>構成比</th>
+                        <th>内訳・詳細</th>
+                        <th>削減の余地</th>
+                    </tr>
+                    <tr>
+                        <td><strong>食材費</strong></td>
+                        <td>35〜45%</td>
+                        <td>野菜・肉・魚・調味料など<br>食材の品質が味を左右</td>
+                        <td>一括購入、契約農家、プライベートブランド活用</td>
+                    </tr>
+                    <tr>
+                        <td><strong>人件費</strong></td>
+                        <td>35〜40%</td>
+                        <td>調理師・栄養士の給与、パート時給<br>社会保険料も含む</td>
+                        <td>省人化機器導入、クックチル活用、シフト最適化</td>
+                    </tr>
+                    <tr>
+                        <td><strong>水道光熱費</strong></td>
+                        <td>5〜8%</td>
+                        <td>ガス代、電気代、水道代<br>調理機器の稼働に必要</td>
+                        <td>省エネ機器導入、運用改善</td>
+                    </tr>
+                    <tr>
+                        <td><strong>消耗品費</strong></td>
+                        <td>3〜5%</td>
+                        <td>洗剤、ラップ、手袋、容器など</td>
+                        <td>一括購入</td>
+                    </tr>
+                    <tr>
+                        <td><strong>本社経費</strong></td>
+                        <td>5〜8%</td>
+                        <td>SV人件費、管理部門費用、システム費用</td>
+                        <td>DX推進による効率化</td>
+                    </tr>
+                    <tr class="comparison-highlight">
+                        <td><strong>営業利益</strong></td>
+                        <td>5〜10%</td>
+                        <td>売上から全コストを引いた利益</td>
+                        <td>-</td>
+                    </tr>
+                </table>
+
+                <div class="info-box warning">
+                    <strong>利益率が低い理由：</strong>
+                    <ul style="margin-top: 0.5rem; margin-bottom: 0;">
+                        <li><strong>労働集約型</strong>：機械化が難しく、人手がかかる</li>
+                        <li><strong>価格競争</strong>：入札では価格が重視される</li>
+                        <li><strong>コスト転嫁困難</strong>：食材費が上がっても契約単価を上げにくい</li>
+                        <li><strong>規模の経済</strong>：大手ほど食材調達コストが低い</li>
+                    </ul>
+                </div>
+
+                <h3>新規受注のプロセス</h3>
+                <h4>入札案件の場合（公立学校、公立病院など）</h4>
+                <div class="process-steps">
+                    <div class="step">
+                        <div class="step-number">1</div>
+                        <div class="step-content">
+                            <h4>公示・入札情報の収集</h4>
+                            <p>自治体のホームページ、入札情報サービスで公示を確認。仕様書・要件を入手。</p>
+                        </div>
+                    </div>
+                    <div class="step">
+                        <div class="step-number">2</div>
+                        <div class="step-content">
+                            <h4>現地説明会・質問</h4>
+                            <p>現場視察、質問提出。施設の状況、設備、人員配置などを確認。</p>
+                        </div>
+                    </div>
+                    <div class="step">
+                        <div class="step-number">3</div>
+                        <div class="step-content">
+                            <h4>提案書・見積書作成</h4>
+                            <p>運営体制、献立例、衛生管理計画、価格を提案。プレゼンテーションを行う場合も。</p>
+                        </div>
+                    </div>
+                    <div class="step">
+                        <div class="step-number">4</div>
+                        <div class="step-content">
+                            <h4>落札・契約締結</h4>
+                            <p>総合評価方式では品質・価格の両面で評価。落札後、契約書を締結。</p>
+                        </div>
+                    </div>
+                    <div class="step">
+                        <div class="step-number">5</div>
+                        <div class="step-content">
+                            <h4>オープン準備・運営開始</h4>
+                            <p>人員採用・配置、設備確認、献立決定、オペレーション構築。運営開始後もフォロー。</p>
+                        </div>
+                    </div>
+                </div>
+
+                <h4>民間施設の場合（有料老人ホーム、企業など）</h4>
+                <div class="process-steps">
+                    <div class="step">
+                        <div class="step-number">1</div>
+                        <div class="step-content">
+                            <h4>情報収集・アプローチ</h4>
+                            <p>新規開設情報の収集、既存顧客からの紹介、営業活動によるアプローチ。</p>
+                        </div>
+                    </div>
+                    <div class="step">
+                        <div class="step-number">2</div>
+                        <div class="step-content">
+                            <h4>ヒアリング・現地調査</h4>
+                            <p>施設のニーズ、こだわり、予算を確認。厨房設備、食数などを調査。</p>
+                        </div>
+                    </div>
+                    <div class="step">
+                        <div class="step-number">3</div>
+                        <div class="step-content">
+                            <h4>提案・見積</h4>
+                            <p>施設のニーズに合わせたカスタマイズ提案。競合他社との比較で選定。</p>
+                        </div>
+                    </div>
+                    <div class="step">
+                        <div class="step-number">4</div>
+                        <div class="step-content">
+                            <h4>契約・オープン</h4>
+                            <p>条件交渉、契約締結。オープン準備から運営開始まで。</p>
+                        </div>
+                    </div>
+                </div>
+
+                <h3>競争の軸（詳細）</h3>
+                <p>給食会社が選ばれる際の評価ポイントは以下の通りです。入札では「総合評価方式」が増えており、価格だけでなく品質・体制も重視されます。</p>
+
+                <table>
+                    <tr>
+                        <th>評価項目</th>
+                        <th>具体的な内容</th>
+                        <th>配点例（総合評価）</th>
+                    </tr>
+                    <tr>
+                        <td><strong>価格</strong></td>
+                        <td>食単価、管理費、年間委託費用</td>
+                        <td>40〜50点</td>
+                    </tr>
+                    <tr>
+                        <td><strong>運営実績</strong></td>
+                        <td>類似施設での受託実績、年数、規模</td>
+                        <td>15〜20点</td>
+                    </tr>
+                    <tr>
+                        <td><strong>人員体制</strong></td>
+                        <td>管理栄養士・調理師の配置、有資格者数</td>
+                        <td>10〜15点</td>
+                    </tr>
+                    <tr>
+                        <td><strong>衛生管理</strong></td>
+                        <td>HACCP対応、ISO認証、マニュアル整備</td>
+                        <td>10〜15点</td>
+                    </tr>
+                    <tr>
+                        <td><strong>献立・サービス</strong></td>
+                        <td>献立内容、イベント対応、アレルギー対応</td>
+                        <td>10〜15点</td>
+                    </tr>
+                    <tr>
+                        <td><strong>危機管理</strong></td>
+                        <td>災害時対応、食中毒発生時の対応体制</td>
+                        <td>5〜10点</td>
+                    </tr>
+                </table>
+
+                <div class="feature-grid">
+                    <div class="feature-card">
+                        <h4>価格競争力</h4>
+                        <p>食材の一括購入によるスケールメリット、効率的な人員配置、本社コストの削減。大手ほど有利だが、ダンピングのリスクも。</p>
+                    </div>
+                    <div class="feature-card">
+                        <h4>品質・味</h4>
+                        <p>手作り感、季節感、見た目の美しさ。「もう一度食べたい」と思わせる味づくり。試食会で評価されることも。</p>
+                    </div>
+                    <div class="feature-card">
+                        <h4>実績・信頼</h4>
+                        <p>同種施設での運営経験、トラブルなく運営している実績。「病院給食の実績〇〇件」など。</p>
+                    </div>
+                    <div class="feature-card">
+                        <h4>人材力</h4>
+                        <p>管理栄養士・調理師の配置、定着率の高さ、教育研修制度の充実。人がサービス品質を左右。</p>
+                    </div>
+                </div>
+
+                <h3>契約期間と更新</h3>
+                <table>
+                    <tr>
+                        <th>施設タイプ</th>
+                        <th>一般的な契約期間</th>
+                        <th>更新条件</th>
+                    </tr>
+                    <tr>
+                        <td>公立学校給食</td>
+                        <td>1〜3年（入札）</td>
+                        <td>期間終了後、再入札</td>
+                    </tr>
+                    <tr>
+                        <td>PFI/DBO方式</td>
+                        <td>15〜20年</td>
+                        <td>長期契約、途中解約条項あり</td>
+                    </tr>
+                    <tr>
+                        <td>病院・福祉施設</td>
+                        <td>1〜3年（自動更新条項あり）</td>
+                        <td>双方異議なければ自動更新</td>
+                    </tr>
+                    <tr>
+                        <td>事業所（社員食堂）</td>
+                        <td>1〜3年（自動更新条項あり）</td>
+                        <td>双方異議なければ自動更新</td>
+                    </tr>
+                </table>
+
+                <div class="info-box success">
+                    <strong>ストック型ビジネスの強み：</strong>
+                    <p style="margin-bottom: 0;">一度契約を獲得すると、問題がなければ自動更新されることが多く、安定した収益基盤となります。これが給食事業の「ストック型ビジネス」としての魅力です。既存顧客を維持しながら新規を開拓することで、着実に事業規模を拡大できます。</p>
+                </div>
+            </section>
+
+            <!-- 主要プレイヤー -->
+            <section id="players">
+                <h2>04. 主要プレイヤー（競合企業）</h2>
+
+                <h3>業界の競争構造</h3>
+                <p>給食業界は約3,000社が競合する分散した市場ですが、上位企業への集約が進んでいます。日清医療食品が圧倒的な1位で、2位以下との差が大きいのが特徴です。</p>
+
+                <div class="summary-grid">
+                    <div class="summary-card">
+                        <div class="label">業界1位</div>
+                        <div class="value">日清医療食品</div>
+                    </div>
+                    <div class="summary-card">
+                        <div class="label">1位の売上高</div>
+                        <div class="value">3,670億円</div>
+                    </div>
+                    <div class="summary-card">
+                        <div class="label">上位5社シェア</div>
+                        <div class="value">約40%</div>
+                    </div>
+                    <div class="summary-card">
+                        <div class="label">ハーベスト順位</div>
+                        <div class="value green">13位</div>
+                    </div>
+                </div>
+
+                <h3>業界売上高ランキング TOP20（詳細）</h3>
+                <table>
+                    <tr>
+                        <th>順位</th>
+                        <th>企業名</th>
+                        <th>売上高</th>
+                        <th>従業員数</th>
+                        <th>主な事業分野</th>
+                        <th>特徴・強み</th>
+                    </tr>
+                    <tr>
+                        <td><strong>1</strong></td>
+                        <td><strong>日清医療食品</strong></td>
+                        <td>3,670億円</td>
+                        <td>約45,000名</td>
+                        <td>病院・福祉</td>
+                        <td>業界断トツ1位、病院給食シェア約30%</td>
+                    </tr>
+                    <tr>
+                        <td><strong>2</strong></td>
+                        <td>エームサービス</td>
+                        <td>1,420億円</td>
+                        <td>約25,000名</td>
+                        <td>事業所</td>
+                        <td>三井物産100%子会社、大手企業の社食</td>
+                    </tr>
+                    <tr>
+                        <td><strong>3</strong></td>
+                        <td>グリーンハウス</td>
+                        <td>1,268億円</td>
+                        <td>約18,000名</td>
+                        <td>事業所</td>
+                        <td>海外展開（シンガポール等）、ホテル事業も</td>
+                    </tr>
+                    <tr>
+                        <td><strong>4</strong></td>
+                        <td>シダックス</td>
+                        <td>1,100億円</td>
+                        <td>約35,000名</td>
+                        <td>学校給食</td>
+                        <td>唯一の上場企業、学校給食No.1</td>
+                    </tr>
+                    <tr>
+                        <td><strong>5</strong></td>
+                        <td>西洋フード・コンパスG</td>
+                        <td>912億円</td>
+                        <td>約12,000名</td>
+                        <td>事業所</td>
+                        <td>外資系（英コンパス社）、グローバル企業の食堂</td>
+                    </tr>
+                    <tr>
+                        <td><strong>6</strong></td>
+                        <td>LEOC</td>
+                        <td>900億円</td>
+                        <td>約17,000名</td>
+                        <td>病院・介護</td>
+                        <td>LEOC大学（研修制度）、オリックスグループ</td>
+                    </tr>
+                    <tr>
+                        <td><strong>7</strong></td>
+                        <td>富士産業</td>
+                        <td>868億円</td>
+                        <td>約20,000名</td>
+                        <td>病院・福祉</td>
+                        <td>病院給食に強み、全国展開</td>
+                    </tr>
+                    <tr>
+                        <td><strong>8</strong></td>
+                        <td>魚国総本社</td>
+                        <td>650億円</td>
+                        <td>約12,000名</td>
+                        <td>事業所</td>
+                        <td>関西発祥、製造業の工場食堂に強み</td>
+                    </tr>
+                    <tr>
+                        <td><strong>9</strong></td>
+                        <td>日本ゼネラルフード</td>
+                        <td>520億円</td>
+                        <td>約8,000名</td>
+                        <td>事業所</td>
+                        <td>中部地方に強み、トヨタグループ関連</td>
+                    </tr>
+                    <tr>
+                        <td><strong>10</strong></td>
+                        <td>一冨士フードサービス</td>
+                        <td>480億円</td>
+                        <td>約9,000名</td>
+                        <td>事業所</td>
+                        <td>関西発祥、阪急阪神東宝グループ</td>
+                    </tr>
+                    <tr>
+                        <td><strong>11</strong></td>
+                        <td>メフォス</td>
+                        <td>420億円</td>
+                        <td>約10,000名</td>
+                        <td>病院・学校</td>
+                        <td>メディカル・福祉・学校のバランス型</td>
+                    </tr>
+                    <tr>
+                        <td><strong>12</strong></td>
+                        <td>東洋食品</td>
+                        <td>380億円</td>
+                        <td>約7,000名</td>
+                        <td>学校給食</td>
+                        <td>学校給食専業、関東に強み</td>
+                    </tr>
+                    <tr class="comparison-highlight">
+                        <td><strong>13</strong></td>
+                        <td><strong>ハーベスト</strong></td>
+                        <td><strong>347億円</strong></td>
+                        <td><strong>約10,000名</strong></td>
+                        <td><strong>学校・ヘルスケア</strong></td>
+                        <td><strong>民設民営方式、ヨシケイ事業</strong></td>
+                    </tr>
+                    <tr>
+                        <td>14</td>
+                        <td>葉隠勇進</td>
+                        <td>330億円</td>
+                        <td>約6,000名</td>
+                        <td>学校給食</td>
+                        <td>学校給食専業、首都圏中心</td>
+                    </tr>
+                    <tr>
+                        <td>15</td>
+                        <td>名給</td>
+                        <td>300億円</td>
+                        <td>約5,500名</td>
+                        <td>学校・事業所</td>
+                        <td>中部地方に強み</td>
+                    </tr>
+                    <tr>
+                        <td>16</td>
+                        <td>ニッコクトラスト</td>
+                        <td>280億円</td>
+                        <td>約5,000名</td>
+                        <td>事業所</td>
+                        <td>大学食堂、研修施設に強み</td>
+                    </tr>
+                    <tr>
+                        <td>17</td>
+                        <td>日本給食</td>
+                        <td>250億円</td>
+                        <td>約4,500名</td>
+                        <td>事業所</td>
+                        <td>創業70年以上の老舗</td>
+                    </tr>
+                    <tr>
+                        <td>18</td>
+                        <td>メーキュー</td>
+                        <td>230億円</td>
+                        <td>約4,000名</td>
+                        <td>事業所</td>
+                        <td>中部地方、製造業向け</td>
+                    </tr>
+                    <tr>
+                        <td>19</td>
+                        <td>日京クリエイト</td>
+                        <td>210億円</td>
+                        <td>約3,800名</td>
+                        <td>事業所</td>
+                        <td>NECグループ関連</td>
+                    </tr>
+                    <tr>
+                        <td>20</td>
+                        <td>エスニード</td>
+                        <td>200億円</td>
+                        <td>約3,500名</td>
+                        <td>病院・福祉</td>
+                        <td>日本ハム系列</td>
+                    </tr>
+                </table>
+
+                <div class="info-box">
+                    <strong>市場シェア構造の特徴：</strong>
+                    <ul style="margin-top: 0.5rem; margin-bottom: 0;">
+                        <li><strong>日清医療食品の圧倒的優位</strong>：2位の約2.5倍の売上高、病院・福祉分野で30%超のシェア</li>
+                        <li><strong>上位5社で約40%のシェア</strong>：残り60%を3,000社近くで分け合う</li>
+                        <li><strong>M&Aによる業界再編</strong>：シダックスの上場廃止（2023年）、オリックスのLEOC買収など</li>
+                        <li><strong>分野別の棲み分け</strong>：病院特化、学校特化、事業所特化など各社の得意分野がある</li>
+                    </ul>
+                </div>
+
+                <h3>主要企業の詳細プロフィール</h3>
+
+                <h4>1位：日清医療食品（病院・福祉給食の圧倒的No.1）</h4>
+                <table>
+                    <tr><th>項目</th><th>内容</th></tr>
+                    <tr><td>売上高</td><td>3,670億円（業界断トツ1位）</td></tr>
+                    <tr><td>従業員数</td><td>約45,000名</td></tr>
+                    <tr><td>設立</td><td>1972年</td></tr>
+                    <tr><td>本社</td><td>東京都千代田区</td></tr>
+                    <tr><td>主な事業分野</td><td>病院給食、福祉施設給食（シェア約30%）</td></tr>
+                    <tr><td>受託施設数</td><td>約5,400施設</td></tr>
+                    <tr><td>特徴・強み</td><td>・病院・福祉特化で業界トップ<br>・全国47都道府県に拠点<br>・管理栄養士約4,000名在籍<br>・クックチル設備導入先進</td></tr>
+                    <tr><td>ハーベストとの違い</td><td>病院・福祉に集中（ハーベストは学校・ヨシケイにも展開）</td></tr>
+                </table>
+
+                <h4>2位：エームサービス（事業所給食のトップランナー）</h4>
+                <table>
+                    <tr><th>項目</th><th>内容</th></tr>
+                    <tr><td>売上高</td><td>1,420億円</td></tr>
+                    <tr><td>従業員数</td><td>約25,000名</td></tr>
+                    <tr><td>設立</td><td>1976年（米アラマーク社との合弁でスタート）</td></tr>
+                    <tr><td>本社</td><td>東京都港区</td></tr>
+                    <tr><td>親会社</td><td>三井物産（100%子会社）</td></tr>
+                    <tr><td>主な事業分野</td><td>事業所給食（大手企業本社食堂）、スポーツ施設</td></tr>
+                    <tr><td>特徴・強み</td><td>・大手企業の本社食堂に強み<br>・年間休日122日（業界最多水準）<br>・スタジアム・アリーナ運営にも進出<br>・福利厚生充実</td></tr>
+                    <tr><td>ハーベストとの違い</td><td>事業所中心（ハーベストはヘルスケア・学校中心）</td></tr>
+                </table>
+
+                <h4>4位：シダックス（学校給食No.1、唯一の上場企業→2023年上場廃止）</h4>
+                <table>
+                    <tr><th>項目</th><th>内容</th></tr>
+                    <tr><td>売上高</td><td>1,100億円</td></tr>
+                    <tr><td>従業員数</td><td>約35,000名</td></tr>
+                    <tr><td>設立</td><td>1959年</td></tr>
+                    <tr><td>本社</td><td>東京都渋谷区</td></tr>
+                    <tr><td>主な事業分野</td><td>学校給食（業界No.1）、事業所給食</td></tr>
+                    <tr><td>特徴・強み</td><td>・学校給食で圧倒的シェア<br>・食育プログラムの充実<br>・自治体との連携実績豊富<br>・2023年に上場廃止（オイシックス傘下）</td></tr>
+                    <tr><td>ハーベストとの違い</td><td>学校給食では競合関係（ハーベストネクストが民設民営で差別化）</td></tr>
+                </table>
+
+                <h4>6位：LEOC（オリックスグループ、人材育成に強み）</h4>
+                <table>
+                    <tr><th>項目</th><th>内容</th></tr>
+                    <tr><td>売上高</td><td>900億円</td></tr>
+                    <tr><td>従業員数</td><td>約17,000名</td></tr>
+                    <tr><td>設立</td><td>1983年</td></tr>
+                    <tr><td>本社</td><td>東京都千代田区</td></tr>
+                    <tr><td>親会社</td><td>オリックス（2021年買収）</td></tr>
+                    <tr><td>主な事業分野</td><td>病院給食、介護施設給食、スポーツ施設</td></tr>
+                    <tr><td>特徴・強み</td><td>・「LEOC大学」による独自の研修制度<br>・スポーツ栄養に強み（プロ野球チーム等）<br>・若手の育成・登用に積極的</td></tr>
+                    <tr><td>ハーベストとの違い</td><td>研修制度が充実（ハーベストはOJT中心）</td></tr>
+                </table>
+
+                <h3>分野別の強豪企業（詳細）</h3>
+                <table>
+                    <tr>
+                        <th>分野</th>
+                        <th>1位</th>
+                        <th>2位</th>
+                        <th>3位</th>
+                        <th>その他主要プレイヤー</th>
+                    </tr>
+                    <tr>
+                        <td><strong>病院給食</strong></td>
+                        <td>日清医療食品</td>
+                        <td>富士産業</td>
+                        <td>LEOC</td>
+                        <td>メフォス、エスニード</td>
+                    </tr>
+                    <tr>
+                        <td><strong>福祉施設給食</strong></td>
+                        <td>日清医療食品</td>
+                        <td>LEOC</td>
+                        <td>富士産業</td>
+                        <td>ハーベスト、メフォス</td>
+                    </tr>
+                    <tr>
+                        <td><strong>事業所給食</strong></td>
+                        <td>エームサービス</td>
+                        <td>グリーンハウス</td>
+                        <td>西洋フード</td>
+                        <td>魚国総本社、一冨士</td>
+                    </tr>
+                    <tr>
+                        <td><strong>学校給食</strong></td>
+                        <td>シダックス</td>
+                        <td>東洋食品</td>
+                        <td>葉隠勇進</td>
+                        <td><strong>ハーベストネクスト</strong>、メフォス</td>
+                    </tr>
+                    <tr>
+                        <td><strong>保育所給食</strong></td>
+                        <td>日清医療食品</td>
+                        <td>メフォス</td>
+                        <td>富士産業</td>
+                        <td>ハーベスト</td>
+                    </tr>
+                </table>
+
+                <h3>業界再編の動き（M&A・資本提携）</h3>
+                <table>
+                    <tr>
+                        <th>時期</th>
+                        <th>内容</th>
+                        <th>影響</th>
+                    </tr>
+                    <tr>
+                        <td>2021年</td>
+                        <td>オリックスがLEOCを買収</td>
+                        <td>大手資本参入、成長投資加速</td>
+                    </tr>
+                    <tr>
+                        <td>2023年</td>
+                        <td>シダックスが上場廃止（オイシックスがTOB）</td>
+                        <td>上場企業ゼロに、業界再編加速</td>
+                    </tr>
+                    <tr>
+                        <td>継続中</td>
+                        <td>地方の中小給食会社の廃業・統合</td>
+                        <td>大手への集約進行</td>
+                    </tr>
+                </table>
+
+                <div class="info-box warning">
+                    <strong>ホーユー問題（2023年9月）の教訓：</strong>
+                    <p style="margin-bottom: 0;">広島県の給食会社「ホーユー」が突然の事業停止。約150施設に影響。食材費・人件費高騰と価格転嫁ができなかったことが原因。中小給食会社の経営の脆弱性が露呈し、発注者側も財務健全性の確認を重視するようになった。</p>
+                </div>
+            </section>
+
+            <!-- 競合比較 -->
+            <section id="comparison">
+                <h2>05. 競合比較（働き方・給与・企業文化）</h2>
+
+                <h3>主要企業の待遇比較</h3>
+                <table>
+                    <tr>
+                        <th>企業名</th>
+                        <th>年間休日</th>
+                        <th>月給目安</th>
+                        <th>残業/月</th>
+                        <th>特徴</th>
+                    </tr>
+                    <tr>
+                        <td>エームサービス</td>
+                        <td><strong>122日</strong></td>
+                        <td>25〜40万円</td>
+                        <td>25時間</td>
+                        <td>業界トップの休日数</td>
+                    </tr>
+                    <tr>
+                        <td>LEOC</td>
+                        <td>115日</td>
+                        <td>22〜35万円</td>
+                        <td>21時間</td>
+                        <td>定年後雇用に強み</td>
+                    </tr>
+                    <tr>
+                        <td>日清医療食品</td>
+                        <td>110日</td>
+                        <td>21〜30万円</td>
+                        <td>37時間</td>
+                        <td>業界最大手、安定</td>
+                    </tr>
+                    <tr class="comparison-highlight">
+                        <td><strong>ハーベスト</strong></td>
+                        <td>107日</td>
+                        <td>20〜30万円</td>
+                        <td>25時間</td>
+                        <td>ヨシケイ事業の独自性</td>
+                    </tr>
+                </table>
+
+                <h3>タイプ別おすすめ企業</h3>
+                <div class="feature-grid">
+                    <div class="feature-card">
+                        <h4>休みを大切にしたい</h4>
+                        <p>→ エームサービス（年間休日122日）</p>
+                    </div>
+                    <div class="feature-card">
+                        <h4>最大手で安定したい</h4>
+                        <p>→ 日清医療食品（業界1位の安定感）</p>
+                    </div>
+                    <div class="feature-card">
+                        <h4>スキルアップしたい</h4>
+                        <p>→ LEOC（LEOC大学の研修制度）</p>
+                    </div>
+                    <div class="feature-card">
+                        <h4>多角的な経験をしたい</h4>
+                        <p>→ <strong>ハーベスト</strong>（給食〜ヨシケイまで）</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ハーベスト会社概要 -->
+            <section id="harvest-overview">
+                <h2>06. ハーベスト株式会社 会社概要</h2>
+
+                <div class="highlight-box">
+                    <h3>ハーベスト株式会社</h3>
+                    <p style="font-size: 1.1rem; margin-bottom: 0;">「食」を通じて、人々の健康と幸せを支える</p>
+                </div>
+
+                <h3>基本情報</h3>
+                <table>
+                    <tr><th>項目</th><th>内容</th></tr>
+                    <tr><td>会社名</td><td>ハーベスト株式会社</td></tr>
+                    <tr><td>設立</td><td>1960年（昭和35年）<span class="badge success">65年以上の歴史</span></td></tr>
+                    <tr><td>本社所在地</td><td>神奈川県横浜市保土ケ谷区岩間町2-120</td></tr>
+                    <tr><td>資本金</td><td>4億5,000万円</td></tr>
+                    <tr><td>売上高</td><td>347億円</td></tr>
+                    <tr><td>従業員数</td><td>約10,000名</td></tr>
+                    <tr><td>営業所数</td><td>約1,000ヵ所</td></tr>
+                </table>
+
+                <h3>グループ構成</h3>
+                <div class="feature-grid">
+                    <div class="feature-card">
+                        <h4>ハーベスト株式会社（本体）</h4>
+                        <p>コントラクト事業 / ヘルスケア事業 / 保育園給食事業 / ヨシケイ事業</p>
+                    </div>
+                    <div class="feature-card">
+                        <h4>ハーベストネクスト株式会社</h4>
+                        <p>学校給食事業（民設民営・DBO等）に特化した分社</p>
+                    </div>
+                </div>
+
+                <h3>品質管理認証</h3>
+                <div class="summary-grid">
+                    <div class="summary-card">
+                        <div class="label">ISO 9001</div>
+                        <div class="value" style="font-size: 1rem;">品質マネジメント</div>
+                    </div>
+                    <div class="summary-card">
+                        <div class="label">ISO 22000</div>
+                        <div class="value" style="font-size: 1rem;">食品安全マネジメント</div>
+                    </div>
+                </div>
+
+                <h3>ハーベストの強み</h3>
+                <div class="process-steps">
+                    <div class="step">
+                        <div class="step-number">1</div>
+                        <div class="step-content">
+                            <h4>65年以上の歴史と実績</h4>
+                            <p>老舗企業としての信頼と安定経営</p>
+                        </div>
+                    </div>
+                    <div class="step">
+                        <div class="step-number">2</div>
+                        <div class="step-content">
+                            <h4>学校給食の民設民営方式のパイオニア</h4>
+                            <p>設計から運営まで一貫対応できる独自の強み</p>
+                        </div>
+                    </div>
+                    <div class="step">
+                        <div class="step-number">3</div>
+                        <div class="step-content">
+                            <h4>ヨシケイ事業による多角化</h4>
+                            <p>全国50万世帯への夕食食材宅配、他社にない独自事業</p>
+                        </div>
+                    </div>
+                    <div class="step">
+                        <div class="step-number">4</div>
+                        <div class="step-content">
+                            <h4>ISO認証取得による品質保証</h4>
+                            <p>入札での優位性と顧客への安心感</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ハーベスト事業内容 -->
+            <section id="harvest-business">
+                <h2>07. ハーベスト株式会社 事業内容</h2>
+
+                <h3>5つの事業セグメント</h3>
+                <div class="feature-grid">
+                    <div class="feature-card">
+                        <h4>コントラクト事業</h4>
+                        <p>企業・工場・官公庁の社員食堂運営。安定した基盤事業。</p>
+                    </div>
+                    <div class="feature-card">
+                        <h4>ヘルスケア事業 <span class="badge success">成長</span></h4>
+                        <p>病院・介護施設向け給食。「もっと食べたいと思える食事」を提供。</p>
+                    </div>
+                    <div class="feature-card">
+                        <h4>学校給食事業 <span class="badge success">成長</span></h4>
+                        <p>ハーベストネクストが担当。民設民営・DBO方式で強み。</p>
+                    </div>
+                    <div class="feature-card">
+                        <h4>保育園給食事業</h4>
+                        <p>離乳食〜幼児食、アレルギー対応、食育プログラム。</p>
+                    </div>
+                    <div class="feature-card">
+                        <h4>ヨシケイ事業</h4>
+                        <p>一般家庭向け夕食食材宅配。B2CとB2Bの両輪経営。</p>
+                    </div>
+                </div>
+
+                <h3>学校給食事業の特徴（ハーベストネクスト）</h3>
+                <div class="info-box highlight">
+                    <strong>民設民営方式のメリット:</strong>
+                    <ul style="margin-top: 0.5rem; margin-bottom: 0;">
+                        <li>自治体の初期投資ゼロ（施設建設費用は民間負担）</li>
+                        <li>短期間での導入（設計から運営開始まで最短1.5年）</li>
+                        <li>リスク移転（施設の老朽化・修繕リスクも民間）</li>
+                        <li>財政の平準化（毎年の委託費として支出）</li>
+                    </ul>
+                </div>
+
+                <h3>主要実績</h3>
+                <table>
+                    <tr>
+                        <th>案件名</th>
+                        <th>方式</th>
+                        <th>規模・特徴</th>
+                    </tr>
+                    <tr class="comparison-highlight">
+                        <td><strong>横浜市中学校給食プロジェクト</strong></td>
+                        <td>民設民営</td>
+                        <td>日量最大3万食、2026年度〜</td>
+                    </tr>
+                    <tr>
+                        <td>厚沢部町総合給食センター</td>
+                        <td>DBO方式</td>
+                        <td>北海道檜山郡</td>
+                    </tr>
+                    <tr>
+                        <td>大野学校給食センター</td>
+                        <td>DBO方式</td>
+                        <td>広島県廿日市市</td>
+                    </tr>
+                    <tr>
+                        <td>宮津工場</td>
+                        <td>民設民営</td>
+                        <td>西日本エリア初の民設民営方式</td>
+                    </tr>
+                </table>
+            </section>
+
+            <!-- 法規制 -->
+            <section id="regulations">
+                <h2>08. 法規制・衛生基準</h2>
+
+                <h3>HACCP（ハサップ）</h3>
+                <div class="info-box warning">
+                    <strong>重要:</strong> 2021年6月より、原則すべての食品等事業者にHACCP対応が義務化されています。
+                </div>
+
+                <p>HACCP = Hazard Analysis and Critical Control Point（危害要因分析重要管理点）</p>
+                <p>食品の安全性を確保するための衛生管理手法。製造工程全体を継続的に監視・記録します。</p>
+
+                <h3>給食施設における重要管理点（CCP）の例</h3>
+                <table>
+                    <tr>
+                        <th>工程</th>
+                        <th>危害要因</th>
+                        <th>管理基準</th>
+                    </tr>
+                    <tr>
+                        <td><strong>加熱調理</strong></td>
+                        <td>病原菌の残存</td>
+                        <td>中心温度75℃以上1分以上</td>
+                    </tr>
+                    <tr>
+                        <td><strong>冷却</strong></td>
+                        <td>細菌の増殖</td>
+                        <td>30分以内に中心温度20℃以下</td>
+                    </tr>
+                    <tr>
+                        <td><strong>保管</strong></td>
+                        <td>細菌の増殖</td>
+                        <td>冷蔵10℃以下、冷凍-18℃以下</td>
+                    </tr>
+                    <tr>
+                        <td><strong>配食</strong></td>
+                        <td>細菌の増殖</td>
+                        <td>調理後2時間以内に喫食</td>
+                    </tr>
+                </table>
+
+                <h3>食中毒予防の三原則</h3>
+                <div class="feature-grid">
+                    <div class="feature-card">
+                        <h4>1. つけない（清潔）</h4>
+                        <p>手洗いの徹底、器具・容器の使い分け、調理場の清潔保持</p>
+                    </div>
+                    <div class="feature-card">
+                        <h4>2. 増やさない（迅速・冷却）</h4>
+                        <p>調理後速やかに喫食、適切な温度管理、室温放置を避ける</p>
+                    </div>
+                    <div class="feature-card">
+                        <h4>3. やっつける（加熱）</h4>
+                        <p>中心温度75℃以上で1分以上加熱、二枚貝は85-90℃で90秒以上</p>
+                    </div>
+                </div>
+
+                <h3>食物アレルギー表示</h3>
+                <div class="info-box">
+                    <strong>義務表示（特定原材料8品目）:</strong> 卵、乳、小麦、落花生、えび、そば、かに、くるみ
+                </div>
+            </section>
+
+            <!-- 業界課題 -->
+            <section id="challenges">
+                <h2>09. 業界課題</h2>
+
+                <h3>給食業界が直面する主な課題</h3>
+                <table>
+                    <tr>
+                        <th>課題</th>
+                        <th>深刻度</th>
+                        <th>影響</th>
+                    </tr>
+                    <tr>
+                        <td><strong>人手不足</strong></td>
+                        <td><span class="badge warning">極めて高い</span></td>
+                        <td>事業継続に直結</td>
+                    </tr>
+                    <tr>
+                        <td><strong>コスト上昇</strong></td>
+                        <td><span class="badge warning">極めて高い</span></td>
+                        <td>収益性悪化</td>
+                    </tr>
+                    <tr>
+                        <td>価格転嫁困難</td>
+                        <td><span class="badge warning">高い</span></td>
+                        <td>利益圧迫</td>
+                    </tr>
+                    <tr>
+                        <td>少子化</td>
+                        <td><span class="badge primary">中〜高</span></td>
+                        <td>学校・保育市場縮小</td>
+                    </tr>
+                </table>
+
+                <h3>コスト上昇の内訳（2022-2024）</h3>
+                <div class="chart-bar">
+                    <div class="label"><span>食材費</span><span>+15〜25%</span></div>
+                    <div class="bar"><div class="fill orange" style="width: 62%"></div></div>
+                </div>
+                <div class="chart-bar">
+                    <div class="label"><span>光熱費</span><span>+20〜40%</span></div>
+                    <div class="bar"><div class="fill orange" style="width: 75%"></div></div>
+                </div>
+                <div class="chart-bar">
+                    <div class="label"><span>物流費</span><span>+10〜15%</span></div>
+                    <div class="bar"><div class="fill" style="width: 31%"></div></div>
+                </div>
+                <div class="chart-bar">
+                    <div class="label"><span>人件費</span><span>+5〜10%</span></div>
+                    <div class="bar"><div class="fill" style="width: 19%"></div></div>
+                </div>
+
+                <h3>2023年ホーユー問題の教訓</h3>
+                <div class="info-box warning">
+                    <p><strong>概要:</strong> 2023年9月、広島県の給食会社「ホーユー」が突然の事業停止。約150の学校・病院・福祉施設に影響。</p>
+                    <p><strong>原因:</strong> 食材費・人件費の高騰と価格転嫁ができなかったこと。</p>
+                    <p style="margin-bottom: 0;"><strong>教訓:</strong> 適正価格の重要性、財務健全性の確認、緊急時の備えが必要。</p>
+                </div>
+            </section>
+
+            <!-- トレンド -->
+            <section id="trends">
+                <h2>10. トレンドと将来展望</h2>
+
+                <h3>主要トレンド</h3>
+                <div class="feature-grid">
+                    <div class="feature-card">
+                        <h4>DX・デジタル化</h4>
+                        <p>クラウド型献立管理、AIによる献立提案、IoT温度管理</p>
+                    </div>
+                    <div class="feature-card">
+                        <h4>調理の自動化</h4>
+                        <p>クックチル・クックフリーズの普及、省人化機器の導入</p>
+                    </div>
+                    <div class="feature-card">
+                        <h4>高齢者市場の成長 <span class="badge success">注目</span></h4>
+                        <p>高齢者施設給食が2028年に病院給食を逆転</p>
+                    </div>
+                    <div class="feature-card">
+                        <h4>冷凍宅配食の拡大</h4>
+                        <p>まとめて配送、長期保存可能、レンジで温めるだけ</p>
+                    </div>
+                    <div class="feature-card">
+                        <h4>健康経営食堂</h4>
+                        <p>スマートミール認証、カロリー・栄養表示、減塩メニュー</p>
+                    </div>
+                    <div class="feature-card">
+                        <h4>SDGs・サステナビリティ</h4>
+                        <p>フードロス削減、プラスチック削減、地産地消</p>
+                    </div>
+                </div>
+
+                <h3>2028年の業界予測</h3>
+                <div class="summary-grid">
+                    <div class="summary-card">
+                        <div class="label">市場規模</div>
+                        <div class="value">5兆1,254億円</div>
+                    </div>
+                    <div class="summary-card">
+                        <div class="label">対2023年比</div>
+                        <div class="value green">+7%</div>
+                    </div>
+                </div>
+
+                <div class="info-box success">
+                    <strong>ハーベストにとっての機会:</strong>
+                    <ul style="margin-top: 0.5rem; margin-bottom: 0;">
+                        <li>横浜市中学校給食のような大型案件の増加</li>
+                        <li>民設民営方式の認知度向上</li>
+                        <li>高齢者施設の新規開設への参入</li>
+                        <li>多角経営（ヨシケイ含む）による安定性</li>
+                    </ul>
+                </div>
+            </section>
+
+            <!-- 入社検討ポイント -->
+            <section id="interview">
+                <h2>11. 入社検討ポイント・面接準備</h2>
+
+                <h3>ハーベストを選ぶ理由</h3>
+                <div class="process-steps">
+                    <div class="step">
+                        <div class="step-number">1</div>
+                        <div class="step-content">
+                            <h4>65年以上の歴史と安定性</h4>
+                            <p>老舗企業としての信頼と実績</p>
+                        </div>
+                    </div>
+                    <div class="step">
+                        <div class="step-number">2</div>
+                        <div class="step-content">
+                            <h4>学校給食（民設民営）での独自ポジション</h4>
+                            <p>他社にない強み、成長分野</p>
+                        </div>
+                    </div>
+                    <div class="step">
+                        <div class="step-number">3</div>
+                        <div class="step-content">
+                            <h4>多角経営による安定性</h4>
+                            <p>コントラクト + ヘルスケア + 学校 + ヨシケイ</p>
+                        </div>
+                    </div>
+                    <div class="step">
+                        <div class="step-number">4</div>
+                        <div class="step-content">
+                            <h4>全国展開 × 地域密着</h4>
+                            <p>約1,000拠点、転勤も選択肢あり</p>
+                        </div>
+                    </div>
+                    <div class="step">
+                        <div class="step-number">5</div>
+                        <div class="step-content">
+                            <h4>ISO認証取得の品質管理体制</h4>
+                            <p>しっかりした教育・研修体制</p>
+                        </div>
+                    </div>
+                </div>
+
+                <h3>志望動機の構成</h3>
+                <div class="info-box">
+                    <ol style="margin: 0;">
+                        <li><strong>なぜ給食業界か</strong> → 食を通じた社会貢献、安定性、成長市場への関心</li>
+                        <li><strong>なぜハーベストか</strong> → 65年の歴史、民設民営の強み、多角経営、理念への共感</li>
+                        <li><strong>自分が貢献できること</strong> → 経験・スキル、資格、意欲・姿勢</li>
+                    </ol>
+                </div>
+
+                <h3>想定質問と回答のポイント</h3>
+                <table>
+                    <tr>
+                        <th>質問</th>
+                        <th>回答のポイント</th>
+                    </tr>
+                    <tr>
+                        <td>給食業界の課題は？</td>
+                        <td>人手不足、コスト上昇、価格転嫁困難、ホーユー問題にも触れる</td>
+                    </tr>
+                    <tr>
+                        <td>ハーベストについて知っていること</td>
+                        <td>1960年設立、347億円、5事業、民設民営、横浜市中学校給食</td>
+                    </tr>
+                    <tr>
+                        <td>ハーベストの強み</td>
+                        <td>民設民営の実績、多角経営、ISO認証の3点</td>
+                    </tr>
+                </table>
+
+                <h3>面接前チェックリスト</h3>
+                <div class="info-box highlight">
+                    <ul style="margin: 0;">
+                        <li>会社の基本情報を覚えた（設立年、売上、従業員数）</li>
+                        <li>5つの事業内容を説明できる</li>
+                        <li>ハーベストの強みを3つ言える</li>
+                        <li>給食業界の課題を説明できる</li>
+                        <li>志望動機を1分で話せる</li>
+                        <li>逆質問を3つ以上用意した</li>
+                    </ul>
+                </div>
+            </section>
+
+            <!-- SV現場研修ガイド -->
+            <section id="sv-training">
+                <h2>12. SV現場研修ガイド</h2>
+
+                <h3>現場研修がSVにとって不可欠な理由</h3>
+                <div class="feature-grid">
+                    <div class="feature-card">
+                        <h4>現場を知らなければ管理できない</h4>
+                        <p>実際に調理・配膳を経験することで業務を理解</p>
+                    </div>
+                    <div class="feature-card">
+                        <h4>スタッフの気持ちがわかる</h4>
+                        <p>「大変さ」を体感することで信頼を得られる</p>
+                    </div>
+                    <div class="feature-card">
+                        <h4>問題の本質が見える</h4>
+                        <p>表面的な報告だけでなく、真の課題がわかる</p>
+                    </div>
+                    <div class="feature-card">
+                        <h4>現場からの信頼を得られる</h4>
+                        <p>「この人は現場をわかっている」と認められる</p>
+                    </div>
+                </div>
+
+                <h3>6ヶ月間のロードマップ</h3>
+                <table>
+                    <tr>
+                        <th>月</th>
+                        <th>フェーズ</th>
+                        <th>目標</th>
+                    </tr>
+                    <tr>
+                        <td>1ヶ月目</td>
+                        <td>基本習得期</td>
+                        <td>1日の流れを理解する</td>
+                    </tr>
+                    <tr>
+                        <td>2ヶ月目</td>
+                        <td>作業習得期</td>
+                        <td>基本作業を一人でできる</td>
+                    </tr>
+                    <tr>
+                        <td>3ヶ月目</td>
+                        <td>調理習得期</td>
+                        <td>調理の基本ができる</td>
+                    </tr>
+                    <tr>
+                        <td>4ヶ月目</td>
+                        <td>応用習得期</td>
+                        <td>一通りの作業ができる</td>
+                    </tr>
+                    <tr>
+                        <td>5ヶ月目</td>
+                        <td>リーダー体験期</td>
+                        <td>チームをまとめる経験をする</td>
+                    </tr>
+                    <tr>
+                        <td>6ヶ月目</td>
+                        <td>まとめ・移行期</td>
+                        <td>現場を卒業し、SVとしてスタートする</td>
+                    </tr>
+                </table>
+            </section>
+
+            <!-- SVヘルスケア事業ガイド -->
+            <section id="sv-healthcare">
+                <h2>13. SVヘルスケア事業ガイド</h2>
+
+                <h3>SVとは</h3>
+                <p><strong>SV（スーパーバイザー）</strong>= 複数の事業所（病院・施設）を担当し、現場の運営管理・品質管理・人材育成を行う本部と現場の橋渡し役。5〜15ヵ所程度の事業所を統括管理します。</p>
+
+                <h3>ヘルスケア事業の対象施設</h3>
+                <table>
+                    <tr>
+                        <th>施設タイプ</th>
+                        <th>平均定員</th>
+                        <th>1日の食数目安</th>
+                    </tr>
+                    <tr>
+                        <td>病院</td>
+                        <td>約182床</td>
+                        <td>500食前後</td>
+                    </tr>
+                    <tr>
+                        <td>老健</td>
+                        <td>約87人</td>
+                        <td>250食前後</td>
+                    </tr>
+                    <tr>
+                        <td>特養</td>
+                        <td>約62人</td>
+                        <td>180食前後</td>
+                    </tr>
+                    <tr>
+                        <td>有料老人ホーム</td>
+                        <td>約39人</td>
+                        <td>100食前後</td>
+                    </tr>
+                    <tr>
+                        <td>サ高住</td>
+                        <td>約35戸</td>
+                        <td>80食前後</td>
+                    </tr>
+                </table>
+
+                <h3>食種の多様性</h3>
+                <div class="info-box">
+                    <strong>一般食:</strong> 常食 → 軟菜食 → 全粥食 → 5分粥 → 3分粥 → 流動食<br>
+                    <strong>治療食:</strong> 糖尿病食、腎臓病食、心臓病食、肝臓病食、術後食<br>
+                    <strong>嚥下調整食:</strong> コード4（軟菜）→ コード3（やわらか）→ コード2（ペースト）→ コード1（ゼリー）→ コード0（訓練食）
+                </div>
+            </section>
+
+            <!-- SV着任後ガイド -->
+            <section id="sv-start">
+                <h2>14. SV着任後ガイド（最初の90日間）</h2>
+
+                <h3>SV着任時に持つべき3つの姿勢</h3>
+                <div class="feature-grid">
+                    <div class="feature-card">
+                        <h4>1. 謙虚さ</h4>
+                        <p>ベテランスタッフから学ぶ姿勢を忘れない、「SVだから」と偉ぶらない</p>
+                    </div>
+                    <div class="feature-card">
+                        <h4>2. 学び続ける姿勢</h4>
+                        <p>わからないことは素直に聞く、先輩SVの動きを観察する</p>
+                    </div>
+                    <div class="feature-card">
+                        <h4>3. 責任感</h4>
+                        <p>担当事業所は自分の責任、逃げない・言い訳しない、でも一人で抱え込まない</p>
+                    </div>
+                </div>
+
+                <h3>最初の1週間にやること</h3>
+                <table>
+                    <tr>
+                        <th>日程</th>
+                        <th>内容</th>
+                    </tr>
+                    <tr>
+                        <td>Day 1-2</td>
+                        <td>引継ぎ（担当事業所リスト、基本情報、過去のトラブル確認）</td>
+                    </tr>
+                    <tr>
+                        <td>Day 3-5</td>
+                        <td>事業所訪問開始（挨拶回り、チーフ・施設担当者と顔合わせ）</td>
+                    </tr>
+                    <tr>
+                        <td>Day 6-7</td>
+                        <td>情報整理（課題リストアップ、優先事項特定、上司への報告）</td>
+                    </tr>
+                </table>
+
+                <h3>30日目のチェックリスト</h3>
+                <div class="info-box">
+                    <ul style="margin: 0;">
+                        <li>全担当事業所を複数回訪問した</li>
+                        <li>各事業所のチーフの名前と顔が一致する</li>
+                        <li>各施設の担当者と名刺交換・挨拶が済んでいる</li>
+                        <li>事業所ごとの食数・食種構成を言える</li>
+                        <li>各事業所の課題を1つ以上把握している</li>
+                    </ul>
+                </div>
+            </section>
+
+            <!-- SV実務マニュアル -->
+            <section id="sv-manual">
+                <h2>15. SV実務マニュアル</h2>
+
+                <h3>未経験者がSVとして成功するためのポイント</h3>
+                <div class="process-steps">
+                    <div class="step">
+                        <div class="step-number">1</div>
+                        <div class="step-content">
+                            <h4>「施設の違い」を徹底的に理解する</h4>
+                            <p>病院・老健・特養では求められるものが全く違う</p>
+                        </div>
+                    </div>
+                    <div class="step">
+                        <div class="step-number">2</div>
+                        <div class="step-content">
+                            <h4>現場スタッフを「味方」にする</h4>
+                            <p>上から目線ではなく、一緒に問題を解決する姿勢</p>
+                        </div>
+                    </div>
+                    <div class="step">
+                        <div class="step-number">3</div>
+                        <div class="step-content">
+                            <h4>クライアント（施設）の立場で考える</h4>
+                            <p>施設が何を求めているかを常に意識</p>
+                        </div>
+                    </div>
+                    <div class="step">
+                        <div class="step-number">4</div>
+                        <div class="step-content">
+                            <h4>「わからないこと」は正直に聞く</h4>
+                            <p>知ったかぶりは事故のもと</p>
+                        </div>
+                    </div>
+                    <div class="step">
+                        <div class="step-number">5</div>
+                        <div class="step-content">
+                            <h4>とにかく現場に足を運ぶ</h4>
+                            <p>現場を見ないと何もわからない</p>
+                        </div>
+                    </div>
+                </div>
+
+                <h3>施設タイプ別の特徴</h3>
+                <table>
+                    <tr>
+                        <th>施設</th>
+                        <th>入所者の状態</th>
+                        <th>食事の位置づけ</th>
+                    </tr>
+                    <tr>
+                        <td>病院（急性期）</td>
+                        <td>急性疾患、手術後</td>
+                        <td>治療の一環</td>
+                    </tr>
+                    <tr>
+                        <td>病院（療養型）</td>
+                        <td>長期療養</td>
+                        <td>療養の支援</td>
+                    </tr>
+                    <tr>
+                        <td>老健</td>
+                        <td>リハビリ中</td>
+                        <td>リハビリ支援</td>
+                    </tr>
+                    <tr>
+                        <td>特養</td>
+                        <td>要介護3以上</td>
+                        <td>生活の質</td>
+                    </tr>
+                    <tr>
+                        <td>有料老人ホーム</td>
+                        <td>比較的自立〜要介護</td>
+                        <td>生活の楽しみ</td>
+                    </tr>
+                </table>
+            </section>
+
+            <!-- SV新規営業ガイド -->
+            <section id="sv-sales">
+                <h2>16. SV新規営業ガイド</h2>
+
+                <h3>新規営業のプロセス</h3>
+                <div class="process-steps">
+                    <div class="step">
+                        <div class="step-number">1</div>
+                        <div class="step-content">
+                            <h4>Phase 1: 案件発掘</h4>
+                            <p>入札情報収集、紹介・問い合わせ対応、営業活動</p>
+                        </div>
+                    </div>
+                    <div class="step">
+                        <div class="step-number">2</div>
+                        <div class="step-content">
+                            <h4>Phase 2: 提案・プレゼン</h4>
+                            <p>ニーズヒアリング、現地調査、提案書・見積書作成</p>
+                        </div>
+                    </div>
+                    <div class="step">
+                        <div class="step-number">3</div>
+                        <div class="step-content">
+                            <h4>Phase 3: 契約締結</h4>
+                            <p>条件交渉、契約書作成、社内稟議</p>
+                        </div>
+                    </div>
+                    <div class="step">
+                        <div class="step-number">4</div>
+                        <div class="step-content">
+                            <h4>Phase 4: オープン準備</h4>
+                            <p>人員採用・配置、設備準備、献立・オペレーション構築</p>
+                        </div>
+                    </div>
+                    <div class="step">
+                        <div class="step-number">5</div>
+                        <div class="step-content">
+                            <h4>Phase 5: 運営開始・フォロー</h4>
+                            <p>立ち上げ期の集中フォロー、通常運営への移行</p>
+                        </div>
+                    </div>
+                </div>
+
+                <h3>案件の種類</h3>
+                <table>
+                    <tr>
+                        <th>種類</th>
+                        <th>特徴</th>
+                    </tr>
+                    <tr>
+                        <td>入札案件</td>
+                        <td>公立病院、自治体施設。公示→入札→落札の流れ</td>
+                    </tr>
+                    <tr>
+                        <td>競合切り替え案件</td>
+                        <td>現在他社受託。施設の不満把握、契約更新時期を狙う</td>
+                    </tr>
+                    <tr>
+                        <td>新規開設案件</td>
+                        <td>新しくオープンする施設。早期の情報収集が重要</td>
+                    </tr>
+                    <tr>
+                        <td>直営→委託切り替え</td>
+                        <td>委託のメリットを説明、既存職員の処遇が課題</td>
+                    </tr>
+                </table>
+            </section>
+
+            <!-- SV緊急時対応 -->
+            <section id="sv-emergency">
+                <h2>17. SV緊急時対応マニュアル</h2>
+
+                <h3>緊急時にSVが果たすべき役割</h3>
+                <div class="info-box warning">
+                    <ol style="margin: 0;">
+                        <li>迅速な情報収集と状況把握</li>
+                        <li>適切な初動対応の指示</li>
+                        <li>上位への報告（エスカレーション）</li>
+                        <li>施設・クライアントへの連絡</li>
+                        <li>二次被害の防止</li>
+                        <li>記録の確保</li>
+                        <li>再発防止策の立案</li>
+                    </ol>
+                </div>
+
+                <h3>食中毒発生時の対応フロー</h3>
+                <table>
+                    <tr>
+                        <th>ステップ</th>
+                        <th>タイミング</th>
+                        <th>対応内容</th>
+                    </tr>
+                    <tr>
+                        <td>STEP1: 初動対応</td>
+                        <td>発生から30分以内</td>
+                        <td>該当食品の提供停止、残存食品・検食の確保、施設への第一報</td>
+                    </tr>
+                    <tr>
+                        <td>STEP2: 情報収集</td>
+                        <td>発生から2時間以内</td>
+                        <td>発症者数・症状確認、共通メニューの洗い出し、調理記録の確保</td>
+                    </tr>
+                    <tr>
+                        <td>STEP3: 関係機関対応</td>
+                        <td>状況に応じて</td>
+                        <td>保健所への報告、立入検査への対応、検便検査の実施</td>
+                    </tr>
+                    <tr>
+                        <td>STEP4: 事後対応</td>
+                        <td>原因究明後</td>
+                        <td>再発防止策の策定・実施、施設への報告書提出</td>
+                    </tr>
+                </table>
+
+                <h3>異物の分類と対応</h3>
+                <div class="feature-grid">
+                    <div class="feature-card">
+                        <h4>危険異物 <span class="badge warning">即時対応</span></h4>
+                        <p>金属片、ガラス片、プラスチック片（硬質）、骨片、害虫 → 健康被害リスク高</p>
+                    </div>
+                    <div class="feature-card">
+                        <h4>非危険異物 <span class="badge primary">報告・原因究明</span></h4>
+                        <p>毛髪、繊維、ビニール片（軟質）、野菜くず → 不快感を与えるがリスク低</p>
+                    </div>
+                </div>
+
+                <h3>検食保存のルール</h3>
+                <div class="info-box">
+                    <ul style="margin: 0;">
+                        <li>各メニュー<strong>50g以上</strong>を清潔な容器に採取</li>
+                        <li><strong>-20℃以下で2週間以上</strong>保存</li>
+                        <li>日付、メニュー名を記載</li>
+                        <li>食中毒発生時の原因究明に不可欠</li>
+                    </ul>
+                </div>
+            </section>
+
+            <!-- Footer -->
+            <section style="background: var(--bg); text-align: center; padding: 2rem;">
+                <p style="color: var(--text-light); margin-bottom: 0.5rem;">給食業界 調査資料</p>
+                <p style="color: var(--text-light); font-size: 0.875rem;">ハーベスト株式会社 入社検討用</p>
+                <p style="color: var(--text-light); font-size: 0.875rem; margin-bottom: 0;">作成日: 2026年1月8日 | 更新日: 2026年1月9日</p>
+            </section>
+        </main>
+    </div>
+
+    <script>
+        // Smooth scroll for sidebar links
+        document.querySelectorAll('.sidebar a').forEach(link => {
+            link.addEventListener('click', function(e) {
+                // Remove active class from all links
+                document.querySelectorAll('.sidebar a').forEach(l => l.classList.remove('active'));
+                // Add active class to clicked link
+                this.classList.add('active');
+            });
+        });
+
+        // Highlight active section on scroll
+        const sections = document.querySelectorAll('section[id]');
+        const navLinks = document.querySelectorAll('.sidebar a');
+
+        window.addEventListener('scroll', () => {
+            let current = '';
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop;
+                if (scrollY >= sectionTop - 200) {
+                    current = section.getAttribute('id');
+                }
+            });
+
+            navLinks.forEach(link => {
+                link.classList.remove('active');
+                if (link.getAttribute('href') === '#' + current) {
+                    link.classList.add('active');
+                }
+            });
+        });
+    </script>
+</body>
+</html>
