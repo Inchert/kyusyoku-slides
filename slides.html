@@ -621,6 +621,217 @@
             font-size: 1.2rem;
             color: var(--primary);
         }
+
+        /* ツールバー（検索・メモ・チェック） */
+        .toolbar {
+            position: fixed;
+            top: 15px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 10px;
+            z-index: 1000;
+            background: rgba(255,255,255,0.95);
+            padding: 8px 15px;
+            border-radius: 25px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+        }
+        .toolbar button {
+            background: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 20px;
+            padding: 8px 15px;
+            cursor: pointer;
+            font-size: 0.85rem;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+        .toolbar button:hover {
+            background: var(--secondary);
+            transform: scale(1.05);
+        }
+        .toolbar button.active {
+            background: var(--accent);
+        }
+
+        /* 検索パネル */
+        .search-panel {
+            display: none;
+            position: fixed;
+            top: 70px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: white;
+            padding: 20px;
+            border-radius: 15px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+            z-index: 999;
+            width: 90%;
+            max-width: 500px;
+        }
+        .search-panel.active { display: block; }
+        .search-panel input {
+            width: 100%;
+            padding: 12px 15px;
+            border: 2px solid #e9ecef;
+            border-radius: 10px;
+            font-size: 1rem;
+            outline: none;
+        }
+        .search-panel input:focus {
+            border-color: var(--primary);
+        }
+        .search-results {
+            margin-top: 15px;
+            max-height: 300px;
+            overflow-y: auto;
+        }
+        .search-result-item {
+            padding: 10px;
+            border-bottom: 1px solid #eee;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+        .search-result-item:hover {
+            background: #f8f9fa;
+        }
+        .search-result-item .slide-title {
+            font-weight: bold;
+            color: var(--primary);
+        }
+        .search-result-item .match-text {
+            font-size: 0.85rem;
+            color: #666;
+            margin-top: 5px;
+        }
+        .search-highlight {
+            background: yellow;
+            padding: 0 2px;
+        }
+
+        /* メモパネル */
+        .memo-panel {
+            display: none;
+            position: fixed;
+            top: 70px;
+            right: 20px;
+            background: white;
+            padding: 20px;
+            border-radius: 15px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+            z-index: 999;
+            width: 320px;
+            max-height: 70vh;
+        }
+        .memo-panel.active { display: block; }
+        .memo-panel h3 {
+            margin-bottom: 15px;
+            color: var(--primary);
+            font-size: 1rem;
+        }
+        .memo-panel textarea {
+            width: 100%;
+            height: 200px;
+            padding: 12px;
+            border: 2px solid #e9ecef;
+            border-radius: 10px;
+            font-size: 0.9rem;
+            resize: vertical;
+            outline: none;
+            font-family: inherit;
+        }
+        .memo-panel textarea:focus {
+            border-color: var(--primary);
+        }
+        .memo-panel .memo-actions {
+            margin-top: 10px;
+            display: flex;
+            gap: 10px;
+        }
+        .memo-panel .memo-actions button {
+            flex: 1;
+            padding: 8px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 0.85rem;
+        }
+        .memo-panel .save-btn {
+            background: var(--success);
+            color: white;
+        }
+        .memo-panel .clear-btn {
+            background: #e9ecef;
+            color: #666;
+        }
+        .memo-saved {
+            color: var(--success);
+            font-size: 0.8rem;
+            margin-top: 8px;
+            display: none;
+        }
+
+        /* チェック機能 */
+        .checkable {
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .checkable:hover {
+            background: #f0f0f0;
+        }
+        .checkable.checked {
+            text-decoration: line-through;
+            opacity: 0.6;
+            background: #e8f5e9;
+        }
+        .checkable.checked::before {
+            content: '✓ ';
+            color: var(--success);
+            font-weight: bold;
+        }
+        .check-mode-indicator {
+            display: none;
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: var(--success);
+            color: white;
+            padding: 10px 20px;
+            border-radius: 25px;
+            font-size: 0.9rem;
+            z-index: 1000;
+        }
+        .check-mode-indicator.active { display: block; }
+
+        @media (max-width: 768px) {
+            .toolbar {
+                top: auto;
+                bottom: 80px;
+                left: 10px;
+                right: 10px;
+                transform: none;
+                width: auto;
+                justify-content: center;
+            }
+            .toolbar button {
+                padding: 10px 12px;
+                font-size: 0.8rem;
+            }
+            .toolbar button span.btn-text { display: none; }
+            .search-panel, .memo-panel {
+                top: auto;
+                bottom: 140px;
+                left: 10px;
+                right: 10px;
+                transform: none;
+                width: auto;
+                max-width: none;
+            }
+        }
     </style>
 </head>
 <body>
@@ -631,6 +842,35 @@
         <span></span>
     </button>
     <div class="overlay" onclick="toggleMenu()"></div>
+
+    <!-- ツールバー -->
+    <div class="toolbar">
+        <button onclick="toggleSearch()" id="searchBtn">🔍 <span class="btn-text">検索</span></button>
+        <button onclick="toggleMemo()" id="memoBtn">📝 <span class="btn-text">メモ</span></button>
+        <button onclick="toggleCheckMode()" id="checkBtn">☑️ <span class="btn-text">チェック</span></button>
+    </div>
+
+    <!-- 検索パネル -->
+    <div class="search-panel" id="searchPanel">
+        <input type="text" id="searchInput" placeholder="キーワードを入力..." oninput="performSearch()">
+        <div class="search-results" id="searchResults"></div>
+    </div>
+
+    <!-- メモパネル -->
+    <div class="memo-panel" id="memoPanel">
+        <h3>📝 スライド別メモ（自動保存）</h3>
+        <textarea id="memoText" placeholder="このスライドのメモを入力..."></textarea>
+        <div class="memo-actions">
+            <button class="save-btn" onclick="saveMemo()">保存</button>
+            <button class="clear-btn" onclick="clearMemo()">クリア</button>
+        </div>
+        <div class="memo-saved" id="memoSaved">✓ 保存しました</div>
+    </div>
+
+    <!-- チェックモード表示 -->
+    <div class="check-mode-indicator" id="checkIndicator">
+        ✓ チェックモードON（項目をタップでチェック）
+    </div>
 
     <div class="container">
         <nav class="sidebar">
@@ -3868,6 +4108,204 @@
             } else if (e.key === 'ArrowLeft' && currentSlide > 0) {
                 showSlide(currentSlide - 1);
             }
+        });
+
+        // ========== 検索機能 ==========
+        let searchOpen = false;
+
+        function toggleSearch() {
+            const panel = document.getElementById('searchPanel');
+            const btn = document.getElementById('searchBtn');
+            searchOpen = !searchOpen;
+            panel.classList.toggle('active', searchOpen);
+            btn.classList.toggle('active', searchOpen);
+            if (searchOpen) {
+                document.getElementById('searchInput').focus();
+                closeMemo();
+            }
+        }
+
+        function performSearch() {
+            const query = document.getElementById('searchInput').value.toLowerCase();
+            const results = document.getElementById('searchResults');
+
+            if (query.length < 2) {
+                results.innerHTML = '<p style="color:#999;text-align:center;">2文字以上入力してください</p>';
+                return;
+            }
+
+            const slides = document.querySelectorAll('.slide');
+            const navItems = document.querySelectorAll('.nav-item');
+            let found = [];
+
+            slides.forEach((slide, index) => {
+                const text = slide.textContent;
+                const lowerText = text.toLowerCase();
+                if (lowerText.includes(query)) {
+                    const title = navItems[index] ? navItems[index].textContent.trim() : `スライド ${index}`;
+                    const pos = lowerText.indexOf(query);
+                    const start = Math.max(0, pos - 30);
+                    const end = Math.min(text.length, pos + query.length + 30);
+                    let matchText = text.substring(start, end);
+                    if (start > 0) matchText = '...' + matchText;
+                    if (end < text.length) matchText = matchText + '...';
+
+                    found.push({ index, title, matchText, query });
+                }
+            });
+
+            if (found.length === 0) {
+                results.innerHTML = '<p style="color:#999;text-align:center;">見つかりませんでした</p>';
+            } else {
+                results.innerHTML = found.map(f => `
+                    <div class="search-result-item" onclick="goToSearchResult(${f.index})">
+                        <div class="slide-title">${f.title}</div>
+                        <div class="match-text">${f.matchText.replace(new RegExp(f.query, 'gi'), '<span class="search-highlight">$&</span>')}</div>
+                    </div>
+                `).join('');
+            }
+        }
+
+        function goToSearchResult(index) {
+            showSlide(index);
+            toggleSearch();
+        }
+
+        // ========== メモ機能 ==========
+        let memoOpen = false;
+
+        function toggleMemo() {
+            const panel = document.getElementById('memoPanel');
+            const btn = document.getElementById('memoBtn');
+            memoOpen = !memoOpen;
+            panel.classList.toggle('active', memoOpen);
+            btn.classList.toggle('active', memoOpen);
+            if (memoOpen) {
+                loadMemo();
+                closeSearch();
+            }
+        }
+
+        function closeMemo() {
+            memoOpen = false;
+            document.getElementById('memoPanel').classList.remove('active');
+            document.getElementById('memoBtn').classList.remove('active');
+        }
+
+        function closeSearch() {
+            searchOpen = false;
+            document.getElementById('searchPanel').classList.remove('active');
+            document.getElementById('searchBtn').classList.remove('active');
+        }
+
+        function loadMemo() {
+            const memos = JSON.parse(localStorage.getItem('slideMemos') || '{}');
+            const memo = memos[currentSlide] || '';
+            document.getElementById('memoText').value = memo;
+        }
+
+        function saveMemo() {
+            const memos = JSON.parse(localStorage.getItem('slideMemos') || '{}');
+            const text = document.getElementById('memoText').value;
+            if (text.trim()) {
+                memos[currentSlide] = text;
+            } else {
+                delete memos[currentSlide];
+            }
+            localStorage.setItem('slideMemos', JSON.stringify(memos));
+
+            const saved = document.getElementById('memoSaved');
+            saved.style.display = 'block';
+            setTimeout(() => saved.style.display = 'none', 2000);
+        }
+
+        function clearMemo() {
+            if (confirm('このスライドのメモを削除しますか？')) {
+                document.getElementById('memoText').value = '';
+                saveMemo();
+            }
+        }
+
+        // スライド変更時にメモを読み込み
+        const originalShowSlide = showSlide;
+        showSlide = function(n) {
+            originalShowSlide(n);
+            if (memoOpen) loadMemo();
+            loadCheckedItems();
+        };
+
+        // ========== チェック機能 ==========
+        let checkMode = false;
+
+        function toggleCheckMode() {
+            checkMode = !checkMode;
+            const btn = document.getElementById('checkBtn');
+            const indicator = document.getElementById('checkIndicator');
+
+            btn.classList.toggle('active', checkMode);
+            indicator.classList.toggle('active', checkMode);
+
+            if (checkMode) {
+                enableCheckMode();
+            } else {
+                disableCheckMode();
+            }
+        }
+
+        function enableCheckMode() {
+            // li要素、p要素、カード内の要素をチェック可能に
+            const checkables = document.querySelectorAll('.slide.active li, .slide.active .card p, .slide.active .highlight-box p');
+            checkables.forEach((el, i) => {
+                if (!el.classList.contains('checkable')) {
+                    el.classList.add('checkable');
+                    el.dataset.checkId = `${currentSlide}-${i}`;
+                    el.addEventListener('click', handleCheck);
+                }
+            });
+            loadCheckedItems();
+        }
+
+        function disableCheckMode() {
+            const checkables = document.querySelectorAll('.checkable');
+            checkables.forEach(el => {
+                el.classList.remove('checkable');
+                el.removeEventListener('click', handleCheck);
+            });
+        }
+
+        function handleCheck(e) {
+            if (!checkMode) return;
+            const el = e.currentTarget;
+            el.classList.toggle('checked');
+            saveCheckedItems();
+        }
+
+        function saveCheckedItems() {
+            const checked = JSON.parse(localStorage.getItem('checkedItems') || '{}');
+            const checkables = document.querySelectorAll('.checkable');
+            checkables.forEach(el => {
+                if (el.classList.contains('checked')) {
+                    checked[el.dataset.checkId] = true;
+                } else {
+                    delete checked[el.dataset.checkId];
+                }
+            });
+            localStorage.setItem('checkedItems', JSON.stringify(checked));
+        }
+
+        function loadCheckedItems() {
+            const checked = JSON.parse(localStorage.getItem('checkedItems') || '{}');
+            const checkables = document.querySelectorAll('.checkable');
+            checkables.forEach(el => {
+                if (checked[el.dataset.checkId]) {
+                    el.classList.add('checked');
+                }
+            });
+        }
+
+        // 初期化時にチェック状態を復元
+        document.addEventListener('DOMContentLoaded', () => {
+            loadCheckedItems();
         });
     </script>
 </body>
