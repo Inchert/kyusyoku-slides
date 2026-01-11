@@ -429,48 +429,98 @@
             .grid-2, .grid-3, .grid-4 { grid-template-columns: 1fr; }
         }
 
+        /* ハンバーガーメニュー */
+        .hamburger {
+            display: none;
+            position: fixed;
+            top: 15px;
+            right: 15px;
+            z-index: 1001;
+            background: var(--primary);
+            border: none;
+            border-radius: 8px;
+            width: 50px;
+            height: 50px;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            gap: 5px;
+        }
+        .hamburger span {
+            display: block;
+            width: 25px;
+            height: 3px;
+            background: white;
+            border-radius: 2px;
+            transition: all 0.3s;
+        }
+        .hamburger.active span:nth-child(1) {
+            transform: rotate(45deg) translate(6px, 6px);
+        }
+        .hamburger.active span:nth-child(2) {
+            opacity: 0;
+        }
+        .hamburger.active span:nth-child(3) {
+            transform: rotate(-45deg) translate(6px, -6px);
+        }
+        .overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0,0,0,0.5);
+            z-index: 99;
+        }
+        .overlay.active { display: block; }
+
         /* レスポンシブ - スマホ */
         @media (max-width: 768px) {
+            .hamburger { display: flex; }
             .container { flex-direction: column; }
             .sidebar {
                 position: fixed;
-                bottom: 0;
-                top: auto;
-                left: 0;
-                right: 0;
-                width: 100%;
-                height: auto;
-                max-height: 50vh;
-                overflow-x: auto;
+                top: 0;
+                left: -300px;
+                width: 280px;
+                height: 100vh;
+                max-height: 100vh;
                 overflow-y: auto;
-                display: flex;
-                flex-wrap: wrap;
-                gap: 5px;
-                padding: 10px;
-                border-radius: 20px 20px 0 0;
-                box-shadow: 0 -5px 20px rgba(0,0,0,0.15);
-                z-index: 1000;
+                padding: 70px 15px 20px;
+                transition: left 0.3s ease;
+                z-index: 100;
+                display: block;
+                border-radius: 0;
             }
-            .sidebar h2 { display: none; }
-            .sidebar .nav-section-title { display: none; }
+            .sidebar.open {
+                left: 0;
+            }
+            .sidebar h2 {
+                display: block;
+                font-size: 1rem;
+                margin-bottom: 15px;
+            }
             .nav-item {
-                padding: 8px 12px;
-                margin: 2px;
-                font-size: 0.8rem;
-                flex-shrink: 0;
+                display: block;
+                padding: 12px 15px;
+                margin: 5px 0;
+                font-size: 0.9rem;
             }
             .nav-item span { display: inline; }
             .nav-item .num {
-                width: 20px;
-                height: 20px;
-                line-height: 20px;
-                font-size: 0.65rem;
-                margin-right: 5px;
+                width: 22px;
+                height: 22px;
+                line-height: 22px;
+                font-size: 0.7rem;
+                margin-right: 8px;
             }
             .main-content {
                 margin-left: 0;
-                margin-bottom: 180px;
                 padding: 15px;
+                padding-top: 70px;
             }
             .slide { padding: 20px; border-radius: 15px; }
             h1 { font-size: 1.5rem; }
@@ -478,23 +528,6 @@
             .card { padding: 15px; }
             .table-container { overflow-x: auto; }
             table { font-size: 0.85rem; }
-            .menu-toggle {
-                display: block;
-                position: fixed;
-                bottom: 10px;
-                right: 10px;
-                z-index: 1001;
-                background: var(--primary);
-                color: white;
-                border: none;
-                border-radius: 50%;
-                width: 50px;
-                height: 50px;
-                font-size: 1.5rem;
-                cursor: pointer;
-                box-shadow: 0 4px 15px rgba(0,0,0,0.3);
-            }
-            .sidebar.collapsed { display: none; }
         }
 
         /* 比較チャート */
@@ -591,6 +624,14 @@
     </style>
 </head>
 <body>
+    <!-- ハンバーガーメニューボタン -->
+    <button class="hamburger" onclick="toggleMenu()">
+        <span></span>
+        <span></span>
+        <span></span>
+    </button>
+    <div class="overlay" onclick="toggleMenu()"></div>
+
     <div class="container">
         <nav class="sidebar">
             <h2>SV研修資料</h2>
@@ -3776,6 +3817,27 @@
             24: 11   // 給食システム入門
         };
 
+        // ハンバーガーメニュー制御
+        function toggleMenu() {
+            const hamburger = document.querySelector('.hamburger');
+            const sidebar = document.querySelector('.sidebar');
+            const overlay = document.querySelector('.overlay');
+
+            hamburger.classList.toggle('active');
+            sidebar.classList.toggle('open');
+            overlay.classList.toggle('active');
+        }
+
+        function closeMenu() {
+            const hamburger = document.querySelector('.hamburger');
+            const sidebar = document.querySelector('.sidebar');
+            const overlay = document.querySelector('.overlay');
+
+            hamburger.classList.remove('active');
+            sidebar.classList.remove('open');
+            overlay.classList.remove('active');
+        }
+
         function showSlide(n) {
             const navItems = document.querySelectorAll('.nav-item');
             const allSlides = document.querySelectorAll('.slide');
@@ -3793,6 +3855,9 @@
                 targetSlide.classList.add('active');
             }
             navItems[n].classList.add('active');
+
+            // モバイルでメニューを閉じる
+            closeMenu();
 
             window.scrollTo(0, 0);
         }
