@@ -420,13 +420,81 @@
             margin: 0;
         }
 
-        /* レスポンシブ */
+        /* レスポンシブ - タブレット */
         @media (max-width: 1024px) {
             .sidebar { width: 60px; padding: 10px; }
             .sidebar h2, .nav-item span { display: none; }
             .nav-item .num { margin: 0; }
             .main-content { margin-left: 60px; padding: 20px; }
             .grid-2, .grid-3, .grid-4 { grid-template-columns: 1fr; }
+        }
+
+        /* レスポンシブ - スマホ */
+        @media (max-width: 768px) {
+            .container { flex-direction: column; }
+            .sidebar {
+                position: fixed;
+                bottom: 0;
+                top: auto;
+                left: 0;
+                right: 0;
+                width: 100%;
+                height: auto;
+                max-height: 50vh;
+                overflow-x: auto;
+                overflow-y: auto;
+                display: flex;
+                flex-wrap: wrap;
+                gap: 5px;
+                padding: 10px;
+                border-radius: 20px 20px 0 0;
+                box-shadow: 0 -5px 20px rgba(0,0,0,0.15);
+                z-index: 1000;
+            }
+            .sidebar h2 { display: none; }
+            .sidebar .nav-section-title { display: none; }
+            .nav-item {
+                padding: 8px 12px;
+                margin: 2px;
+                font-size: 0.8rem;
+                flex-shrink: 0;
+            }
+            .nav-item span { display: inline; }
+            .nav-item .num {
+                width: 20px;
+                height: 20px;
+                line-height: 20px;
+                font-size: 0.65rem;
+                margin-right: 5px;
+            }
+            .main-content {
+                margin-left: 0;
+                margin-bottom: 180px;
+                padding: 15px;
+            }
+            .slide { padding: 20px; border-radius: 15px; }
+            h1 { font-size: 1.5rem; }
+            h2 { font-size: 1.2rem; }
+            .card { padding: 15px; }
+            .table-container { overflow-x: auto; }
+            table { font-size: 0.85rem; }
+            .menu-toggle {
+                display: block;
+                position: fixed;
+                bottom: 10px;
+                right: 10px;
+                z-index: 1001;
+                background: var(--primary);
+                color: white;
+                border: none;
+                border-radius: 50%;
+                width: 50px;
+                height: 50px;
+                font-size: 1.5rem;
+                cursor: pointer;
+                box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+            }
+            .sidebar.collapsed { display: none; }
         }
 
         /* 比較チャート */
