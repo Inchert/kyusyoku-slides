@@ -625,52 +625,96 @@
         /* ツールバー（検索・メモ・チェック） */
         .toolbar {
             position: fixed;
-            top: 15px;
-            left: 50%;
-            transform: translateX(-50%);
+            top: 80px;
+            right: 20px;
             display: flex;
-            gap: 10px;
+            flex-direction: column;
+            gap: 8px;
             z-index: 1000;
-            background: rgba(255,255,255,0.95);
-            padding: 8px 15px;
-            border-radius: 25px;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+            transition: all 0.3s;
+        }
+        .toolbar.hidden {
+            transform: translateX(60px);
+        }
+        .toolbar.hidden .tool-btn {
+            opacity: 0;
+            pointer-events: none;
         }
         .toolbar button {
-            background: var(--primary);
-            color: white;
+            background: rgba(255,255,255,0.95);
+            color: var(--primary);
             border: none;
-            border-radius: 20px;
-            padding: 8px 15px;
+            border-radius: 12px;
+            padding: 12px;
             cursor: pointer;
             font-size: 0.85rem;
             transition: all 0.3s;
             display: flex;
             align-items: center;
-            gap: 5px;
+            justify-content: center;
+            gap: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.15);
+            width: 48px;
+            height: 48px;
         }
         .toolbar button:hover {
-            background: var(--secondary);
-            transform: scale(1.05);
+            background: var(--primary);
+            color: white;
+            transform: scale(1.1);
         }
         .toolbar button.active {
-            background: var(--accent);
+            background: var(--primary);
+            color: white;
+        }
+        .toolbar button svg {
+            width: 20px;
+            height: 20px;
+            fill: currentColor;
+        }
+        .toolbar .btn-text { display: none; }
+        .toolbar-toggle {
+            position: fixed;
+            top: 80px;
+            right: 20px;
+            width: 48px;
+            height: 48px;
+            background: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 12px;
+            cursor: pointer;
+            z-index: 1001;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+            transition: all 0.3s;
+        }
+        .toolbar-toggle:hover {
+            transform: scale(1.1);
+        }
+        .toolbar-toggle svg {
+            width: 20px;
+            height: 20px;
+            fill: currentColor;
+            transition: transform 0.3s;
+        }
+        .toolbar-toggle.collapsed svg {
+            transform: rotate(180deg);
         }
 
         /* 検索パネル */
         .search-panel {
             display: none;
             position: fixed;
-            top: 70px;
-            left: 50%;
-            transform: translateX(-50%);
+            top: 140px;
+            right: 80px;
             background: white;
             padding: 20px;
             border-radius: 15px;
             box-shadow: 0 10px 40px rgba(0,0,0,0.2);
             z-index: 999;
-            width: 90%;
-            max-width: 500px;
+            width: 320px;
         }
         .search-panel.active { display: block; }
         .search-panel input {
@@ -716,15 +760,15 @@
         .memo-panel {
             display: none;
             position: fixed;
-            top: 70px;
-            right: 20px;
+            top: 200px;
+            right: 80px;
             background: white;
             padding: 20px;
             border-radius: 15px;
             box-shadow: 0 10px 40px rgba(0,0,0,0.2);
             z-index: 999;
             width: 320px;
-            max-height: 70vh;
+            max-height: 60vh;
         }
         .memo-panel.active { display: block; }
         .memo-panel h3 {
@@ -810,24 +854,31 @@
         @media (max-width: 768px) {
             .toolbar {
                 top: auto;
-                bottom: 80px;
-                left: 10px;
+                bottom: 70px;
                 right: 10px;
-                transform: none;
-                width: auto;
-                justify-content: center;
+                flex-direction: row;
+                gap: 6px;
+            }
+            .toolbar.hidden {
+                transform: translateX(calc(100% + 10px));
             }
             .toolbar button {
-                padding: 10px 12px;
-                font-size: 0.8rem;
+                width: 42px;
+                height: 42px;
+                padding: 10px;
             }
-            .toolbar button span.btn-text { display: none; }
+            .toolbar-toggle {
+                top: auto;
+                bottom: 70px;
+                right: 10px;
+                width: 42px;
+                height: 42px;
+            }
             .search-panel, .memo-panel {
                 top: auto;
-                bottom: 140px;
+                bottom: 130px;
                 left: 10px;
                 right: 10px;
-                transform: none;
                 width: auto;
                 max-width: none;
             }
@@ -843,11 +894,22 @@
     </button>
     <div class="overlay" onclick="toggleMenu()"></div>
 
+    <!-- ツールバー非表示ボタン -->
+    <button class="toolbar-toggle" id="toolbarToggle" onclick="toggleToolbar()">
+        <svg viewBox="0 0 24 24"><path d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z"/></svg>
+    </button>
+
     <!-- ツールバー -->
-    <div class="toolbar">
-        <button onclick="toggleSearch()" id="searchBtn">🔍 <span class="btn-text">検索</span></button>
-        <button onclick="toggleMemo()" id="memoBtn">📝 <span class="btn-text">メモ</span></button>
-        <button onclick="toggleCheckMode()" id="checkBtn">☑️ <span class="btn-text">チェック</span></button>
+    <div class="toolbar" id="toolbar">
+        <button onclick="toggleSearch()" id="searchBtn" class="tool-btn" title="検索">
+            <svg viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg>
+        </button>
+        <button onclick="toggleMemo()" id="memoBtn" class="tool-btn" title="メモ">
+            <svg viewBox="0 0 24 24"><path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34c-.39-.39-1.02-.39-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"/></svg>
+        </button>
+        <button onclick="toggleCheckMode()" id="checkBtn" class="tool-btn" title="チェック">
+            <svg viewBox="0 0 24 24"><path d="M19 3H5c-1.11 0-2 .9-2 2v14c0 1.1.89 2 2 2h14c1.11 0 2-.9 2-2V5c0-1.1-.89-2-2-2zm-9 14l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></svg>
+        </button>
     </div>
 
     <!-- 検索パネル -->
@@ -858,18 +920,18 @@
 
     <!-- メモパネル -->
     <div class="memo-panel" id="memoPanel">
-        <h3>📝 スライド別メモ（自動保存）</h3>
+        <h3>スライド別メモ</h3>
         <textarea id="memoText" placeholder="このスライドのメモを入力..."></textarea>
         <div class="memo-actions">
             <button class="save-btn" onclick="saveMemo()">保存</button>
             <button class="clear-btn" onclick="clearMemo()">クリア</button>
         </div>
-        <div class="memo-saved" id="memoSaved">✓ 保存しました</div>
+        <div class="memo-saved" id="memoSaved">保存しました</div>
     </div>
 
     <!-- チェックモード表示 -->
     <div class="check-mode-indicator" id="checkIndicator">
-        ✓ チェックモードON（項目をタップでチェック）
+        チェックモードON（項目をタップでチェック）
     </div>
 
     <div class="container">
@@ -4077,6 +4139,37 @@
             sidebar.classList.remove('open');
             overlay.classList.remove('active');
         }
+
+        // ツールバー表示/非表示
+        let toolbarHidden = false;
+
+        function toggleToolbar() {
+            const toolbar = document.getElementById('toolbar');
+            const toggle = document.getElementById('toolbarToggle');
+
+            toolbarHidden = !toolbarHidden;
+            toolbar.classList.toggle('hidden', toolbarHidden);
+            toggle.classList.toggle('collapsed', toolbarHidden);
+
+            // 非表示時はパネルも閉じる
+            if (toolbarHidden) {
+                closeSearch();
+                closeMemo();
+            }
+
+            // 状態を保存
+            localStorage.setItem('toolbarHidden', toolbarHidden);
+        }
+
+        // 初期化時にツールバー状態を復元
+        document.addEventListener('DOMContentLoaded', () => {
+            const saved = localStorage.getItem('toolbarHidden');
+            if (saved === 'true') {
+                toolbarHidden = true;
+                document.getElementById('toolbar').classList.add('hidden');
+                document.getElementById('toolbarToggle').classList.add('collapsed');
+            }
+        });
 
         function showSlide(n) {
             const navItems = document.querySelectorAll('.nav-item');
