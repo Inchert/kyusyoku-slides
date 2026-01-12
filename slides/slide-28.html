@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SVの役割と4つの柱 - ハーベスト SV研修資料</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- ハンバーガーメニューボタン -->
+    <button class="hamburger" onclick="toggleMenu()">
+        <span></span>
+        <span></span>
+        <span></span>
+    </button>
+    <div class="overlay" onclick="toggleMenu()"></div>
+
+    <!-- ツールバー非表示ボタン -->
+    <button class="toolbar-toggle" id="toolbarToggle" onclick="toggleToolbar()">
+        <svg viewBox="0 0 24 24"><path d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z"/></svg>
+    </button>
+
+    <!-- ツールバー -->
+    <div class="toolbar" id="toolbar">
+        <button id="searchBtn" onclick="toggleSearch()">
+            <svg viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg>
+        </button>
+        <button id="memoBtn" onclick="toggleMemo()">
+            <svg viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V5h14v14zm-2-8H7v-2h10v2zm-4 4H7v-2h6v2z"/></svg>
+        </button>
+        <button id="checkBtn" onclick="toggleCheckMode()">
+            <svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>
+        </button>
+    </div>
+
+    <!-- 検索パネル -->
+    <div class="search-panel" id="searchPanel">
+        <input type="text" id="searchInput" placeholder="検索..." oninput="performSearch()">
+        <div class="search-results" id="searchResults"></div>
+    </div>
+
+    <!-- メモパネル -->
+    <div class="memo-panel" id="memoPanel">
+        <h3>メモ</h3>
+        <textarea id="memoText" placeholder="このスライドのメモを入力..."></textarea>
+        <div class="memo-actions">
+            <button class="save-btn" onclick="saveMemo()">保存</button>
+            <button class="clear-btn" onclick="clearMemo()">クリア</button>
+        </div>
+        <div class="memo-saved" id="memoSaved">保存しました</div>
+    </div>
+
+    <!-- チェックモードインジケーター -->
+    <div class="check-mode-indicator" id="checkIndicator">チェックモード ON</div>
+
+    <div class="container">
+        <nav class="sidebar">
+            <h2>SV研修資料</h2>
+            <a href="index.html" class="nav-item"><span class="num">0</span><span>目次</span></a>
+            <a href="slide-01.html" class="nav-item"><span class="num">1</span><span>給食業界入門</span></a>
+            <a href="slide-02.html" class="nav-item"><span class="num">2</span><span>市場規模・将来予測</span></a>
+            <a href="slide-03.html" class="nav-item"><span class="num">3</span><span>業界構造・ビジネスモデル</span></a>
+            <a href="slide-04.html" class="nav-item"><span class="num">4</span><span>主要プレイヤー</span></a>
+            <a href="slide-05.html" class="nav-item"><span class="num">5</span><span>競合比較</span></a>
+            <a href="slide-06.html" class="nav-item"><span class="num">6</span><span>ハーベスト会社紹介</span></a>
+            <a href="slide-07.html" class="nav-item"><span class="num">7</span><span>給食関連法規</span></a>
+            <a href="slide-08.html" class="nav-item"><span class="num">8</span><span>業界課題</span></a>
+            <a href="slide-09.html" class="nav-item"><span class="num">9</span><span>トレンド・将来展望</span></a>
+            <a href="slide-10.html" class="nav-item"><span class="num">10</span><span>入社検討ポイント</span></a>
+            <a href="slide-11.html" class="nav-item"><span class="num">11</span><span>SV現場研修ガイド</span></a>
+            <a href="slide-12.html" class="nav-item"><span class="num">12</span><span>ヘルスケア事業</span></a>
+            <a href="slide-13.html" class="nav-item"><span class="num">13</span><span>SV着任後ガイド</span></a>
+            <a href="slide-14.html" class="nav-item"><span class="num">14</span><span>SV実務マニュアル</span></a>
+            <a href="slide-15.html" class="nav-item"><span class="num">15</span><span>新規営業ガイド</span></a>
+            <a href="slide-16.html" class="nav-item"><span class="num">16</span><span>緊急時対応</span></a>
+            <a href="slide-17.html" class="nav-item"><span class="num">17</span><span>衛生管理基礎</span></a>
+            <a href="slide-18.html" class="nav-item"><span class="num">18</span><span>給食オペレーション</span></a>
+            <a href="slide-19.html" class="nav-item"><span class="num">19</span><span>栄養管理基礎</span></a>
+            <a href="slide-20.html" class="nav-item"><span class="num">20</span><span>原価管理入門</span></a>
+            <a href="slide-21.html" class="nav-item"><span class="num">21</span><span>労務管理の基本</span></a>
+            <a href="slide-22.html" class="nav-item"><span class="num">22</span><span>クライアント対応術</span></a>
+            <a href="slide-23.html" class="nav-item"><span class="num">23</span><span>トラブル対応</span></a>
+            <a href="slide-24.html" class="nav-item"><span class="num">24</span><span>給食システム入門</span></a>
+            <a href="slide-25.html" class="nav-item"><span class="num">A</span><span>専門用語集（付録A）</span></a>
+            <a href="slide-26.html" class="nav-item"><span class="num">B</span><span>SV分析ツール（付録B）</span></a>
+            <a href="slide-27.html" class="nav-item"><span class="num">C</span><span>キャリアパス（付録C）</span></a>
+            <a href="slide-28.html" class="nav-item active"><span class="num">D</span><span>SVの役割と4つの柱</span></a>
+            <a href="slide-29.html" class="nav-item"><span class="num">E</span><span>人のマネジメント</span></a>
+            <a href="slide-30.html" class="nav-item"><span class="num">F</span><span>数値・改善思考</span></a>
+            <a href="slide-31.html" class="nav-item"><span class="num">G</span><span>データに基づく意思決定</span></a>
+            <a href="slide-32.html" class="nav-item"><span class="num">H</span><span>報告・説得スキル</span></a>
+            <a href="slide-33.html" class="nav-item"><span class="num">I</span><span>SV心構えと自己研鑽</span></a>
+        </nav>
+
+        <main class="main-content">
+            <div class="slide active">
+                <h1>付録D SVの役割と4つの柱</h1>
+
+                <!-- SVとは何か -->
+                <h2>SVとは何か</h2>
+                <div class="info-box" style="text-align: center; padding: 30px;">
+                    <h3 style="color: var(--primary); margin-bottom: 15px;">SVの定義</h3>
+                    <p style="font-size: 1.3em; font-weight: bold;">単なる「現場経験者」ではなく</p>
+                    <p style="font-size: 1.5em; color: var(--primary); font-weight: bold; margin: 20px 0;">「現場 × 人 × 仕組み × 数値」</p>
+                    <p style="font-size: 1.3em; font-weight: bold;">で成果を出せる人</p>
+                </div>
+
+                <div class="grid-2" style="margin-top: 20px;">
+                    <div class="danger-box">
+                        <h4>SVではない人の特徴</h4>
+                        <ul>
+                            <li>現場作業が上手なだけ</li>
+                            <li>経験年数が長いだけ</li>
+                            <li>指示を出すだけ</li>
+                            <li>数字を見ない</li>
+                            <li>改善を提案しない</li>
+                        </ul>
+                    </div>
+                    <div class="success-box">
+                        <h4>真のSVの特徴</h4>
+                        <ul>
+                            <li>現場を理解した上で管理できる</li>
+                            <li>人を動かし、育てられる</li>
+                            <li>仕組みで問題を解決する</li>
+                            <li>数字で状況を説明できる</li>
+                            <li>継続的に改善を推進する</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- 4つの柱 -->
+                <h2>SVに必要な4つの柱</h2>
+                <div class="diagram-box">
+                    <div style="text-align: center; margin-bottom: 20px;">
+                        <p style="font-size: 1.1em;">SVの能力は4つの柱で構成されています</p>
+                    </div>
+                    <div class="grid-2">
+                        <div class="card" style="border-left: 5px solid var(--primary);">
+                            <h4 style="color: var(--primary);">第1の柱：現場運営</h4>
+                            <p><strong>内容：</strong>作業工程、動線最適化、安全・衛生、手順書</p>
+                            <p style="background: #e3f2fd; padding: 10px; border-radius: 5px; margin-top: 10px;">
+                                <strong>核心：</strong>ルールではなく<br>「守れる仕組み」で動かす
+                            </p>
+                        </div>
+                        <div class="card" style="border-left: 5px solid var(--secondary);">
+                            <h4 style="color: var(--secondary);">第2の柱：人のマネジメント</h4>
+                            <p><strong>内容：</strong>コミュニケーション、ベテラン対応、新人教育</p>
+                            <p style="background: #f3e5f5; padding: 10px; border-radius: 5px; margin-top: 10px;">
+                                <strong>核心：</strong>命令者ではなく<br>「伴走者」
+                            </p>
+                        </div>
+                        <div class="card" style="border-left: 5px solid var(--accent);">
+                            <h4 style="color: var(--accent);">第3の柱：数値・改善思考</h4>
+                            <p><strong>内容：</strong>KPI設計、PDCA、仕組み化、データ意思決定</p>
+                            <p style="background: #fff3e0; padding: 10px; border-radius: 5px; margin-top: 10px;">
+                                <strong>核心：</strong>感覚ではなく<br>「数字で説明」
+                            </p>
+                        </div>
+                        <div class="card" style="border-left: 5px solid var(--success);">
+                            <h4 style="color: var(--success);">第4の柱：報告・説得スキル</h4>
+                            <p><strong>内容：</strong>レポート、根拠ある説明、伝わる文章</p>
+                            <p style="background: #e8f5e9; padding: 10px; border-radius: 5px; margin-top: 10px;">
+                                <strong>核心：</strong>伝える力＝<br>信頼を作る力
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 第1の柱：現場運営 詳細 -->
+                <h2>第1の柱：現場運営</h2>
+                <div class="info-box">
+                    <h4>「守れる仕組み」とは何か</h4>
+                    <p>ルールを作っても守られなければ意味がない。SVは「なぜ守られないのか」を考え、仕組みで解決する。</p>
+                </div>
+
+                <div class="grid-3">
+                    <div class="card">
+                        <h4>作業工程の最適化</h4>
+                        <ul>
+                            <li>無駄な動きの排除</li>
+                            <li>作業順序の標準化</li>
+                            <li>ボトルネックの特定と解消</li>
+                            <li>時間帯別の作業割り当て</li>
+                        </ul>
+                    </div>
+                    <div class="card">
+                        <h4>動線の最適化</h4>
+                        <ul>
+                            <li>交差汚染防止の動線設計</li>
+                            <li>効率的な配置</li>
+                            <li>繁忙時間帯の動線分離</li>
+                            <li>物の置き場所の標準化</li>
+                        </ul>
+                    </div>
+                    <div class="card">
+                        <h4>手順書の活用</h4>
+                        <ul>
+                            <li>誰でもできる手順書作成</li>
+                            <li>写真・図を活用</li>
+                            <li>定期的な見直し・更新</li>
+                            <li>教育ツールとして活用</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <h3>ルール vs 仕組み</h3>
+                <table>
+                    <tr>
+                        <th>項目</th>
+                        <th>ルール（守られにくい）</th>
+                        <th>仕組み（守られる）</th>
+                    </tr>
+                    <tr>
+                        <td><strong>手洗い</strong></td>
+                        <td>「必ず手を洗うこと」と掲示</td>
+                        <td>入室時に手洗い場を通過する動線設計</td>
+                    </tr>
+                    <tr>
+                        <td><strong>温度記録</strong></td>
+                        <td>「毎回記録すること」と指示</td>
+                        <td>配膳前に記録しないと次の作業に進めない仕組み</td>
+                    </tr>
+                    <tr>
+                        <td><strong>在庫管理</strong></td>
+                        <td>「使ったら記録すること」と依頼</td>
+                        <td>バーコード読み取りで自動記録</td>
+                    </tr>
+                    <tr>
+                        <td><strong>清掃</strong></td>
+                        <td>「毎日清掃すること」と周知</td>
+                        <td>清掃完了写真を送信しないと退勤できない</td>
+                    </tr>
+                </table>
+
+                <!-- 4つの柱の相互関係 -->
+                <h2>4つの柱の相互関係</h2>
+                <div class="diagram-box">
+                    <div style="text-align: center;">
+                        <p>4つの柱は独立しているのではなく、相互に影響し合います</p>
+                        <div style="display: flex; justify-content: center; align-items: center; flex-wrap: wrap; gap: 20px; margin: 30px 0;">
+                            <div style="width: 120px; height: 120px; background: var(--primary); color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; text-align: center; font-weight: bold;">現場運営</div>
+                            <div style="font-size: 2em;">⟷</div>
+                            <div style="width: 120px; height: 120px; background: var(--secondary); color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; text-align: center; font-weight: bold;">人の<br>マネジメント</div>
+                            <div style="font-size: 2em;">⟷</div>
+                            <div style="width: 120px; height: 120px; background: var(--accent); color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; text-align: center; font-weight: bold;">数値・<br>改善思考</div>
+                            <div style="font-size: 2em;">⟷</div>
+                            <div style="width: 120px; height: 120px; background: var(--success); color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; text-align: center; font-weight: bold;">報告・<br>説得スキル</div>
+                        </div>
+                    </div>
+                </div>
+
+                <h3>相互関係の具体例</h3>
+                <div class="grid-2">
+                    <div class="card">
+                        <h4>現場運営 ⟷ 人のマネジメント</h4>
+                        <p>現場の仕組みを変えるには、人の協力が必要。人を動かすには、現場を理解していることが前提。</p>
+                    </div>
+                    <div class="card">
+                        <h4>人のマネジメント ⟷ 数値・改善</h4>
+                        <p>人を説得するには数字が必要。改善を実行するには人の協力が不可欠。</p>
+                    </div>
+                    <div class="card">
+                        <h4>数値・改善 ⟷ 報告・説得</h4>
+                        <p>改善の成果は数字で報告。上司を説得するにはデータに基づいた提案が必要。</p>
+                    </div>
+                    <div class="card">
+                        <h4>報告・説得 ⟷ 現場運営</h4>
+                        <p>現場の課題を伝える力がなければ、リソースを獲得できない。報告は現場を変える力になる。</p>
+                    </div>
+                </div>
+
+                <!-- SVの成長段階 -->
+                <h2>SVの成長段階</h2>
+                <table>
+                    <tr>
+                        <th>段階</th>
+                        <th>特徴</th>
+                        <th>4つの柱の習熟度</th>
+                    </tr>
+                    <tr>
+                        <td><span class="badge badge-warning">レベル1：見習い</span></td>
+                        <td>現場研修中〜着任直後</td>
+                        <td>現場運営を学習中。他の柱はこれから</td>
+                    </tr>
+                    <tr>
+                        <td><span class="badge badge-info">レベル2：一人前</span></td>
+                        <td>着任後6ヶ月〜1年</td>
+                        <td>現場運営・人のマネジメントが一定レベル</td>
+                    </tr>
+                    <tr>
+                        <td><span class="badge badge-primary">レベル3：中堅</span></td>
+                        <td>着任後1〜3年</td>
+                        <td>数値・改善思考が身につく。報告も適切</td>
+                    </tr>
+                    <tr>
+                        <td><span class="badge badge-success">レベル4：ベテラン</span></td>
+                        <td>着任後3年以上</td>
+                        <td>4つの柱すべてを高いレベルで実践</td>
+                    </tr>
+                    <tr>
+                        <td><span class="badge badge-danger">レベル5：エキスパート</span></td>
+                        <td>エリアマネージャー候補</td>
+                        <td>他のSVを育成できる。組織全体の改善を推進</td>
+                    </tr>
+                </table>
+
+                <!-- セルフチェック -->
+                <h2>4つの柱 セルフチェック</h2>
+                <div class="grid-2">
+                    <div class="card">
+                        <h4>現場運営</h4>
+                        <ul class="checklist">
+                            <li>担当事業所の作業工程を説明できる</li>
+                            <li>動線の問題点を指摘できる</li>
+                            <li>手順書を作成・更新できる</li>
+                            <li>「仕組み」で問題を解決した経験がある</li>
+                        </ul>
+                    </div>
+                    <div class="card">
+                        <h4>人のマネジメント</h4>
+                        <ul class="checklist">
+                            <li>スタッフから相談を受けている</li>
+                            <li>ベテランスタッフと良好な関係がある</li>
+                            <li>新人教育に関わっている</li>
+                            <li>チーフを育成できている</li>
+                        </ul>
+                    </div>
+                    <div class="card">
+                        <h4>数値・改善思考</h4>
+                        <ul class="checklist">
+                            <li>担当事業所のKPIを把握している</li>
+                            <li>PDCAサイクルを回した経験がある</li>
+                            <li>改善提案を実行した経験がある</li>
+                            <li>感覚ではなくデータで判断している</li>
+                        </ul>
+                    </div>
+                    <div class="card">
+                        <h4>報告・説得スキル</h4>
+                        <ul class="checklist">
+                            <li>上司への報告が滞りなくできている</li>
+                            <li>数字を使って説明できる</li>
+                            <li>提案書・報告書を作成できる</li>
+                            <li>施設側への説明がうまくいっている</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- まとめ -->
+                <h2>まとめ：SVとしての成長のために</h2>
+                <div class="success-box">
+                    <div class="grid-2" style="text-align: center;">
+                        <div>
+                            <p style="font-size: 1.3em; font-weight: bold; color: var(--primary);">4つの柱をバランスよく</p>
+                            <p>どれか一つが突出していても、SVとしては不十分。4つの柱をバランスよく伸ばすことが重要。</p>
+                        </div>
+                        <div>
+                            <p style="font-size: 1.3em; font-weight: bold; color: var(--success);">日々の実践で磨く</p>
+                            <p>座学だけでは身につかない。日々の巡回・改善活動の中で4つの柱を意識して実践する。</p>
+                        </div>
+                    </div>
+                    <div style="text-align: center; margin-top: 20px; padding: 15px; background: linear-gradient(135deg, var(--primary), var(--secondary)); color: white; border-radius: 10px;">
+                        <p style="font-size: 1.2em; margin: 0;"><strong>「現場 × 人 × 仕組み × 数値」で成果を出せるSVを目指そう</strong></p>
+                    </div>
+                </div>
+
+                <div class="nav-buttons">
+                    <a href="slide-27.html" class="nav-btn">← 前へ</a>
+                    <a href="slide-29.html" class="nav-btn">次へ →</a>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="scripts.js"></script>
+</body>
+</html>

@@ -1,0 +1,786 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>緊急時対応マニュアル - ハーベスト SV研修資料</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- ハンバーガーメニューボタン -->
+    <button class="hamburger" onclick="toggleMenu()">
+        <span></span>
+        <span></span>
+        <span></span>
+    </button>
+    <div class="overlay" onclick="toggleMenu()"></div>
+
+    <!-- ツールバー非表示ボタン -->
+    <button class="toolbar-toggle" id="toolbarToggle" onclick="toggleToolbar()">
+        <svg viewBox="0 0 24 24"><path d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z"/></svg>
+    </button>
+
+    <!-- ツールバー -->
+    <div class="toolbar" id="toolbar">
+        <button id="searchBtn" onclick="toggleSearch()">
+            <svg viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg>
+        </button>
+        <button id="memoBtn" onclick="toggleMemo()">
+            <svg viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V5h14v14zm-2-8H7v-2h10v2zm-4 4H7v-2h6v2z"/></svg>
+        </button>
+        <button id="checkBtn" onclick="toggleCheckMode()">
+            <svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>
+        </button>
+    </div>
+
+    <!-- 検索パネル -->
+    <div class="search-panel" id="searchPanel">
+        <input type="text" id="searchInput" placeholder="検索..." oninput="performSearch()">
+        <div class="search-results" id="searchResults"></div>
+    </div>
+
+    <!-- メモパネル -->
+    <div class="memo-panel" id="memoPanel">
+        <h3>メモ</h3>
+        <textarea id="memoText" placeholder="このスライドのメモを入力..."></textarea>
+        <div class="memo-actions">
+            <button class="save-btn" onclick="saveMemo()">保存</button>
+            <button class="clear-btn" onclick="clearMemo()">クリア</button>
+        </div>
+        <div class="memo-saved" id="memoSaved">保存しました</div>
+    </div>
+
+    <!-- チェックモードインジケーター -->
+    <div class="check-mode-indicator" id="checkIndicator">チェックモード ON</div>
+
+    <div class="container">
+        <nav class="sidebar">
+            <h2>SV研修資料</h2>
+            <a href="index.html" class="nav-item"><span class="num">0</span><span>目次</span></a>
+            <a href="slide-01.html" class="nav-item"><span class="num">1</span><span>給食業界入門</span></a>
+            <a href="slide-02.html" class="nav-item"><span class="num">2</span><span>市場規模・将来予測</span></a>
+            <a href="slide-03.html" class="nav-item"><span class="num">3</span><span>業界構造・ビジネスモデル</span></a>
+            <a href="slide-04.html" class="nav-item"><span class="num">4</span><span>主要プレイヤー</span></a>
+            <a href="slide-05.html" class="nav-item"><span class="num">5</span><span>競合比較</span></a>
+            <a href="slide-06.html" class="nav-item"><span class="num">6</span><span>ハーベスト会社紹介</span></a>
+            <a href="slide-07.html" class="nav-item"><span class="num">7</span><span>給食関連法規</span></a>
+            <a href="slide-08.html" class="nav-item"><span class="num">8</span><span>業界課題</span></a>
+            <a href="slide-09.html" class="nav-item"><span class="num">9</span><span>トレンド・将来展望</span></a>
+            <a href="slide-10.html" class="nav-item"><span class="num">10</span><span>入社検討ポイント</span></a>
+            <a href="slide-11.html" class="nav-item"><span class="num">11</span><span>SV現場研修ガイド</span></a>
+            <a href="slide-12.html" class="nav-item"><span class="num">12</span><span>ヘルスケア事業</span></a>
+            <a href="slide-13.html" class="nav-item"><span class="num">13</span><span>SV着任後ガイド</span></a>
+            <a href="slide-14.html" class="nav-item"><span class="num">14</span><span>SV実務マニュアル</span></a>
+            <a href="slide-15.html" class="nav-item"><span class="num">15</span><span>新規営業ガイド</span></a>
+            <a href="slide-16.html" class="nav-item active"><span class="num">16</span><span>緊急時対応</span></a>
+            <a href="slide-17.html" class="nav-item"><span class="num">17</span><span>衛生管理基礎</span></a>
+            <a href="slide-18.html" class="nav-item"><span class="num">18</span><span>給食オペレーション</span></a>
+            <a href="slide-19.html" class="nav-item"><span class="num">19</span><span>栄養管理基礎</span></a>
+            <a href="slide-20.html" class="nav-item"><span class="num">20</span><span>原価管理入門</span></a>
+            <a href="slide-21.html" class="nav-item"><span class="num">21</span><span>労務管理の基本</span></a>
+            <a href="slide-22.html" class="nav-item"><span class="num">22</span><span>クライアント対応術</span></a>
+            <a href="slide-23.html" class="nav-item"><span class="num">23</span><span>トラブル対応</span></a>
+            <a href="slide-24.html" class="nav-item"><span class="num">24</span><span>給食システム入門</span></a>
+            <a href="slide-25.html" class="nav-item"><span class="num">A</span><span>専門用語集（付録A）</span></a>
+            <a href="slide-26.html" class="nav-item"><span class="num">B</span><span>SV分析ツール（付録B）</span></a>
+            <a href="slide-27.html" class="nav-item"><span class="num">C</span><span>キャリアパス（付録C）</span></a>
+            <a href="slide-28.html" class="nav-item"><span class="num">D</span><span>SVの役割と4つの柱</span></a>
+            <a href="slide-29.html" class="nav-item"><span class="num">E</span><span>人のマネジメント</span></a>
+            <a href="slide-30.html" class="nav-item"><span class="num">F</span><span>数値・改善思考</span></a>
+            <a href="slide-31.html" class="nav-item"><span class="num">G</span><span>データに基づく意思決定</span></a>
+            <a href="slide-32.html" class="nav-item"><span class="num">H</span><span>報告・説得スキル</span></a>
+            <a href="slide-33.html" class="nav-item"><span class="num">I</span><span>SV心構えと自己研鑽</span></a>
+        </nav>
+
+        <main class="main-content">
+            <div class="slide active">
+                <h1>第16章 緊急時対応マニュアル</h1>
+
+                <!-- ========================================
+                     第1部：緊急時対応の基本原則
+                     ======================================== -->
+                <h2 class="section-title">第1部：緊急時対応の基本原則</h2>
+
+                <h2>SVとしての責務</h2>
+                <p>緊急事態が発生した時、SVは現場とクライアント、そして本部をつなぐ<strong>キーパーソン</strong>として機能します。パニックにならず、冷静に状況を把握し、適切な判断と行動を取ることが求められます。</p>
+
+                <div class="grid-3">
+                    <div class="card">
+                        <h4 style="color: var(--primary);">1. 情報収集・状況把握</h4>
+                        <p>迅速に情報を集め、何が起きているか正確に把握</p>
+                        <ul style="font-size: 0.9rem;">
+                            <li>事実と推測を分ける</li>
+                            <li>5W1Hを意識</li>
+                            <li>時系列で整理</li>
+                        </ul>
+                    </div>
+                    <div class="card">
+                        <h4 style="color: var(--secondary);">2. 初動対応の指示</h4>
+                        <p>現場への適切な指示、二次被害の防止</p>
+                        <ul style="font-size: 0.9rem;">
+                            <li>優先順位を明確に</li>
+                            <li>具体的に指示</li>
+                            <li>現場へ急行</li>
+                        </ul>
+                    </div>
+                    <div class="card">
+                        <h4 style="color: var(--success);">3. 報告・連携</h4>
+                        <p>上位への報告、施設・関係機関との連携</p>
+                        <ul style="font-size: 0.9rem;">
+                            <li>エスカレーション</li>
+                            <li>記録の確保</li>
+                            <li>再発防止策立案</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="info-box" style="margin-top: 20px;">
+                    <h4>SVが果たすべき7つの役割</h4>
+                    <div class="grid-2" style="margin-top: 10px;">
+                        <div>
+                            <ol>
+                                <li><strong>迅速な情報収集と状況把握</strong></li>
+                                <li><strong>適切な初動対応の指示</strong></li>
+                                <li><strong>上位への報告（エスカレーション）</strong></li>
+                                <li><strong>施設・クライアントへの連絡</strong></li>
+                            </ol>
+                        </div>
+                        <div>
+                            <ol start="5">
+                                <li><strong>二次被害の防止</strong></li>
+                                <li><strong>記録の確保</strong></li>
+                                <li><strong>再発防止策の立案</strong></li>
+                            </ol>
+                        </div>
+                    </div>
+                </div>
+
+                <h2>緊急連絡体制</h2>
+                <div class="flowchart" style="flex-direction: row; flex-wrap: wrap; justify-content: center; gap: 5px;">
+                    <div class="flow-step" style="font-size: 0.85rem; padding: 10px 15px;">現場スタッフ</div>
+                    <div class="flow-arrow">→</div>
+                    <div class="flow-step" style="font-size: 0.85rem; padding: 10px 15px;">チーフ<br><small>（即時）</small></div>
+                    <div class="flow-arrow">→</div>
+                    <div class="flow-step" style="font-size: 0.85rem; padding: 10px 15px; background: var(--primary);">SV<br><small>（5分以内）</small></div>
+                    <div class="flow-arrow">→</div>
+                    <div class="flow-step" style="font-size: 0.85rem; padding: 10px 15px;">エリアマネージャー<br><small>（15分以内）</small></div>
+                    <div class="flow-arrow">→</div>
+                    <div class="flow-step" style="font-size: 0.85rem; padding: 10px 15px;">本部<br><small>（重大案件）</small></div>
+                </div>
+                <p style="text-align: center; font-size: 0.9rem; color: var(--text-muted);">※SVは施設側担当者にも並行して連絡</p>
+
+                <h2>緊急事態の種類と対応レベル</h2>
+                <table>
+                    <tr>
+                        <th>緊急事態</th>
+                        <th>重大度</th>
+                        <th>初動対応</th>
+                        <th>報告レベル</th>
+                    </tr>
+                    <tr>
+                        <td><span class="badge badge-danger">食中毒</span></td>
+                        <td style="color: var(--danger);"><strong>最重大</strong></td>
+                        <td>検食保管、患者対応、保健所連絡準備</td>
+                        <td>本部即報告・役員報告</td>
+                    </tr>
+                    <tr>
+                        <td><span class="badge badge-danger">アレルギー事故</span></td>
+                        <td style="color: var(--danger);"><strong>最重大</strong></td>
+                        <td>救急対応、原因食品保管</td>
+                        <td>本部即報告・役員報告</td>
+                    </tr>
+                    <tr>
+                        <td><span class="badge badge-warning">異物混入（危険）</span></td>
+                        <td style="color: var(--warning);"><strong>重大</strong></td>
+                        <td>現物確保、写真撮影、健康被害確認</td>
+                        <td>本部即報告</td>
+                    </tr>
+                    <tr>
+                        <td><span class="badge badge-warning">異物混入（非危険）</span></td>
+                        <td>中</td>
+                        <td>現物確保、写真撮影、原因調査</td>
+                        <td>当日中報告</td>
+                    </tr>
+                    <tr>
+                        <td><span class="badge badge-warning">設備故障</span></td>
+                        <td>中〜重大</td>
+                        <td>代替対応、メニュー変更、修理手配</td>
+                        <td>当日中報告</td>
+                    </tr>
+                    <tr>
+                        <td><span class="badge badge-primary">災害</span></td>
+                        <td style="color: var(--warning);"><strong>重大</strong></td>
+                        <td>安全確保、被害状況確認、食事対応判断</td>
+                        <td>本部報告</td>
+                    </tr>
+                    <tr>
+                        <td><span class="badge badge-primary">急な欠員</span></td>
+                        <td>中</td>
+                        <td>応援手配、業務調整、シフト組み替え</td>
+                        <td>状況に応じて</td>
+                    </tr>
+                </table>
+
+                <!-- ========================================
+                     第2部：食中毒発生時の対応
+                     ======================================== -->
+                <h2 class="section-title">第2部：食中毒発生時の対応</h2>
+
+                <div class="danger-box">
+                    <h4>食中毒は最も深刻な事態</h4>
+                    <p>食中毒が発生した場合、入所者・患者の健康被害に加え、<strong>営業停止処分</strong>、<strong>損害賠償</strong>、<strong>マスコミ報道</strong>など、会社全体に甚大な影響を及ぼす可能性があります。迅速かつ適切な初動対応が極めて重要です。</p>
+                </div>
+
+                <h2>食中毒対応フローチャート</h2>
+
+                <h3>STEP1：初動対応（発生から30分以内）</h3>
+                <div class="grid-2">
+                    <div class="danger-box">
+                        <h4>現場チーフがやること</h4>
+                        <ul>
+                            <li>□ 該当食品の提供を<strong>即時停止</strong></li>
+                            <li>□ 残存食品・検食の<strong>確保・保全</strong></li>
+                            <li>□ 発症者の状況確認</li>
+                            <li>□ 施設側への第一報</li>
+                            <li>□ SVへの連絡</li>
+                        </ul>
+                    </div>
+                    <div class="warning-box">
+                        <h4>絶対にやってはいけないこと</h4>
+                        <ul>
+                            <li>✕ 検食・残存食品を廃棄する</li>
+                            <li>✕ 調理記録・温度記録を廃棄する</li>
+                            <li>✕ 原因を推測で発言する</li>
+                            <li>✕ 報告を遅らせる</li>
+                            <li>✕ 隠蔽しようとする</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <h3>STEP2：情報収集（発生から2時間以内）</h3>
+                <div class="info-box">
+                    <h4>確認・収集すべき情報</h4>
+                    <div class="grid-2">
+                        <div>
+                            <ul>
+                                <li>□ 発症者数・症状の確認</li>
+                                <li>□ 発症時刻・喫食内容の特定</li>
+                                <li>□ 共通メニューの洗い出し</li>
+                            </ul>
+                        </div>
+                        <div>
+                            <ul>
+                                <li>□ 調理記録・温度記録の確保</li>
+                                <li>□ 調理担当者の健康状態確認</li>
+                                <li>□ 原材料の仕入れ元・ロット確認</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <h3>SVの具体的アクション</h3>
+                <div class="grid-2">
+                    <div class="card">
+                        <h4>第一報を受けたら（〜30分）</h4>
+                        <ol>
+                            <li><strong>現場へ急行する</strong>（可能な限り）</li>
+                            <li>現場責任者から状況を聞き取る
+                                <ul style="font-size: 0.9rem;">
+                                    <li>発症者数、症状、発症時刻</li>
+                                    <li>喫食メニュー、提供時刻</li>
+                                </ul>
+                            </li>
+                            <li><strong>エリアマネージャーへ報告</strong></li>
+                            <li>施設側責任者と面談</li>
+                        </ol>
+                    </div>
+                    <div class="card">
+                        <h4>現場到着後（〜2時間）</h4>
+                        <ol>
+                            <li>検食・残存食品の確保状況を確認</li>
+                            <li>調理記録、温度記録、検収記録を確保</li>
+                            <li>調理工程の聞き取り</li>
+                            <li>調理スタッフの健康状態確認</li>
+                            <li>施設側と今後の対応を協議</li>
+                            <li><strong>代替食の手配</strong>（必要に応じて）</li>
+                        </ol>
+                    </div>
+                </div>
+
+                <h3>保健所対応</h3>
+                <div class="warning-box">
+                    <h4>保健所の立入検査に備える</h4>
+                    <ul>
+                        <li>保健所の立入検査に<strong>必ず立ち会う</strong></li>
+                        <li>記録類を求められたら提示する</li>
+                        <li>検便検査の手配をする</li>
+                        <li>質問には<strong>正確に回答</strong>（憶測で答えない）</li>
+                        <li>営業停止命令が出た場合の対応を検討</li>
+                    </ul>
+                    <p style="margin-top: 10px; color: var(--danger);"><strong>重要：</strong>わからないことは「確認します」と答え、決して推測で回答しない</p>
+                </div>
+
+                <h3>検食の重要性</h3>
+                <div class="info-box">
+                    <h4>検食とは</h4>
+                    <p>提供した食事を一定期間保存しておくもの。<strong>食中毒発生時の原因究明に不可欠</strong>です。</p>
+                    <table style="margin-top: 10px;">
+                        <tr>
+                            <th>項目</th>
+                            <th>基準</th>
+                        </tr>
+                        <tr>
+                            <td>採取量</td>
+                            <td>各メニュー<strong>50g以上</strong></td>
+                        </tr>
+                        <tr>
+                            <td>保存温度</td>
+                            <td><strong>-20℃以下</strong>で冷凍保存</td>
+                        </tr>
+                        <tr>
+                            <td>保存期間</td>
+                            <td><strong>2週間以上</strong></td>
+                        </tr>
+                        <tr>
+                            <td>ラベリング</td>
+                            <td>日付、食事区分、メニュー名を記載</td>
+                        </tr>
+                    </table>
+                </div>
+
+                <!-- ========================================
+                     第3部：異物混入発生時の対応
+                     ======================================== -->
+                <h2 class="section-title">第3部：異物混入発生時の対応</h2>
+
+                <h2>異物の分類</h2>
+                <div class="grid-2">
+                    <div class="danger-box">
+                        <h4>危険異物（即時対応・報告必須）</h4>
+                        <p>健康被害のリスクが高い異物</p>
+                        <ul>
+                            <li>金属片（刃物の欠け、ホチキス針等）</li>
+                            <li>ガラス片</li>
+                            <li>プラスチック片（硬質）</li>
+                            <li>骨片（魚骨・肉骨）</li>
+                            <li>害虫・害虫の一部</li>
+                        </ul>
+                        <p style="margin-top: 10px; color: var(--danger);"><strong>→ 本部へ即時報告必須</strong></p>
+                    </div>
+                    <div class="warning-box">
+                        <h4>非危険異物（報告・原因究明必要）</h4>
+                        <p>不快感を与えるが健康被害リスクは低い</p>
+                        <ul>
+                            <li>毛髪</li>
+                            <li>繊維（ふきん、ユニフォーム等）</li>
+                            <li>ビニール片（軟質）</li>
+                            <li>野菜くず（皮、ヘタ等）</li>
+                            <li>紙片</li>
+                        </ul>
+                        <p style="margin-top: 10px;"><strong>→ 当日中に報告・原因究明</strong></p>
+                    </div>
+                </div>
+
+                <h2>異物混入対応フロー</h2>
+                <div class="steps">
+                    <div class="step">
+                        <div class="step-number">1</div>
+                        <div class="step-label">現物確保<br><small>絶対廃棄しない<br>写真撮影</small></div>
+                    </div>
+                    <div class="step">
+                        <div class="step-number">2</div>
+                        <div class="step-label">発見者対応<br><small>謝罪・健康確認<br>代替食提供</small></div>
+                    </div>
+                    <div class="step">
+                        <div class="step-number">3</div>
+                        <div class="step-label">原因調査<br><small>異物特定<br>混入経路特定</small></div>
+                    </div>
+                    <div class="step">
+                        <div class="step-number">4</div>
+                        <div class="step-label">報告<br><small>施設報告<br>報告書作成</small></div>
+                    </div>
+                    <div class="step">
+                        <div class="step-number">5</div>
+                        <div class="step-label">再発防止<br><small>即時対策<br>恒久対策</small></div>
+                    </div>
+                </div>
+
+                <h3>異物混入報告書の記載項目</h3>
+                <div class="card">
+                    <table>
+                        <tr><th style="width: 30%;">記載項目</th><th>内容</th></tr>
+                        <tr><td><strong>1. 基本情報</strong></td><td>発生日時、発生場所（施設名、病棟等）、発見者情報</td></tr>
+                        <tr><td><strong>2. 異物の詳細</strong></td><td>異物の種類・大きさ、混入していた料理名、写真添付</td></tr>
+                        <tr><td><strong>3. 発生状況</strong></td><td>発見の経緯、喫食の有無、健康被害の有無</td></tr>
+                        <tr><td><strong>4. 原因分析</strong></td><td>推定される混入経路、調理工程の確認結果</td></tr>
+                        <tr><td><strong>5. 対応内容</strong></td><td>発見者への対応、施設への報告内容</td></tr>
+                        <tr><td><strong>6. 再発防止策</strong></td><td>即時対応、恒久対策、実施予定日</td></tr>
+                    </table>
+                </div>
+
+                <!-- ========================================
+                     第4部：機器故障時の対応
+                     ======================================== -->
+                <h2 class="section-title">第4部：機器故障時の対応</h2>
+
+                <h2>主要機器の故障対応</h2>
+                <div class="grid-2">
+                    <div class="card">
+                        <h4>スチームコンベクションオーブン故障</h4>
+                        <p><strong>影響：</strong>焼き物・蒸し物の大量調理が不可</p>
+                        <p><strong>代替：</strong></p>
+                        <ul>
+                            <li>回転釜での蒸し調理</li>
+                            <li>オーブンレンジの活用</li>
+                            <li>メニュー変更（煮物等へ）</li>
+                        </ul>
+                    </div>
+                    <div class="card">
+                        <h4>冷蔵庫・冷凍庫故障</h4>
+                        <p><strong>影響：</strong>食材の品質劣化・廃棄リスク</p>
+                        <p><strong>代替：</strong></p>
+                        <ul>
+                            <li>他の冷蔵庫への移動</li>
+                            <li>近隣事業所への食材避難</li>
+                            <li>クーラーボックス＋保冷剤</li>
+                        </ul>
+                        <p style="color: var(--danger);"><strong>判断：</strong>温度上昇した食材は使用禁止</p>
+                    </div>
+                </div>
+                <div class="grid-2">
+                    <div class="card">
+                        <h4>食器洗浄機故障</h4>
+                        <p><strong>代替：</strong>手洗い洗浄（80℃以上ですすぎ）、使い捨て食器の使用</p>
+                    </div>
+                    <div class="card">
+                        <h4>ガス設備・水道トラブル</h4>
+                        <p><strong>代替：</strong>電気調理機器活用、非加熱メニュー、外部からの調達</p>
+                    </div>
+                </div>
+
+                <h2>機器故障時のSVの判断ポイント</h2>
+                <div class="info-box">
+                    <ol>
+                        <li><strong>食事提供への影響度を判断</strong> - 次の食事に間に合うか？代替調理方法はあるか？</li>
+                        <li><strong>代替手段の検討</strong> - 他機器での代替、近隣事業所からの応援、外部からの調達</li>
+                        <li><strong>施設への連絡・相談</strong> - 状況説明、代替案の提示、施設の意向確認</li>
+                        <li><strong>修理手配</strong> - メンテナンス会社への連絡、修理見積・期間の確認</li>
+                    </ol>
+                </div>
+
+                <!-- ========================================
+                     第5部：災害時の対応
+                     ======================================== -->
+                <h2 class="section-title">第5部：災害時の対応</h2>
+
+                <h2>地震発生時の対応</h2>
+                <div class="grid-2">
+                    <div class="danger-box">
+                        <h4>発生直後（〜5分）</h4>
+                        <ol>
+                            <li><strong>身の安全確保</strong>（火を消す、テーブル下へ）</li>
+                            <li><strong>揺れが収まったら</strong>
+                                <ul><li>スタッフの安否確認</li><li>火元確認・ガス元栓閉める</li></ul>
+                            </li>
+                        </ol>
+                    </div>
+                    <div class="warning-box">
+                        <h4>初動対応（5分〜30分）</h4>
+                        <ol>
+                            <li>被害状況確認（人的被害、設備破損、ライフライン）</li>
+                            <li>施設側との連携（避難指示に従う）</li>
+                            <li>本部への報告（安否、被害、食事提供可否）</li>
+                        </ol>
+                    </div>
+                </div>
+
+                <h2>停電時の対応</h2>
+                <div class="grid-2">
+                    <div class="info-box">
+                        <h4>即時対応</h4>
+                        <ul>
+                            <li><strong>冷蔵庫の扉を開けない</strong>（数時間は温度維持可能）</li>
+                            <li>調理中の料理の状況確認</li>
+                            <li>施設と復旧見込みを確認</li>
+                        </ul>
+                    </div>
+                    <div class="card">
+                        <h4>停電時間別対応</h4>
+                        <ul>
+                            <li><strong>短時間（〜2時間）：</strong>ガス機器で調理継続</li>
+                            <li><strong>長時間（2時間以上）：</strong>温度上昇食材は廃棄、備蓄食品活用</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <h2>感染症発生時（施設内）</h2>
+                <div class="grid-2">
+                    <div class="warning-box">
+                        <h4>施設で感染症が発生した場合</h4>
+                        <ul>
+                            <li>施設から情報収集（感染者数、感染エリア）</li>
+                            <li>厨房内の感染防止強化（手洗い徹底、体調不良者出勤停止）</li>
+                            <li>配膳方法の変更（使い捨て食器、エリア制限）</li>
+                        </ul>
+                    </div>
+                    <div class="danger-box">
+                        <h4>厨房スタッフに感染疑いが出た場合</h4>
+                        <ul>
+                            <li>即時出勤停止</li>
+                            <li>濃厚接触者の特定</li>
+                            <li>厨房の消毒</li>
+                            <li>施設・本部への報告</li>
+                            <li>人員補充の手配</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- ========================================
+                     第6部：人員トラブル対応
+                     ======================================== -->
+                <h2 class="section-title">第6部：人員トラブル対応</h2>
+
+                <h2>急な欠勤への対応</h2>
+                <div class="info-box">
+                    <h4>代替要員の確保（優先順位）</h4>
+                    <table>
+                        <tr><th>優先度</th><th>対応策</th><th>特徴</th></tr>
+                        <tr><td><span class="badge badge-primary">1</span></td><td>同事業所の他スタッフに出勤依頼</td><td>現場を知っている、即戦力</td></tr>
+                        <tr><td><span class="badge badge-primary">2</span></td><td>近隣事業所からの応援</td><td>会社のルールを知っている</td></tr>
+                        <tr><td><span class="badge badge-primary">3</span></td><td>派遣・スポットワーカー手配</td><td>時間がかかる場合あり</td></tr>
+                        <tr><td><span class="badge badge-warning">4</span></td><td><strong>SV自身が現場に入る</strong></td><td>最後の手段、他業務に影響</td></tr>
+                    </table>
+                </div>
+
+                <h2>スタッフ間トラブル</h2>
+                <div class="card">
+                    <h4>SVとしての対応</h4>
+                    <ol>
+                        <li><strong>事実確認</strong> - 双方から個別に話を聞く、第三者からも情報収集、憶測で判断しない</li>
+                        <li><strong>対応検討</strong> - 軽微：注意・指導 / 深刻：シフト調整 / ハラスメント：本部人事への報告</li>
+                        <li><strong>フォローアップ</strong> - 定期的な状況確認、改善が見られない場合は上位へエスカレーション</li>
+                    </ol>
+                </div>
+
+                <!-- ========================================
+                     第7部：クレーム対応
+                     ======================================== -->
+                <h2 class="section-title">第7部：クレーム対応</h2>
+
+                <h2>クレーム対応の5ステップ</h2>
+                <div class="steps" style="flex-wrap: wrap; justify-content: center;">
+                    <div class="step">
+                        <div class="step-number">1</div>
+                        <div class="step-label">傾聴<br><small>最後まで聞く</small></div>
+                    </div>
+                    <div class="step">
+                        <div class="step-number">2</div>
+                        <div class="step-label">謝罪<br><small>まず謝罪</small></div>
+                    </div>
+                    <div class="step">
+                        <div class="step-number">3</div>
+                        <div class="step-label">事実確認<br><small>5W1H</small></div>
+                    </div>
+                    <div class="step">
+                        <div class="step-number">4</div>
+                        <div class="step-label">対応策提示<br><small>再発防止策</small></div>
+                    </div>
+                    <div class="step">
+                        <div class="step-number">5</div>
+                        <div class="step-label">フォローアップ<br><small>後日報告</small></div>
+                    </div>
+                </div>
+
+                <h3>よくあるクレームと対応例</h3>
+                <table>
+                    <tr><th>クレーム</th><th>対応ポイント</th></tr>
+                    <tr><td><strong>「味が薄い/濃い」</strong></td><td>ご意見を受け止める。治療食の場合は医師の指示であることを説明。可能な範囲で調整検討。</td></tr>
+                    <tr><td><strong>「冷めている」</strong></td><td>即座に謝罪。温め直しまたは作り直しを提案。温蔵設備の温度設定を見直し。</td></tr>
+                    <tr><td><strong>「量が少ない」</strong></td><td>盛り付け量を確認。治療食の場合は栄養管理上の必要性を説明。施設栄養士と相談。</td></tr>
+                    <tr><td><strong>「同じメニューばかり」</strong></td><td>献立サイクルを説明。バリエーション改善を検討。選択食の導入を相談。</td></tr>
+                </table>
+
+                <!-- ========================================
+                     第8部：まとめ
+                     ======================================== -->
+                <h2 class="section-title">第8部：まとめ</h2>
+
+                <h2>緊急時対応の心得</h2>
+                <div class="success-box">
+                    <h4 style="text-align: center; font-size: 1.3rem;">緊急時のSV 5つの心得</h4>
+                    <div class="grid-2" style="margin-top: 20px;">
+                        <div>
+                            <h4>1. 冷静に状況を把握する</h4>
+                            <p>パニックにならない、事実を確認</p>
+                            <h4 style="margin-top: 15px;">2. 報告は迅速に、正確に</h4>
+                            <p><strong>悪い情報ほど早く上げる</strong></p>
+                            <h4 style="margin-top: 15px;">3. 記録を残す</h4>
+                            <p>後で必ず必要になる</p>
+                        </div>
+                        <div>
+                            <h4>4. 一人で抱え込まない</h4>
+                            <p>上司・本部に相談</p>
+                            <h4 style="margin-top: 15px;">5. 再発防止を必ず行う</h4>
+                            <p>同じことを繰り返さない</p>
+                        </div>
+                    </div>
+                </div>
+
+                <h2>緊急時チェックリスト</h2>
+                <div class="grid-2">
+                    <div class="danger-box">
+                        <h4>食中毒発生時</h4>
+                        <ul>
+                            <li>□ 該当食品の提供停止</li>
+                            <li>□ 検食・残存食品の確保</li>
+                            <li>□ 発症者の状況確認</li>
+                            <li>□ 現場へ急行</li>
+                            <li>□ エリアマネージャーへ報告</li>
+                            <li>□ 施設責任者と面談</li>
+                            <li>□ 保健所対応の準備</li>
+                        </ul>
+                    </div>
+                    <div class="warning-box">
+                        <h4>異物混入発生時</h4>
+                        <ul>
+                            <li>□ 異物・料理の現物確保</li>
+                            <li>□ 写真撮影</li>
+                            <li>□ 発見者への謝罪・対応</li>
+                            <li>□ 原因調査</li>
+                            <li>□ 施設への報告</li>
+                            <li>□ 報告書作成</li>
+                            <li>□ 再発防止策の実施</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- 実践編：緊急時の対応セリフ集 -->
+                <h2 class="section-title">実践編：緊急時の対応セリフ集</h2>
+
+                <h3>食中毒疑い発生時のセリフ</h3>
+                <div class="grid-2">
+                    <div class="card" style="border-left: 4px solid var(--danger);">
+                        <h4>【現場から第一報を受けた時】</h4>
+                        <div style="background: #fff5f5; padding: 15px; border-radius: 5px;">
+                            <p><strong>落ち着いて確認：</strong>「わかりました。落ち着いて状況を教えてください」</p>
+                            <p><strong>詳細確認：</strong>「何人が、いつから、どんな症状ですか？」</p>
+                            <p><strong>指示：</strong>「該当の食事の提供を止めてください。検食は絶対に捨てないでください」</p>
+                            <p><strong>対応表明：</strong>「今からそちらに向かいます。○分で着きます」</p>
+                        </div>
+                    </div>
+                    <div class="card" style="border-left: 4px solid var(--danger);">
+                        <h4>【施設責任者への謝罪】</h4>
+                        <div style="background: #fff5f5; padding: 15px; border-radius: 5px;">
+                            <p><strong>第一声：</strong>「このたびは大変申し訳ございません」</p>
+                            <p><strong>状況報告：</strong>「現在把握している状況をご報告いたします」</p>
+                            <p><strong>対応方針：</strong>「保健所の指示に従い、全面的に調査に協力いたします」</p>
+                            <p><strong>今後の対応：</strong>「状況が分かり次第、随時ご報告させていただきます」</p>
+                        </div>
+                    </div>
+                </div>
+
+                <h3>異物混入発生時のセリフ</h3>
+                <div class="grid-2">
+                    <div class="card" style="border-left: 4px solid var(--warning);">
+                        <h4>【異物を発見した方への対応】</h4>
+                        <div style="background: #fffbf0; padding: 15px; border-radius: 5px;">
+                            <p><strong>謝罪：</strong>「大変申し訳ございません。ご不快な思いをさせてしまいました」</p>
+                            <p><strong>確認：</strong>「お怪我やお体への影響はございませんか？」</p>
+                            <p><strong>現物確保：</strong>「恐れ入りますが、原因究明のため異物と料理を確認させてください」</p>
+                            <p><strong>対応：</strong>「すぐに代わりのお食事をご用意いたします」</p>
+                        </div>
+                    </div>
+                    <div class="card" style="border-left: 4px solid var(--warning);">
+                        <h4>【施設への報告】</h4>
+                        <div style="background: #fffbf0; padding: 15px; border-radius: 5px;">
+                            <p><strong>報告：</strong>「本日○時頃、異物混入が発生いたしました」</p>
+                            <p><strong>原因説明：</strong>「原因を調査したところ、○○と判明いたしました」</p>
+                            <p><strong>再発防止：</strong>「再発防止策として○○を実施いたします」</p>
+                            <p><strong>お詫び：</strong>「ご心配をおかけし、申し訳ございませんでした」</p>
+                        </div>
+                    </div>
+                </div>
+
+                <h3>急な欠勤・人員トラブル時のセリフ</h3>
+                <div class="grid-2">
+                    <div class="card" style="border-left: 4px solid var(--primary);">
+                        <h4>【早朝に欠勤連絡を受けた時】</h4>
+                        <div style="background: #f0f7ff; padding: 15px; border-radius: 5px;">
+                            <p><strong>状況確認：</strong>「体調は大丈夫ですか？ゆっくり休んでください」</p>
+                            <p><strong>対応：</strong>「現場には私から連絡します。今日はお大事に」</p>
+                            <p><strong>現場への連絡：</strong>「○○さんが体調不良でお休みです。ヘルプを手配します」</p>
+                            <p><strong>ヘルプ依頼：</strong>「急で申し訳ないのですが、本日○○事業所のヘルプをお願いできますか」</p>
+                        </div>
+                    </div>
+                    <div class="card" style="border-left: 4px solid var(--secondary);">
+                        <h4>【スタッフ間トラブルの相談を受けた時】</h4>
+                        <div style="background: #f5f0ff; padding: 15px; border-radius: 5px;">
+                            <p><strong>傾聴：</strong>「教えてくれてありがとうございます。詳しく聞かせてください」</p>
+                            <p><strong>確認：</strong>「それは辛かったですね。いつ頃から続いていますか？」</p>
+                            <p><strong>対応：</strong>「状況を確認して、対応を考えます。少しお時間ください」</p>
+                            <p><strong>フォロー：</strong>「また何かあったら、いつでも連絡してください」</p>
+                        </div>
+                    </div>
+                </div>
+
+                <h3>緊急時対応の心構え</h3>
+                <div class="success-box">
+                    <h4 style="text-align: center;">緊急時に覚えておく「5つの鉄則」</h4>
+                    <div class="grid-3" style="margin-top: 15px; text-align: center;">
+                        <div>
+                            <p style="font-size: 1.8em; color: var(--danger); margin: 0;">1</p>
+                            <p><strong>まず落ち着く</strong></p>
+                            <p style="font-size: 0.85em;">深呼吸して冷静に</p>
+                        </div>
+                        <div>
+                            <p style="font-size: 1.8em; color: var(--danger); margin: 0;">2</p>
+                            <p><strong>事実を正確に把握</strong></p>
+                            <p style="font-size: 0.85em;">5W1Hで確認</p>
+                        </div>
+                        <div>
+                            <p style="font-size: 1.8em; color: var(--danger); margin: 0;">3</p>
+                            <p><strong>すぐに報告</strong></p>
+                            <p style="font-size: 0.85em;">悪い知らせほど早く</p>
+                        </div>
+                        <div>
+                            <p style="font-size: 1.8em; color: var(--danger); margin: 0;">4</p>
+                            <p><strong>証拠を確保</strong></p>
+                            <p style="font-size: 0.85em;">写真・現物・記録</p>
+                        </div>
+                        <div>
+                            <p style="font-size: 1.8em; color: var(--danger); margin: 0;">5</p>
+                            <p><strong>一人で抱えない</strong></p>
+                            <p style="font-size: 0.85em;">チームで対応</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="danger-box" style="margin-top: 20px;">
+                    <h4>緊急時にやってはいけないこと</h4>
+                    <div class="grid-2">
+                        <ul>
+                            <li>事実確認前に謝罪の文書を出す</li>
+                            <li>原因を推測で断定する</li>
+                            <li>現場を責める発言をする</li>
+                            <li>SNSで情報を発信する</li>
+                        </ul>
+                        <ul>
+                            <li>報告を遅らせる・隠す</li>
+                            <li>証拠（検食・異物）を処分する</li>
+                            <li>勝手に施設と合意する</li>
+                            <li>パニックになって指示が出せない</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="nav-buttons">
+                    <a href="slide-15.html" class="nav-btn">← 前へ</a>
+                    <a href="slide-17.html" class="nav-btn">次へ →</a>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="scripts.js"></script>
+</body>
+</html>

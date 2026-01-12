@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>目次 - ハーベスト SV研修資料</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- ハンバーガーメニューボタン -->
+    <button class="hamburger" onclick="toggleMenu()">
+        <span></span>
+        <span></span>
+        <span></span>
+    </button>
+    <div class="overlay" onclick="toggleMenu()"></div>
+
+    <!-- ツールバー非表示ボタン -->
+    <button class="toolbar-toggle" id="toolbarToggle" onclick="toggleToolbar()">
+        <svg viewBox="0 0 24 24"><path d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z"/></svg>
+    </button>
+
+    <!-- ツールバー -->
+    <div class="toolbar" id="toolbar">
+        <button id="searchBtn" onclick="toggleSearch()">
+            <svg viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg>
+        </button>
+        <button id="memoBtn" onclick="toggleMemo()">
+            <svg viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V5h14v14zm-2-8H7v-2h10v2zm-4 4H7v-2h6v2z"/></svg>
+        </button>
+        <button id="checkBtn" onclick="toggleCheckMode()">
+            <svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>
+        </button>
+    </div>
+
+    <!-- 検索パネル -->
+    <div class="search-panel" id="searchPanel">
+        <input type="text" id="searchInput" placeholder="検索..." oninput="performSearch()">
+        <div class="search-results" id="searchResults"></div>
+    </div>
+
+    <!-- メモパネル -->
+    <div class="memo-panel" id="memoPanel">
+        <h3>メモ</h3>
+        <textarea id="memoText" placeholder="このスライドのメモを入力..."></textarea>
+        <div class="memo-actions">
+            <button class="save-btn" onclick="saveMemo()">保存</button>
+            <button class="clear-btn" onclick="clearMemo()">クリア</button>
+        </div>
+        <div class="memo-saved" id="memoSaved">保存しました</div>
+    </div>
+
+    <!-- チェックモードインジケーター -->
+    <div class="check-mode-indicator" id="checkIndicator">チェックモード ON</div>
+
+    <div class="container">
+        <nav class="sidebar">
+            <h2>SV研修資料</h2>
+            <a href="index.html" class="nav-item active"><span class="num">0</span><span>目次</span></a>
+            <a href="slide-01.html" class="nav-item"><span class="num">1</span><span>給食業界入門</span></a>
+            <a href="slide-02.html" class="nav-item"><span class="num">2</span><span>市場規模・将来予測</span></a>
+            <a href="slide-03.html" class="nav-item"><span class="num">3</span><span>業界構造・ビジネスモデル</span></a>
+            <a href="slide-04.html" class="nav-item"><span class="num">4</span><span>主要プレイヤー</span></a>
+            <a href="slide-05.html" class="nav-item"><span class="num">5</span><span>競合比較</span></a>
+            <a href="slide-06.html" class="nav-item"><span class="num">6</span><span>ハーベスト会社紹介</span></a>
+            <a href="slide-07.html" class="nav-item"><span class="num">7</span><span>給食関連法規</span></a>
+            <a href="slide-08.html" class="nav-item"><span class="num">8</span><span>業界課題</span></a>
+            <a href="slide-09.html" class="nav-item"><span class="num">9</span><span>トレンド・将来展望</span></a>
+            <a href="slide-10.html" class="nav-item"><span class="num">10</span><span>入社検討ポイント</span></a>
+            <a href="slide-11.html" class="nav-item"><span class="num">11</span><span>SV現場研修ガイド</span></a>
+            <a href="slide-12.html" class="nav-item"><span class="num">12</span><span>ヘルスケア事業</span></a>
+            <a href="slide-13.html" class="nav-item"><span class="num">13</span><span>SV着任後ガイド</span></a>
+            <a href="slide-14.html" class="nav-item"><span class="num">14</span><span>SV実務マニュアル</span></a>
+            <a href="slide-15.html" class="nav-item"><span class="num">15</span><span>新規営業ガイド</span></a>
+            <a href="slide-16.html" class="nav-item"><span class="num">16</span><span>緊急時対応</span></a>
+            <a href="slide-17.html" class="nav-item"><span class="num">17</span><span>衛生管理基礎</span></a>
+            <a href="slide-18.html" class="nav-item"><span class="num">18</span><span>給食オペレーション</span></a>
+            <a href="slide-19.html" class="nav-item"><span class="num">19</span><span>栄養管理基礎</span></a>
+            <a href="slide-20.html" class="nav-item"><span class="num">20</span><span>原価管理入門</span></a>
+            <a href="slide-21.html" class="nav-item"><span class="num">21</span><span>労務管理の基本</span></a>
+            <a href="slide-22.html" class="nav-item"><span class="num">22</span><span>クライアント対応術</span></a>
+            <a href="slide-23.html" class="nav-item"><span class="num">23</span><span>トラブル対応</span></a>
+            <a href="slide-24.html" class="nav-item"><span class="num">24</span><span>給食システム入門</span></a>
+            <a href="slide-25.html" class="nav-item"><span class="num">A</span><span>専門用語集（付録A）</span></a>
+            <a href="slide-26.html" class="nav-item"><span class="num">B</span><span>SV分析ツール（付録B）</span></a>
+            <a href="slide-27.html" class="nav-item"><span class="num">C</span><span>キャリアパス（付録C）</span></a>
+            <a href="slide-28.html" class="nav-item"><span class="num">D</span><span>SVの役割と4つの柱</span></a>
+            <a href="slide-29.html" class="nav-item"><span class="num">E</span><span>人のマネジメント</span></a>
+            <a href="slide-30.html" class="nav-item"><span class="num">F</span><span>数値・改善思考</span></a>
+            <a href="slide-31.html" class="nav-item"><span class="num">G</span><span>データに基づく意思決定</span></a>
+            <a href="slide-32.html" class="nav-item"><span class="num">H</span><span>報告・説得スキル</span></a>
+            <a href="slide-33.html" class="nav-item"><span class="num">I</span><span>SV心構えと自己研鑽</span></a>
+        </nav>
+
+        <main class="main-content">
+            <div class="slide active">
+                <h1>ハーベスト SV研修資料</h1>
+                <p>スーパーバイザー(SV)として必要な知識とスキルを網羅した研修資料です。</p>
+
+                <div class="info-box">
+                    <strong>この研修資料について</strong>
+                    <p>全25章で構成され、給食業界の基礎から実務まで体系的に学べます。</p>
+                </div>
+
+                <h2>目次</h2>
+                <div class="toc-grid">
+                    <a href="slide-01.html" class="toc-card">
+                        <h3>第1章 給食業界入門</h3>
+                        <p>業界の全体像、6分野、委託vs直営</p>
+                    </a>
+                    <a href="slide-02.html" class="toc-card">
+                        <h3>第2章 市場規模と将来予測</h3>
+                        <p>4.8兆円市場、分野別規模、2028年予測</p>
+                    </a>
+                    <a href="slide-03.html" class="toc-card">
+                        <h3>第3章 業界構造とビジネスモデル</h3>
+                        <p>契約形態、収益構造、バリューチェーン</p>
+                    </a>
+                    <a href="slide-04.html" class="toc-card">
+                        <h3>第4章 主要プレイヤー</h3>
+                        <p>業界TOP20、分野別強豪、M&A動向</p>
+                    </a>
+                    <a href="slide-05.html" class="toc-card">
+                        <h3>第5章 競合比較</h3>
+                        <p>待遇・給与・企業文化、面接対策</p>
+                    </a>
+                    <a href="slide-06.html" class="toc-card">
+                        <h3>第6章 ハーベスト会社紹介</h3>
+                        <p>会社概要、理念、事業内容、組織体制</p>
+                    </a>
+                    <a href="slide-07.html" class="toc-card">
+                        <h3>第7章 給食関連法規</h3>
+                        <p>食品衛生法、労働基準法、各種規制</p>
+                    </a>
+                    <a href="slide-08.html" class="toc-card">
+                        <h3>第8章 業界課題</h3>
+                        <p>人手不足、コスト上昇、業界課題への対応</p>
+                    </a>
+                    <a href="slide-09.html" class="toc-card">
+                        <h3>第9章 トレンドと将来展望</h3>
+                        <p>DX推進、自動化技術、高齢者市場</p>
+                    </a>
+                    <a href="slide-10.html" class="toc-card">
+                        <h3>第10章 入社検討ポイント</h3>
+                        <p>面接準備、志望動機、キャリアパス</p>
+                    </a>
+                    <a href="slide-11.html" class="toc-card">
+                        <h3>第11章 SV現場研修ガイド</h3>
+                        <p>6ヶ月間の研修、成長段階、評価基準</p>
+                    </a>
+                    <a href="slide-12.html" class="toc-card">
+                        <h3>第12章 ヘルスケア事業ガイド</h3>
+                        <p>医療・介護施設の特徴と対応</p>
+                    </a>
+                    <a href="slide-13.html" class="toc-card">
+                        <h3>第13章 SV着任後ガイド</h3>
+                        <p>着任後90日間のアクションプラン</p>
+                    </a>
+                    <a href="slide-14.html" class="toc-card">
+                        <h3>第14章 SV実務マニュアル</h3>
+                        <p>施設別対応、複数店舗管理</p>
+                    </a>
+                    <a href="slide-15.html" class="toc-card">
+                        <h3>第15章 新規営業ガイド</h3>
+                        <p>営業プロセス、提案、契約</p>
+                    </a>
+                    <a href="slide-16.html" class="toc-card">
+                        <h3>第16章 緊急時対応マニュアル</h3>
+                        <p>食中毒、災害、人員トラブル対応</p>
+                    </a>
+                    <a href="slide-17.html" class="toc-card">
+                        <h3>第17章 衛生管理基礎</h3>
+                        <p>HACCP、温度管理、衛生チェック</p>
+                    </a>
+                    <a href="slide-18.html" class="toc-card">
+                        <h3>第18章 給食オペレーション</h3>
+                        <p>調理工程、配膳、洗浄、1日の流れ</p>
+                    </a>
+                    <a href="slide-19.html" class="toc-card">
+                        <h3>第19章 栄養管理基礎</h3>
+                        <p>栄養素、献立作成、食種対応</p>
+                    </a>
+                    <a href="slide-20.html" class="toc-card">
+                        <h3>第20章 原価管理入門</h3>
+                        <p>食材費、人件費、収支管理</p>
+                    </a>
+                    <a href="slide-21.html" class="toc-card">
+                        <h3>第21章 労務管理の基本</h3>
+                        <p>シフト管理、採用、労働法規</p>
+                    </a>
+                    <a href="slide-22.html" class="toc-card">
+                        <h3>第22章 クライアント対応術</h3>
+                        <p>施設との関係構築、クレーム対応</p>
+                    </a>
+                    <a href="slide-23.html" class="toc-card">
+                        <h3>第23章 トラブル対応マニュアル</h3>
+                        <p>異物混入、食中毒、設備故障対応</p>
+                    </a>
+                    <a href="slide-24.html" class="toc-card">
+                        <h3>第24章 給食システム入門</h3>
+                        <p>発注システム、献立システム</p>
+                    </a>
+                </div>
+
+                <h2>付録：SV知識体系</h2>
+                <div class="toc-grid">
+                    <a href="slide-28.html" class="toc-card">
+                        <h3>付録D SVの役割と4つの柱</h3>
+                        <p>現場×人×仕組み×数値で成果を出す</p>
+                    </a>
+                    <a href="slide-29.html" class="toc-card">
+                        <h3>付録E 人のマネジメント</h3>
+                        <p>伴走者としてのSV、ベテラン対応、新人教育</p>
+                    </a>
+                    <a href="slide-30.html" class="toc-card">
+                        <h3>付録F 数値・改善思考</h3>
+                        <p>KPI設計、PDCA、見える化・伝える化・自動化</p>
+                    </a>
+                    <a href="slide-31.html" class="toc-card">
+                        <h3>付録G データに基づく意思決定</h3>
+                        <p>判断フレームワーク、報告テクニック</p>
+                    </a>
+                    <a href="slide-32.html" class="toc-card">
+                        <h3>付録H 報告・説得スキル</h3>
+                        <p>PREP法、根拠ある説明、伝わる文章</p>
+                    </a>
+                    <a href="slide-33.html" class="toc-card">
+                        <h3>付録I SV心構えと自己研鑽</h3>
+                        <p>4原則、推奨書籍、成長の習慣</p>
+                    </a>
+                </div>
+
+                <div class="nav-buttons">
+                    <span class="nav-btn" style="visibility: hidden;">前へ</span>
+                    <a href="slide-01.html" class="nav-btn">次へ →</a>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="scripts.js"></script>
+</body>
+</html>

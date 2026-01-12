@@ -1,0 +1,520 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>報告・説得スキル - ハーベスト SV研修資料</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- ハンバーガーメニューボタン -->
+    <button class="hamburger" onclick="toggleMenu()">
+        <span></span>
+        <span></span>
+        <span></span>
+    </button>
+    <div class="overlay" onclick="toggleMenu()"></div>
+
+    <!-- ツールバー非表示ボタン -->
+    <button class="toolbar-toggle" id="toolbarToggle" onclick="toggleToolbar()">
+        <svg viewBox="0 0 24 24"><path d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z"/></svg>
+    </button>
+
+    <!-- ツールバー -->
+    <div class="toolbar" id="toolbar">
+        <button id="searchBtn" onclick="toggleSearch()">
+            <svg viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg>
+        </button>
+        <button id="memoBtn" onclick="toggleMemo()">
+            <svg viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V5h14v14zm-2-8H7v-2h10v2zm-4 4H7v-2h6v2z"/></svg>
+        </button>
+        <button id="checkBtn" onclick="toggleCheckMode()">
+            <svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>
+        </button>
+    </div>
+
+    <!-- 検索パネル -->
+    <div class="search-panel" id="searchPanel">
+        <input type="text" id="searchInput" placeholder="検索..." oninput="performSearch()">
+        <div class="search-results" id="searchResults"></div>
+    </div>
+
+    <!-- メモパネル -->
+    <div class="memo-panel" id="memoPanel">
+        <h3>メモ</h3>
+        <textarea id="memoText" placeholder="このスライドのメモを入力..."></textarea>
+        <div class="memo-actions">
+            <button class="save-btn" onclick="saveMemo()">保存</button>
+            <button class="clear-btn" onclick="clearMemo()">クリア</button>
+        </div>
+        <div class="memo-saved" id="memoSaved">保存しました</div>
+    </div>
+
+    <!-- チェックモードインジケーター -->
+    <div class="check-mode-indicator" id="checkIndicator">チェックモード ON</div>
+
+    <div class="container">
+        <nav class="sidebar">
+            <h2>SV研修資料</h2>
+            <a href="index.html" class="nav-item"><span class="num">0</span><span>目次</span></a>
+            <a href="slide-01.html" class="nav-item"><span class="num">1</span><span>給食業界入門</span></a>
+            <a href="slide-02.html" class="nav-item"><span class="num">2</span><span>市場規模・将来予測</span></a>
+            <a href="slide-03.html" class="nav-item"><span class="num">3</span><span>業界構造・ビジネスモデル</span></a>
+            <a href="slide-04.html" class="nav-item"><span class="num">4</span><span>主要プレイヤー</span></a>
+            <a href="slide-05.html" class="nav-item"><span class="num">5</span><span>競合比較</span></a>
+            <a href="slide-06.html" class="nav-item"><span class="num">6</span><span>ハーベスト会社紹介</span></a>
+            <a href="slide-07.html" class="nav-item"><span class="num">7</span><span>給食関連法規</span></a>
+            <a href="slide-08.html" class="nav-item"><span class="num">8</span><span>業界課題</span></a>
+            <a href="slide-09.html" class="nav-item"><span class="num">9</span><span>トレンド・将来展望</span></a>
+            <a href="slide-10.html" class="nav-item"><span class="num">10</span><span>入社検討ポイント</span></a>
+            <a href="slide-11.html" class="nav-item"><span class="num">11</span><span>SV現場研修ガイド</span></a>
+            <a href="slide-12.html" class="nav-item"><span class="num">12</span><span>ヘルスケア事業</span></a>
+            <a href="slide-13.html" class="nav-item"><span class="num">13</span><span>SV着任後ガイド</span></a>
+            <a href="slide-14.html" class="nav-item"><span class="num">14</span><span>SV実務マニュアル</span></a>
+            <a href="slide-15.html" class="nav-item"><span class="num">15</span><span>新規営業ガイド</span></a>
+            <a href="slide-16.html" class="nav-item"><span class="num">16</span><span>緊急時対応</span></a>
+            <a href="slide-17.html" class="nav-item"><span class="num">17</span><span>衛生管理基礎</span></a>
+            <a href="slide-18.html" class="nav-item"><span class="num">18</span><span>給食オペレーション</span></a>
+            <a href="slide-19.html" class="nav-item"><span class="num">19</span><span>栄養管理基礎</span></a>
+            <a href="slide-20.html" class="nav-item"><span class="num">20</span><span>原価管理入門</span></a>
+            <a href="slide-21.html" class="nav-item"><span class="num">21</span><span>労務管理の基本</span></a>
+            <a href="slide-22.html" class="nav-item"><span class="num">22</span><span>クライアント対応術</span></a>
+            <a href="slide-23.html" class="nav-item"><span class="num">23</span><span>トラブル対応</span></a>
+            <a href="slide-24.html" class="nav-item"><span class="num">24</span><span>給食システム入門</span></a>
+            <a href="slide-25.html" class="nav-item"><span class="num">A</span><span>専門用語集（付録A）</span></a>
+            <a href="slide-26.html" class="nav-item"><span class="num">B</span><span>SV分析ツール（付録B）</span></a>
+            <a href="slide-27.html" class="nav-item"><span class="num">C</span><span>キャリアパス（付録C）</span></a>
+            <a href="slide-28.html" class="nav-item"><span class="num">D</span><span>SVの役割と4つの柱</span></a>
+            <a href="slide-29.html" class="nav-item"><span class="num">E</span><span>人のマネジメント</span></a>
+            <a href="slide-30.html" class="nav-item"><span class="num">F</span><span>数値・改善思考</span></a>
+            <a href="slide-31.html" class="nav-item"><span class="num">G</span><span>データに基づく意思決定</span></a>
+            <a href="slide-32.html" class="nav-item active"><span class="num">H</span><span>報告・説得スキル</span></a>
+            <a href="slide-33.html" class="nav-item"><span class="num">I</span><span>SV心構えと自己研鑽</span></a>
+        </nav>
+
+        <main class="main-content">
+            <div class="slide active">
+                <h1>付録H 報告・説得スキル</h1>
+
+                <!-- 伝える力＝信頼を作る力 -->
+                <h2>「伝える力」＝「信頼を作る力」</h2>
+                <div class="info-box" style="text-align: center; padding: 30px;">
+                    <p style="font-size: 1.2em;">SVの仕事の半分は「伝えること」</p>
+                    <div class="grid-3" style="margin-top: 20px;">
+                        <div style="background: #e3f2fd; padding: 15px; border-radius: 10px;">
+                            <h4 style="color: var(--primary);">上司へ</h4>
+                            <p>現場の状況報告<br>改善提案<br>支援要請</p>
+                        </div>
+                        <div style="background: #f3e5f5; padding: 15px; border-radius: 10px;">
+                            <h4 style="color: var(--secondary);">現場へ</h4>
+                            <p>指示・依頼<br>フィードバック<br>方針説明</p>
+                        </div>
+                        <div style="background: #e8f5e9; padding: 15px; border-radius: 10px;">
+                            <h4 style="color: var(--success);">施設へ</h4>
+                            <p>状況報告<br>提案・交渉<br>クレーム対応</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 報告の基本 -->
+                <h2>報告の基本</h2>
+                <h3>報連相（ホウレンソウ）の使い分け</h3>
+                <table>
+                    <tr>
+                        <th style="width: 15%;">種類</th>
+                        <th style="width: 25%;">定義</th>
+                        <th style="width: 30%;">タイミング</th>
+                        <th style="width: 30%;">具体例</th>
+                    </tr>
+                    <tr>
+                        <td><span class="badge badge-primary">報告</span></td>
+                        <td>指示された業務の結果・進捗を伝える</td>
+                        <td>完了時、中間、異常発生時</td>
+                        <td>「先日ご相談した件、対応完了しました」</td>
+                    </tr>
+                    <tr>
+                        <td><span class="badge badge-secondary">連絡</span></td>
+                        <td>関係者に情報を共有する</td>
+                        <td>知っておくべき情報が発生したとき</td>
+                        <td>「A事業所のチーフが来月退職予定です」</td>
+                    </tr>
+                    <tr>
+                        <td><span class="badge badge-success">相談</span></td>
+                        <td>判断に迷うことについて意見を求める</td>
+                        <td>自分の判断だけでは不安なとき</td>
+                        <td>「施設からこういう要望があり、どう対応すべきか相談です」</td>
+                    </tr>
+                </table>
+
+                <h3>報告の鉄則</h3>
+                <div class="grid-2">
+                    <div class="success-box">
+                        <h4>良い報告</h4>
+                        <ol>
+                            <li><strong>結論から先に</strong>
+                                <p style="font-size: 0.9em; margin: 5px 0;">「結論から申し上げますと〜」</p>
+                            </li>
+                            <li><strong>事実と意見を分ける</strong>
+                                <p style="font-size: 0.9em; margin: 5px 0;">「事実として〜、私の見解としては〜」</p>
+                            </li>
+                            <li><strong>数字を使う</strong>
+                                <p style="font-size: 0.9em; margin: 5px 0;">「前月比+3件、目標比-2%」</p>
+                            </li>
+                            <li><strong>悪いことほど早く</strong>
+                                <p style="font-size: 0.9em; margin: 5px 0;">トラブルは即報告</p>
+                            </li>
+                        </ol>
+                    </div>
+                    <div class="danger-box">
+                        <h4>悪い報告</h4>
+                        <ol>
+                            <li><strong>経緯から長々と</strong>
+                                <p style="font-size: 0.9em; margin: 5px 0;">「まず背景から説明しますと〜」</p>
+                            </li>
+                            <li><strong>事実と意見が混在</strong>
+                                <p style="font-size: 0.9em; margin: 5px 0;">「〜だと思うので〜だったと思います」</p>
+                            </li>
+                            <li><strong>曖昧な表現</strong>
+                                <p style="font-size: 0.9em; margin: 5px 0;">「だいたい」「おそらく」「たぶん」</p>
+                            </li>
+                            <li><strong>悪いことを後回し</strong>
+                                <p style="font-size: 0.9em; margin: 5px 0;">報告が遅れるほど事態悪化</p>
+                            </li>
+                        </ol>
+                    </div>
+                </div>
+
+                <!-- レポートの書き方 -->
+                <h2>レポート・報告書の書き方</h2>
+                <h3>PREP法</h3>
+                <div class="info-box">
+                    <p>論理的でわかりやすい文章を書くためのフレームワーク</p>
+                </div>
+                <div class="flowchart">
+                    <div class="flow-step" style="background: var(--primary); color: white;">
+                        <strong>P: Point</strong><br>
+                        結論・要点
+                    </div>
+                    <div class="flow-arrow">→</div>
+                    <div class="flow-step" style="background: var(--secondary); color: white;">
+                        <strong>R: Reason</strong><br>
+                        理由
+                    </div>
+                    <div class="flow-arrow">→</div>
+                    <div class="flow-step" style="background: var(--accent); color: white;">
+                        <strong>E: Example</strong><br>
+                        具体例・データ
+                    </div>
+                    <div class="flow-arrow">→</div>
+                    <div class="flow-step" style="background: var(--success); color: white;">
+                        <strong>P: Point</strong><br>
+                        結論の再確認
+                    </div>
+                </div>
+
+                <h3>PREP法の具体例</h3>
+                <div class="card" style="border-left: 5px solid var(--primary);">
+                    <h4>報告例：食材費削減の提案</h4>
+                    <table>
+                        <tr>
+                            <td style="width: 20%; vertical-align: top;"><span class="badge badge-primary">P（結論）</span></td>
+                            <td>「A事業所の食材費率を改善するため、発注基準の見直しを提案します」</td>
+                        </tr>
+                        <tr>
+                            <td style="vertical-align: top;"><span class="badge badge-secondary">R（理由）</span></td>
+                            <td>「現在、食材費率が目標を4%超過しており、主な原因は特定食材の廃棄増加です」</td>
+                        </tr>
+                        <tr>
+                            <td style="vertical-align: top;"><span class="badge badge-warning">E（具体例）</span></td>
+                            <td>「過去3ヶ月の廃棄記録を分析したところ、野菜類の廃棄が月平均15kgあり、約3万円のロスが発生しています。発注基準を週単位から日単位に変更することで、約60%削減が見込めます」</td>
+                        </tr>
+                        <tr>
+                            <td style="vertical-align: top;"><span class="badge badge-success">P（結論）</span></td>
+                            <td>「よって、来月から発注基準の見直しを実施したいと考えています」</td>
+                        </tr>
+                    </table>
+                </div>
+
+                <h3>週報・月報のテンプレート</h3>
+                <div class="grid-2">
+                    <div class="card">
+                        <h4>週報の構成</h4>
+                        <ol>
+                            <li><strong>今週のサマリー</strong>（3行以内）</li>
+                            <li><strong>KPI実績</strong>
+                                <ul>
+                                    <li>食数実績 vs 計画</li>
+                                    <li>クレーム件数</li>
+                                    <li>欠員状況</li>
+                                </ul>
+                            </li>
+                            <li><strong>トピックス</strong>（重要事項3つ程度）</li>
+                            <li><strong>課題と対応</strong></li>
+                            <li><strong>来週の予定・重点事項</strong></li>
+                        </ol>
+                    </div>
+                    <div class="card">
+                        <h4>月報の構成</h4>
+                        <ol>
+                            <li><strong>今月のサマリー</strong>（5行以内）</li>
+                            <li><strong>収支実績</strong>
+                                <ul>
+                                    <li>売上・原価・利益</li>
+                                    <li>食材費率・人件費率</li>
+                                </ul>
+                            </li>
+                            <li><strong>品質指標</strong>（クレーム・衛生）</li>
+                            <li><strong>人員状況</strong>（欠員・離職・採用）</li>
+                            <li><strong>施設との関係</strong></li>
+                            <li><strong>課題と改善計画</strong></li>
+                            <li><strong>来月の重点施策</strong></li>
+                        </ol>
+                    </div>
+                </div>
+
+                <!-- 説得の技術 -->
+                <h2>説得の技術</h2>
+                <h3>説得が必要な場面</h3>
+                <div class="grid-3">
+                    <div class="card" style="border-top: 4px solid var(--primary);">
+                        <h4>上司への説得</h4>
+                        <ul>
+                            <li>人員増加の要請</li>
+                            <li>設備投資の提案</li>
+                            <li>新しい取り組みの承認</li>
+                        </ul>
+                    </div>
+                    <div class="card" style="border-top: 4px solid var(--secondary);">
+                        <h4>現場への説得</h4>
+                        <ul>
+                            <li>新ルールの導入</li>
+                            <li>業務改善の実施</li>
+                            <li>シフト変更の協力依頼</li>
+                        </ul>
+                    </div>
+                    <div class="card" style="border-top: 4px solid var(--success);">
+                        <h4>施設への説得</h4>
+                        <ul>
+                            <li>価格改定の交渉</li>
+                            <li>サービス変更の提案</li>
+                            <li>クレーム対応後の信頼回復</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <h3>説得の3要素</h3>
+                <div class="diagram-box">
+                    <div class="grid-3" style="text-align: center;">
+                        <div style="background: #e3f2fd; padding: 20px; border-radius: 10px;">
+                            <h4 style="color: var(--primary);">ロゴス（論理）</h4>
+                            <p>データ・事実に基づく<br>論理的な説明</p>
+                            <p style="font-size: 0.9em;">「数字で示す」</p>
+                        </div>
+                        <div style="background: #f3e5f5; padding: 20px; border-radius: 10px;">
+                            <h4 style="color: var(--secondary);">パトス（感情）</h4>
+                            <p>相手の感情に訴える<br>共感を得る</p>
+                            <p style="font-size: 0.9em;">「心を動かす」</p>
+                        </div>
+                        <div style="background: #e8f5e9; padding: 20px; border-radius: 10px;">
+                            <h4 style="color: var(--success);">エトス（信頼）</h4>
+                            <p>日頃の言動による<br>信頼の積み重ね</p>
+                            <p style="font-size: 0.9em;">「この人の言うことなら」</p>
+                        </div>
+                    </div>
+                </div>
+
+                <h3>説得のテクニック</h3>
+                <table>
+                    <tr>
+                        <th style="width: 25%;">テクニック</th>
+                        <th style="width: 35%;">説明</th>
+                        <th style="width: 40%;">具体例</th>
+                    </tr>
+                    <tr>
+                        <td><strong>メリットを先に</strong></td>
+                        <td>相手にとっての利点を最初に伝える</td>
+                        <td>「この方法だと作業時間が30分短縮できます」</td>
+                    </tr>
+                    <tr>
+                        <td><strong>選択肢を示す</strong></td>
+                        <td>複数の選択肢を提示して選ばせる</td>
+                        <td>「A案とB案があります。A案はコスト重視、B案は品質重視です」</td>
+                    </tr>
+                    <tr>
+                        <td><strong>実績を示す</strong></td>
+                        <td>成功事例を提示する</td>
+                        <td>「他の事業所で同じ取り組みを行い、20%改善しました」</td>
+                    </tr>
+                    <tr>
+                        <td><strong>リスクも伝える</strong></td>
+                        <td>デメリットも正直に伝えることで信頼を得る</td>
+                        <td>「導入初月は一時的に負担が増える可能性があります」</td>
+                    </tr>
+                    <tr>
+                        <td><strong>相手の立場で考える</strong></td>
+                        <td>相手が何を重視しているかを理解する</td>
+                        <td>「施設様のご懸念は○○だと思いますので、△△で対応します」</td>
+                    </tr>
+                </table>
+
+                <!-- 根拠ある説明 -->
+                <h2>根拠ある説明</h2>
+                <h3>「なぜ？」に答えられる説明</h3>
+                <div class="grid-2">
+                    <div class="danger-box">
+                        <h4>根拠のない説明</h4>
+                        <ul>
+                            <li>「なんとなくそう思います」</li>
+                            <li>「経験上、そうです」</li>
+                            <li>「みんなそう言っています」</li>
+                            <li>「以前からそうしています」</li>
+                        </ul>
+                    </div>
+                    <div class="success-box">
+                        <h4>根拠のある説明</h4>
+                        <ul>
+                            <li>「過去3ヶ月のデータによると〜」</li>
+                            <li>「他事業所の実績では〜」</li>
+                            <li>「業界標準では〜」</li>
+                            <li>「○○の調査によると〜」</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <h3>根拠として使えるもの</h3>
+                <table>
+                    <tr>
+                        <th>根拠の種類</th>
+                        <th>具体例</th>
+                        <th>説得力</th>
+                    </tr>
+                    <tr>
+                        <td><strong>自社データ</strong></td>
+                        <td>過去の実績、KPI推移、他事業所の事例</td>
+                        <td><span class="badge badge-success">高い</span></td>
+                    </tr>
+                    <tr>
+                        <td><strong>業界データ</strong></td>
+                        <td>業界平均、ベンチマーク、統計データ</td>
+                        <td><span class="badge badge-primary">高い</span></td>
+                    </tr>
+                    <tr>
+                        <td><strong>第三者評価</strong></td>
+                        <td>施設からのフィードバック、監査結果</td>
+                        <td><span class="badge badge-primary">高い</span></td>
+                    </tr>
+                    <tr>
+                        <td><strong>専門家の見解</strong></td>
+                        <td>栄養士の意見、コンサルの提言</td>
+                        <td><span class="badge badge-info">中程度</span></td>
+                    </tr>
+                    <tr>
+                        <td><strong>現場の声</strong></td>
+                        <td>スタッフからのヒアリング結果</td>
+                        <td><span class="badge badge-warning">補助的</span></td>
+                    </tr>
+                </table>
+
+                <!-- 伝わる文章 -->
+                <h2>伝わる文章の書き方</h2>
+                <h3>文章の基本ルール</h3>
+                <div class="grid-2">
+                    <div class="card">
+                        <h4>1. 一文を短く</h4>
+                        <div style="background: #ffebee; padding: 10px; border-radius: 5px; margin-bottom: 10px;">
+                            <p style="margin: 0;"><strong>悪い例：</strong>本日、A事業所を巡回したところ、チーフから人員不足の相談があり、確認したところ早番のパートが2名退職予定であることが判明し、採用活動を開始する必要があると考えます。</p>
+                        </div>
+                        <div style="background: #e8f5e9; padding: 10px; border-radius: 5px;">
+                            <p style="margin: 0;"><strong>良い例：</strong>本日、A事業所を巡回しました。チーフから人員不足の相談を受けました。確認したところ、早番のパートが2名退職予定です。採用活動の開始が必要です。</p>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <h4>2. 主語と述語を近づける</h4>
+                        <div style="background: #ffebee; padding: 10px; border-radius: 5px; margin-bottom: 10px;">
+                            <p style="margin: 0;"><strong>悪い例：</strong>私は、昨日の会議で議論された新しい衛生管理ルールについて、現場への導入を来月から開始することを提案します。</p>
+                        </div>
+                        <div style="background: #e8f5e9; padding: 10px; border-radius: 5px;">
+                            <p style="margin: 0;"><strong>良い例：</strong>新しい衛生管理ルールの現場導入を提案します。来月から開始したいと考えています。</p>
+                        </div>
+                    </div>
+                </div>
+
+                <h3>ビジネスメールの基本構成</h3>
+                <div class="card">
+                    <table>
+                        <tr>
+                            <td style="width: 20%; vertical-align: top;"><strong>件名</strong></td>
+                            <td>【報告】A事業所 食材費改善施策の結果について</td>
+                        </tr>
+                        <tr>
+                            <td style="vertical-align: top;"><strong>宛名</strong></td>
+                            <td>○○部長</td>
+                        </tr>
+                        <tr>
+                            <td style="vertical-align: top;"><strong>挨拶</strong></td>
+                            <td>お疲れ様です。SVの○○です。</td>
+                        </tr>
+                        <tr>
+                            <td style="vertical-align: top;"><strong>要件（結論）</strong></td>
+                            <td>A事業所の食材費改善施策について、1ヶ月の結果をご報告します。<br>結論として、食材費率は42%→39%に改善しました。</td>
+                        </tr>
+                        <tr>
+                            <td style="vertical-align: top;"><strong>詳細</strong></td>
+                            <td>
+                                【施策内容】発注基準の見直し、廃棄削減の取り組み<br>
+                                【結果】食材費率3%改善、廃棄量30%削減<br>
+                                【今後】他事業所への横展開を検討中
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="vertical-align: top;"><strong>アクション</strong></td>
+                            <td>特にご対応いただく事項はございません。<br>ご質問があればお知らせください。</td>
+                        </tr>
+                        <tr>
+                            <td style="vertical-align: top;"><strong>署名</strong></td>
+                            <td>○○エリア SV 氏名</td>
+                        </tr>
+                    </table>
+                </div>
+
+                <!-- まとめ -->
+                <h2>まとめ：報告・説得スキルの要点</h2>
+                <div class="success-box">
+                    <div class="grid-2" style="text-align: center;">
+                        <div>
+                            <h4>報告の鉄則</h4>
+                            <p>結論から先に<br>事実と意見を分ける<br>数字を使う<br>悪いことほど早く</p>
+                        </div>
+                        <div>
+                            <h4>説得の3要素</h4>
+                            <p>ロゴス（論理）<br>パトス（感情）<br>エトス（信頼）</p>
+                        </div>
+                    </div>
+                    <div style="margin-top: 20px; padding: 15px; background: linear-gradient(135deg, var(--primary), var(--secondary)); color: white; border-radius: 10px; text-align: center;">
+                        <p style="margin: 0; font-size: 1.1em;"><strong>「伝える力」は「信頼を作る力」。日々の報告・説明で信頼を積み重ねよう</strong></p>
+                    </div>
+                </div>
+
+                <h3>報告・説得スキル チェックリスト</h3>
+                <ul class="checklist">
+                    <li>報告は結論から先に伝えている</li>
+                    <li>事実と意見を分けて説明している</li>
+                    <li>数字を使って具体的に説明している</li>
+                    <li>悪いニュースは早めに報告している</li>
+                    <li>PREP法を意識して文章を書いている</li>
+                    <li>説得時は相手のメリットを先に伝えている</li>
+                    <li>根拠を示して説明している</li>
+                    <li>週報・月報を期限通りに提出している</li>
+                </ul>
+
+                <div class="nav-buttons">
+                    <a href="slide-31.html" class="nav-btn">← 前へ</a>
+                    <a href="slide-33.html" class="nav-btn">次へ →</a>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="scripts.js"></script>
+</body>
+</html>

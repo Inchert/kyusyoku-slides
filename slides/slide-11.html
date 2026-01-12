@@ -1,0 +1,863 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SV現場研修ガイド - ハーベスト SV研修資料</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- ハンバーガーメニューボタン -->
+    <button class="hamburger" onclick="toggleMenu()">
+        <span></span>
+        <span></span>
+        <span></span>
+    </button>
+    <div class="overlay" onclick="toggleMenu()"></div>
+
+    <!-- ツールバー非表示ボタン -->
+    <button class="toolbar-toggle" id="toolbarToggle" onclick="toggleToolbar()">
+        <svg viewBox="0 0 24 24"><path d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z"/></svg>
+    </button>
+
+    <!-- ツールバー -->
+    <div class="toolbar" id="toolbar">
+        <button id="searchBtn" onclick="toggleSearch()">
+            <svg viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg>
+        </button>
+        <button id="memoBtn" onclick="toggleMemo()">
+            <svg viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V5h14v14zm-2-8H7v-2h10v2zm-4 4H7v-2h6v2z"/></svg>
+        </button>
+        <button id="checkBtn" onclick="toggleCheckMode()">
+            <svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>
+        </button>
+    </div>
+
+    <!-- 検索パネル -->
+    <div class="search-panel" id="searchPanel">
+        <input type="text" id="searchInput" placeholder="検索..." oninput="performSearch()">
+        <div class="search-results" id="searchResults"></div>
+    </div>
+
+    <!-- メモパネル -->
+    <div class="memo-panel" id="memoPanel">
+        <h3>メモ</h3>
+        <textarea id="memoText" placeholder="このスライドのメモを入力..."></textarea>
+        <div class="memo-actions">
+            <button class="save-btn" onclick="saveMemo()">保存</button>
+            <button class="clear-btn" onclick="clearMemo()">クリア</button>
+        </div>
+        <div class="memo-saved" id="memoSaved">保存しました</div>
+    </div>
+
+    <!-- チェックモードインジケーター -->
+    <div class="check-mode-indicator" id="checkIndicator">チェックモード ON</div>
+
+    <div class="container">
+        <nav class="sidebar">
+            <h2>SV研修資料</h2>
+            <a href="index.html" class="nav-item"><span class="num">0</span><span>目次</span></a>
+            <a href="slide-01.html" class="nav-item"><span class="num">1</span><span>給食業界入門</span></a>
+            <a href="slide-02.html" class="nav-item"><span class="num">2</span><span>市場規模・将来予測</span></a>
+            <a href="slide-03.html" class="nav-item"><span class="num">3</span><span>業界構造・ビジネスモデル</span></a>
+            <a href="slide-04.html" class="nav-item"><span class="num">4</span><span>主要プレイヤー</span></a>
+            <a href="slide-05.html" class="nav-item"><span class="num">5</span><span>競合比較</span></a>
+            <a href="slide-06.html" class="nav-item"><span class="num">6</span><span>ハーベスト会社紹介</span></a>
+            <a href="slide-07.html" class="nav-item"><span class="num">7</span><span>給食関連法規</span></a>
+            <a href="slide-08.html" class="nav-item"><span class="num">8</span><span>業界課題</span></a>
+            <a href="slide-09.html" class="nav-item"><span class="num">9</span><span>トレンド・将来展望</span></a>
+            <a href="slide-10.html" class="nav-item"><span class="num">10</span><span>入社検討ポイント</span></a>
+            <a href="slide-11.html" class="nav-item active"><span class="num">11</span><span>SV現場研修ガイド</span></a>
+            <a href="slide-12.html" class="nav-item"><span class="num">12</span><span>ヘルスケア事業</span></a>
+            <a href="slide-13.html" class="nav-item"><span class="num">13</span><span>SV着任後ガイド</span></a>
+            <a href="slide-14.html" class="nav-item"><span class="num">14</span><span>SV実務マニュアル</span></a>
+            <a href="slide-15.html" class="nav-item"><span class="num">15</span><span>新規営業ガイド</span></a>
+            <a href="slide-16.html" class="nav-item"><span class="num">16</span><span>緊急時対応</span></a>
+            <a href="slide-17.html" class="nav-item"><span class="num">17</span><span>衛生管理基礎</span></a>
+            <a href="slide-18.html" class="nav-item"><span class="num">18</span><span>給食オペレーション</span></a>
+            <a href="slide-19.html" class="nav-item"><span class="num">19</span><span>栄養管理基礎</span></a>
+            <a href="slide-20.html" class="nav-item"><span class="num">20</span><span>原価管理入門</span></a>
+            <a href="slide-21.html" class="nav-item"><span class="num">21</span><span>労務管理の基本</span></a>
+            <a href="slide-22.html" class="nav-item"><span class="num">22</span><span>クライアント対応術</span></a>
+            <a href="slide-23.html" class="nav-item"><span class="num">23</span><span>トラブル対応</span></a>
+            <a href="slide-24.html" class="nav-item"><span class="num">24</span><span>給食システム入門</span></a>
+            <a href="slide-25.html" class="nav-item"><span class="num">A</span><span>専門用語集（付録A）</span></a>
+            <a href="slide-26.html" class="nav-item"><span class="num">B</span><span>SV分析ツール（付録B）</span></a>
+            <a href="slide-27.html" class="nav-item"><span class="num">C</span><span>キャリアパス（付録C）</span></a>
+            <a href="slide-28.html" class="nav-item"><span class="num">D</span><span>SVの役割と4つの柱</span></a>
+            <a href="slide-29.html" class="nav-item"><span class="num">E</span><span>人のマネジメント</span></a>
+            <a href="slide-30.html" class="nav-item"><span class="num">F</span><span>数値・改善思考</span></a>
+            <a href="slide-31.html" class="nav-item"><span class="num">G</span><span>データに基づく意思決定</span></a>
+            <a href="slide-32.html" class="nav-item"><span class="num">H</span><span>報告・説得スキル</span></a>
+            <a href="slide-33.html" class="nav-item"><span class="num">I</span><span>SV心構えと自己研鑽</span></a>
+        </nav>
+
+        <main class="main-content">
+            <div class="slide active">
+                <h1>第11章 SV現場研修ガイド（SV候補者向け）</h1>
+
+                <!-- 現場研修の意義 -->
+                <h2>現場研修の意義</h2>
+                <div class="success-box">
+                    <h4>なぜ現場研修が必要か</h4>
+                    <ul>
+                        <li><strong>現場を知らなければ、現場を管理できない</strong> - 実際に調理・配膳を経験することで業務を理解</li>
+                        <li><strong>スタッフの気持ちがわかるようになる</strong> - 「大変さ」を体感することで信頼を得られる</li>
+                        <li><strong>問題の本質が見えるようになる</strong> - 表面的な報告だけでなく、真の課題がわかる</li>
+                        <li><strong>改善提案ができるようになる</strong> - 経験に基づいた具体的なアドバイスが可能に</li>
+                        <li><strong>現場からの信頼を得られる</strong> - 「この人は現場をわかっている」と認められる</li>
+                    </ul>
+                </div>
+
+                <div class="danger-box">
+                    <h4>現場経験なしでSVになった場合の失敗例</h4>
+                    <ul>
+                        <li>「なぜこんな簡単なことができないの？」 → 実際にやってみると簡単ではない</li>
+                        <li>「もっと効率よくやればいい」 → 現場の制約を知らないと机上の空論に</li>
+                        <li>スタッフから信頼されない → 「あの人、現場のこと何も知らないくせに」</li>
+                        <li>本当の問題に気づかない → 表面的な対応しかできない</li>
+                        <li>施設への説明ができない → 「なぜそうなるのか」を説明できない</li>
+                    </ul>
+                </div>
+
+                <!-- 現場研修の目標 -->
+                <h2>現場研修 6ヶ月間の目標</h2>
+                <div class="grid-2">
+                    <div class="card">
+                        <h4>【知識】</h4>
+                        <ul class="checklist">
+                            <li>給食業務の全体像を理解する</li>
+                            <li>衛生管理の基本を完全に身につける</li>
+                            <li>各食種の特徴と調理法を理解する</li>
+                            <li>施設との連携方法を学ぶ</li>
+                            <li>帳票・記録の意味と書き方を覚える</li>
+                        </ul>
+                    </div>
+                    <div class="card">
+                        <h4>【技術】</h4>
+                        <ul class="checklist">
+                            <li>基本的な調理作業ができるようになる</li>
+                            <li>盛り付け・配膳ができるようになる</li>
+                            <li>洗浄・清掃作業ができるようになる</li>
+                            <li>温度管理・記録ができるようになる</li>
+                        </ul>
+                    </div>
+                    <div class="card">
+                        <h4>【マインド】</h4>
+                        <ul class="checklist">
+                            <li>現場スタッフの苦労を体感する</li>
+                            <li>食事を届ける喜びを実感する</li>
+                            <li>チームワークの大切さを学ぶ</li>
+                            <li>「利用者のために」という意識を持つ</li>
+                        </ul>
+                    </div>
+                    <div class="card">
+                        <h4>【人間関係】</h4>
+                        <ul class="checklist">
+                            <li>現場スタッフとの信頼関係を築く</li>
+                            <li>施設側スタッフとの関係を築く</li>
+                            <li>「一緒に働く仲間」として認められる</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- 6ヶ月間のロードマップ -->
+                <h2>6ヶ月間のロードマップ</h2>
+                <div class="timeline">
+                    <div class="timeline-item">
+                        <div class="timeline-time">1ヶ月目：基本習得期</div>
+                        <p>業務の流れを覚える / 衛生管理の基本を学ぶ / 洗浄・清掃作業を担当</p>
+                        <p><strong>目標：「1日の流れを理解する」</strong></p>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-time">2ヶ月目：作業習得期</div>
+                        <p>下処理・盛り付け・配膳作業を担当 / 食種の違いを学ぶ</p>
+                        <p><strong>目標：「基本作業を一人でできる」</strong></p>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-time">3ヶ月目：調理習得期</div>
+                        <p>簡単な調理（和え物、汁物等）担当 / 嚥下調整食・治療食を学ぶ / 発注・在庫管理</p>
+                        <p><strong>目標：「調理の基本ができる」</strong></p>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-time">4ヶ月目：応用習得期</div>
+                        <p>主菜の調理担当 / 複数作業を並行 / アレルギー対応実践 / 施設との連携</p>
+                        <p><strong>目標：「一通りの作業ができる」</strong></p>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-time">5ヶ月目：リーダー体験期</div>
+                        <p>シフトリーダー体験 / パートさんへの指示出し / トラブル対応経験 / 責任者の補佐</p>
+                        <p><strong>目標：「チームをまとめる経験をする」</strong></p>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-time">6ヶ月目：まとめ・移行期</div>
+                        <p>現場研修の振り返り / SV業務への引継ぎ準備 / 先輩SVへの同行開始</p>
+                        <p><strong>目標：「現場を卒業し、SVとしてスタートする」</strong></p>
+                    </div>
+                </div>
+
+                <!-- 早番の1日 -->
+                <h2>早番の1日（例：病院・施設）</h2>
+                <table>
+                    <tr><th>時間</th><th>業務内容</th></tr>
+                    <tr><td>5:00</td><td>出勤・体調確認（検温）・着替え（白衣・帽子・マスク）・手洗い</td></tr>
+                    <tr><td>5:30</td><td>朝食準備開始：当日の献立確認・食材確認・下処理・調理開始</td></tr>
+                    <tr><td>6:30</td><td>朝食調理：主菜・汁物・ご飯の準備</td></tr>
+                    <tr><td>7:00</td><td>盛り付け・配膳準備：食種別盛付・嚥下調整食仕上げ・トレイセット・配膳車積込</td></tr>
+                    <tr><td>7:30</td><td><span class="badge badge-primary">朝食提供</span>：配膳・温度確認</td></tr>
+                    <tr><td>8:30</td><td>後片付け・昼食準備：食器回収・洗浄・昼食下処理開始</td></tr>
+                    <tr><td>10:00</td><td>昼食調理開始</td></tr>
+                    <tr><td>11:30</td><td>昼食盛り付け・配膳準備</td></tr>
+                    <tr><td>12:00</td><td><span class="badge badge-primary">昼食提供</span></td></tr>
+                    <tr><td>13:00</td><td>後片付け：食器洗浄・厨房清掃・翌日準備</td></tr>
+                    <tr><td>14:00</td><td>退勤（早番終了）</td></tr>
+                </table>
+
+                <!-- 業務別の学びポイント -->
+                <h2>業務別の学びポイント</h2>
+                <div class="grid-2">
+                    <div class="card">
+                        <h4>下処理作業で学ぶこと</h4>
+                        <p><strong>野菜：</strong>洗浄方法（3回洗い）、切り方（統一した大きさ・食べやすさ）、保管方法、廃棄量削減（歩留まり意識）</p>
+                        <p><strong>肉・魚：</strong>検収時チェック（品温・鮮度）、解凍方法（流水・冷蔵庫解凍）、二次汚染防止（まな板・包丁使い分け）、下味付け</p>
+                        <p><em>学びのポイント：「なぜそうするのか」を考える、効率よい作業の工夫を観察、先輩の動きを真似る</em></p>
+                    </div>
+                    <div class="card">
+                        <h4>調理作業で学ぶこと</h4>
+                        <p><strong>大量調理の特徴：</strong>家庭料理との違い（量が多い、時間がかかる、段取り重要）、調理機器の使い方（スチコン・回転釜・フライヤー）、温度管理（中心温度75℃以上）、味付け調整（大量調理は味がぼやけやすい）</p>
+                        <p><strong>食種別調理：</strong>一般食と治療食の違い、嚥下調整食の作り方（ミキサー食・ソフト食・ゼリー食）、減塩・エネルギー調整のコツ、アレルギー対応（別鍋・別調理）</p>
+                    </div>
+                    <div class="card">
+                        <h4>盛り付け・配膳で学ぶこと</h4>
+                        <p><strong>盛り付け：</strong>分量の統一（計量意識）、見た目の美しさ（彩り・配置）、食種別盛付（嚥下食は特に見た目重要）、温度管理（温かいものは温かく）、トレイ配置ルール</p>
+                        <p><strong>配膳：</strong>配膳表確認（誰に何を届けるか）、名前・部屋番号確認（間違い防止）、アレルギー・禁止食品のダブルチェック、施設スタッフへの引き渡し、時間厳守</p>
+                    </div>
+                    <div class="card">
+                        <h4>洗浄・清掃で学ぶこと</h4>
+                        <p><strong>食器洗浄：</strong>下洗い→洗浄機→乾燥の流れ、洗浄温度確認（80℃以上のすすぎ）、残渣処理、洗浄機メンテナンス</p>
+                        <p><strong>厨房清掃：</strong>毎日清掃（床・作業台・機器）、週次清掃（壁・換気扇）、消毒方法（アルコール・次亜塩素酸）、グリストラップ清掃、害虫防止対策</p>
+                        <p><em>「見えないところ」こそ衛生管理の要、清掃は次の調理の準備</em></p>
+                    </div>
+                </div>
+
+                <!-- 衛生管理チェックリスト -->
+                <h2>衛生管理 毎日のチェックリスト</h2>
+                <div class="grid-3">
+                    <div class="card" style="background: #e3f2fd;">
+                        <h4>【出勤時】</h4>
+                        <ul class="checklist">
+                            <li>体調確認（発熱・下痢・嘔吐）</li>
+                            <li>手指の傷・化膿確認</li>
+                            <li>爪は短く切っているか</li>
+                            <li>アクセサリー・時計を外す</li>
+                            <li>専用ユニフォーム着替え</li>
+                            <li>帽子で髪を完全に覆う</li>
+                            <li>マスク着用</li>
+                            <li>手洗い（30秒以上、2回洗い）</li>
+                        </ul>
+                    </div>
+                    <div class="card" style="background: #fff3e0;">
+                        <h4>【作業中】</h4>
+                        <ul class="checklist">
+                            <li>作業変更ごとに手洗い</li>
+                            <li>トイレ後は必ず手洗い</li>
+                            <li>生もの・加熱済みの区別</li>
+                            <li>まな板・包丁の使い分け</li>
+                            <li>中心温度確認・記録</li>
+                            <li>冷蔵庫・冷凍庫温度確認</li>
+                        </ul>
+                    </div>
+                    <div class="card" style="background: #f3e5f5;">
+                        <h4>【終業時】</h4>
+                        <ul class="checklist">
+                            <li>作業台・機器の洗浄・消毒</li>
+                            <li>床の清掃</li>
+                            <li>残渣の処理</li>
+                            <li>冷蔵庫内の整理</li>
+                            <li>翌日の準備確認</li>
+                            <li>記録の完成</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- 手洗いの手順 -->
+                <h3>正しい手洗いの手順（所要時間：最低30秒以上）</h3>
+                <div class="steps">
+                    <div class="step"><div class="step-number">1</div><div class="step-label">流水で濡らす</div></div>
+                    <div class="step"><div class="step-number">2</div><div class="step-label">石けんを取る</div></div>
+                    <div class="step"><div class="step-number">3</div><div class="step-label">手のひら</div></div>
+                    <div class="step"><div class="step-number">4</div><div class="step-label">手の甲</div></div>
+                    <div class="step"><div class="step-number">5</div><div class="step-label">指の間</div></div>
+                    <div class="step"><div class="step-number">6</div><div class="step-label">親指ねじり</div></div>
+                    <div class="step"><div class="step-number">7</div><div class="step-label">指先・爪</div></div>
+                    <div class="step"><div class="step-number">8</div><div class="step-label">手首</div></div>
+                </div>
+                <p><strong>手洗いのタイミング：</strong>作業開始前 / トイレ後 / 生もの触った後 / 作業変更時 / 電話後 / 顔・髪触った後</p>
+
+                <!-- 食種の違い -->
+                <h2>食種の違いを理解する</h2>
+                <div class="flowchart">
+                    <div class="flow-step">常食 - 普通のご飯・おかず（噛む力・飲み込む力に問題なし）</div>
+                    <div class="flow-arrow">↓</div>
+                    <div class="flow-step">軟菜食（やわらか食） - やわらかく煮た料理（噛む力がやや弱い）</div>
+                    <div class="flow-arrow">↓</div>
+                    <div class="flow-step">全粥食 - 主食がお粥（ご飯が食べにくい）</div>
+                    <div class="flow-arrow">↓</div>
+                    <div class="flow-step" style="background: #ff9800;">嚥下調整食4 - 軟らかく調理・とろみ付き（飲み込みやや困難）</div>
+                    <div class="flow-arrow">↓</div>
+                    <div class="flow-step" style="background: #ff7043;">嚥下調整食3 - やわらか食・まとまりやすい（飲み込み困難）</div>
+                    <div class="flow-arrow">↓</div>
+                    <div class="flow-step" style="background: #ef5350;">嚥下調整食2 - ペースト・ミキサー状（噛む力がほとんどない）</div>
+                    <div class="flow-arrow">↓</div>
+                    <div class="flow-step" style="background: #e53935;">嚥下調整食1 - ゼリー・プリン状（飲み込みが非常に困難）</div>
+                    <div class="flow-arrow">↓</div>
+                    <div class="flow-step" style="background: #c62828;">嚥下調整食0 - 嚥下訓練用ゼリー（リハビリ段階）</div>
+                </div>
+
+                <table>
+                    <tr><th>学びのポイント</th><th>具体的な確認事項</th></tr>
+                    <tr><td>見た目の違い</td><td>同じメニューが食種でどう変わるか観察</td></tr>
+                    <tr><td>調理方法の違い</td><td>嚥下食はどう作るか、とろみの付け方</td></tr>
+                    <tr><td>盛り付けの違い</td><td>嚥下食でも「おいしそう」に見せる工夫</td></tr>
+                    <tr><td>患者・入所者の反応</td><td>どの食種の人がどう食べているか観察</td></tr>
+                </table>
+
+                <!-- 信頼される新人になるために -->
+                <h2>現場で信頼される新人になるために</h2>
+                <div class="grid-2">
+                    <div class="card" style="background: #e8f5e9;">
+                        <h4>基本姿勢</h4>
+                        <ul>
+                            <li>謙虚に学ぶ姿勢</li>
+                            <li>「教えてください」と素直に言う</li>
+                            <li>言われたことは素直にやる</li>
+                            <li>同じミスを繰り返さない</li>
+                        </ul>
+                    </div>
+                    <div class="card" style="background: #e3f2fd;">
+                        <h4>コミュニケーション</h4>
+                        <ul>
+                            <li>挨拶は自分から、大きな声で</li>
+                            <li>名前を覚えて呼ぶ</li>
+                            <li>「ありがとうございます」を忘れない</li>
+                            <li>雑談にも参加する（休憩時間等）</li>
+                        </ul>
+                    </div>
+                    <div class="card" style="background: #fff3e0;">
+                        <h4>行動</h4>
+                        <ul>
+                            <li>誰よりも早く動く</li>
+                            <li>汚れ仕事、きつい仕事を進んでやる</li>
+                            <li>時間を守る（遅刻厳禁）</li>
+                            <li>メモを取る</li>
+                        </ul>
+                    </div>
+                    <div class="card" style="background: #ffebee;">
+                        <h4>注意すべきこと</h4>
+                        <ul>
+                            <li>「前の職場では〜」と言わない</li>
+                            <li>「知ってます」と言わない</li>
+                            <li>先輩の仕事を批判しない</li>
+                            <li>最初から改善提案しない</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- ベテランパートさんとの付き合い方 -->
+                <h3>ベテランパートさんとの付き合い方</h3>
+                <div class="info-box">
+                    <p><strong>パートさんは「現場のプロ」</strong></p>
+                    <ul>
+                        <li>何年も同じ現場で働いている</li>
+                        <li>その施設のことを一番よく知っている</li>
+                        <li>調理の腕は一流の人も多い</li>
+                    </ul>
+                    <p><strong>だから：</strong>敬意を持って接する / 「教えてください」とお願いする / 上から目線は絶対NG / 「将来SVになる」は言わない方が無難 / 味方になってもらえると心強い</p>
+                </div>
+
+                <!-- 現場研修での正しい立ち位置 -->
+                <h2>現場研修での正しい立ち位置</h2>
+                <div class="warning-box">
+                    <h4>結論：「まだSVじゃない顔」で入る</h4>
+                    <p><strong>指示しない / 正解を押し付けない / 仕切らない</strong></p>
+                    <p>まずは <strong>"現場の一員（ただし観察力高め）"</strong> がベスト</p>
+                </div>
+
+                <div class="grid-2">
+                    <div class="card" style="background: #e8f5e9;">
+                        <h4>正しい最初の挨拶</h4>
+                        <p>「SVとして来ましたが、まずは現場をしっかり理解したくて来ています」</p>
+                        <p>→ この一言で警戒心が9割消えます</p>
+                    </div>
+                    <div class="card" style="background: #ffebee;">
+                        <h4>NGな挨拶</h4>
+                        <ul>
+                            <li>「改善点を見に来ました」</li>
+                            <li>「やり方を見直します」</li>
+                            <li>「本部の指示で」</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- 給食業界ならではの地雷 -->
+                <h3>給食業界ならではの"地雷"を踏まない</h3>
+                <div class="card">
+                    <p><strong>給食現場の特徴：</strong>ベテラン女性が多い / 独自ルール・暗黙知が強い / 安全・衛生が最優先 / 忙しい時間帯は殺気立つ</p>
+                    <p><strong>立ち振る舞いの基本：</strong></p>
+                    <ul>
+                        <li>作業を止めて質問しない</li>
+                        <li>ピークタイムは話しかけない</li>
+                        <li>「それ、危なくないですか？」は言わない</li>
+                        <li>衛生ルールの運用実態を観察</li>
+                        <li>曜日・献立による差を把握</li>
+                    </ul>
+                    <p><em>→ マニュアルより現実を見る</em></p>
+                </div>
+
+                <!-- 研修中に観察すべき5つの視点 -->
+                <h2>研修中に観察すべき5つの視点</h2>
+                <div class="grid-3">
+                    <div class="card">
+                        <h4>【人】</h4>
+                        <ul>
+                            <li>誰がキーパーソンか（責任者以外にも影響力ある人）</li>
+                            <li>スタッフ同士の関係性（派閥、仲良しグループ）</li>
+                            <li>困ったとき誰に聞いているか</li>
+                            <li>新人への態度はどうか</li>
+                        </ul>
+                    </div>
+                    <div class="card">
+                        <h4>【モノ】</h4>
+                        <ul>
+                            <li>設備の使い方（マニュアル通りか独自か）</li>
+                            <li>道具の配置・動線</li>
+                            <li>食材の保管状態</li>
+                            <li>掲示物（古いまま放置されてないか）</li>
+                        </ul>
+                    </div>
+                    <div class="card">
+                        <h4>【時間】</h4>
+                        <ul>
+                            <li>どの時間帯が最も忙しいか</li>
+                            <li>休憩はいつ、どのように取っているか</li>
+                            <li>納品・検品のタイミング</li>
+                            <li>余裕がある時間帯はいつか</li>
+                        </ul>
+                    </div>
+                    <div class="card">
+                        <h4>【ルール】</h4>
+                        <ul>
+                            <li>マニュアルと実態のギャップ</li>
+                            <li>暗黙の了解（「これはこうやるもの」）</li>
+                            <li>衛生管理の徹底度</li>
+                            <li>記録・帳票の運用状況</li>
+                        </ul>
+                    </div>
+                    <div class="card">
+                        <h4>【雰囲気】</h4>
+                        <ul>
+                            <li>現場の空気感（ピリピリ？和やか？）</li>
+                            <li>コミュニケーションの取り方</li>
+                            <li>問題が起きたときの対処の仕方</li>
+                            <li>施設側との関係性</li>
+                        </ul>
+                    </div>
+                </div>
+                <p><strong>→ 観察したことはその日のうちにメモ</strong></p>
+
+                <!-- 質問の仕方 -->
+                <h2>質問の仕方</h2>
+                <div class="grid-2">
+                    <div class="card" style="background: #ffebee;">
+                        <h4>NGな聞き方</h4>
+                        <table>
+                            <tr><th>NG例</th><th>なぜダメか</th></tr>
+                            <tr><td>「なんでこのやり方なんですか？」</td><td>否定に聞こえる</td></tr>
+                            <tr><td>「マニュアルと違いますよね？」</td><td>指摘・批判に聞こえる</td></tr>
+                            <tr><td>「これ、効率悪くないですか？」</td><td>上から目線</td></tr>
+                            <tr><td>「前の現場ではこうでしたけど」</td><td>比較は嫌われる</td></tr>
+                        </table>
+                    </div>
+                    <div class="card" style="background: #e8f5e9;">
+                        <h4>OKな聞き方</h4>
+                        <table>
+                            <tr><th>OK例</th><th>効果</th></tr>
+                            <tr><td>「これ、どうやるんですか？」</td><td>素直に教わる姿勢</td></tr>
+                            <tr><td>「コツとかあったら教えてください」</td><td>相手を立てる</td></tr>
+                            <tr><td>「〇〇さんすごいですね」</td><td>承認＋興味</td></tr>
+                            <tr><td>「ここの現場ならではの工夫は？」</td><td>現場へのリスペクト</td></tr>
+                        </table>
+                    </div>
+                </div>
+                <p><strong>質問のタイミング：</strong>○作業が落ち着いた後 / ○休憩中（相手の様子を見て） / ○片付けしながら / ×調理中・配膳中 / ×忙しそうなとき</p>
+
+                <!-- 信頼を得る3原則 -->
+                <h2>信頼を得る3原則</h2>
+                <div class="grid-3">
+                    <div class="card" style="border-top: 4px solid var(--success);">
+                        <h4>原則1: まず動く</h4>
+                        <ul>
+                            <li>「何かやれることありますか？」</li>
+                            <li>雑用でも喜んでやる</li>
+                            <li>洗い物・運搬・清掃を進んでやる</li>
+                        </ul>
+                        <p><em>見ているだけ→「何しに来たの？」</em></p>
+                    </div>
+                    <div class="card" style="border-top: 4px solid var(--primary);">
+                        <h4>原則2: 覚える努力を見せる</h4>
+                        <ul>
+                            <li>メモを取る（見えるところで）</li>
+                            <li>名前を覚える（できれば初日で全員）</li>
+                            <li>教わったことは2回目から自分でやる</li>
+                        </ul>
+                    </div>
+                    <div class="card" style="border-top: 4px solid var(--warning);">
+                        <h4>原則3: 感謝を伝える</h4>
+                        <ul>
+                            <li>「ありがとうございます」を惜しまない</li>
+                            <li>「〇〇さんのおかげで分かりました」</li>
+                            <li>教えてもらったことを実践→報告</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- 困った場面と対処法 -->
+                <h2>困った場面と対処法</h2>
+                <div class="grid-2">
+                    <div class="card">
+                        <h4>明らかに間違ったやり方をしている</h4>
+                        <p><span class="badge badge-danger">NG</span> その場で指摘する / 「それ違いますよ」</p>
+                        <p><span class="badge badge-success">OK</span> 黙って観察してメモ / 後日責任者に「確認」として聞く / 安全に関わる場合のみ責任者にそっと相談</p>
+                    </div>
+                    <div class="card">
+                        <h4>ベテランに冷たくされる</h4>
+                        <p><span class="badge badge-danger">NG</span> 避ける・距離を置く / 上司に報告して何とかしてもらおうとする</p>
+                        <p><span class="badge badge-success">OK</span> 淡々と丁寧に接し続ける / その人の仕事を認める発言 / 時間をかけて関係構築</p>
+                    </div>
+                    <div class="card">
+                        <h4>何をしていいか分からない</h4>
+                        <p><span class="badge badge-danger">NG</span> ぼーっと立っている / スマホを見る</p>
+                        <p><span class="badge badge-success">OK</span> 「次、何かやれることありますか？」 / 周りを見てできそうな片付け・清掃</p>
+                    </div>
+                    <div class="card">
+                        <h4>ミスをしてしまった</h4>
+                        <p><span class="badge badge-danger">NG</span> 隠す・ごまかす / 言い訳をする</p>
+                        <p><span class="badge badge-success">OK</span> すぐに報告 / 「すみません、〇〇してしまいました」 / リカバリーを一緒にやる / 同じミスは絶対にしない</p>
+                    </div>
+                    <div class="card">
+                        <h4>衛生上の問題を発見した</h4>
+                        <p><span class="badge badge-danger">NG</span> 全員の前で指摘する / いきなり本部に報告</p>
+                        <p><span class="badge badge-success">OK</span> 責任者に個別に相談 / 「ちょっと確認したいことが…」 / 重大な問題は上長に報告（現場には配慮）</p>
+                    </div>
+                </div>
+                <p><em>→ <strong>「正しいこと」より「正しい伝え方」</strong></em></p>
+
+                <!-- 研修終了時に言うと強い一言 -->
+                <h2>研修終了時に言うと強い一言</h2>
+                <div class="success-box" style="text-align: center;">
+                    <p style="font-size: 1.1em;">「今日までありがとうございました。<br>ここで教えてもらったやり方を<br>どう活かせるか、ちゃんと考えます」</p>
+                    <p>→ これで <strong>「敵じゃないSV」認定</strong> されます</p>
+                </div>
+                <p><strong>さらに効果的な行動：</strong>全員に個別で挨拶・お礼 / 「〇〇さんに教えてもらった△△、勉強になりました」と具体的に / 後日お礼のメッセージを責任者経由で伝える</p>
+
+                <!-- 卒業チェックリスト -->
+                <h2>現場研修 卒業チェックリスト</h2>
+                <div class="grid-3">
+                    <div class="card">
+                        <h4>【業務スキル】</h4>
+                        <ul class="checklist">
+                            <li>1日の業務の流れを説明できる</li>
+                            <li>基本的な調理作業ができる</li>
+                            <li>盛り付け・配膳が正確にできる</li>
+                            <li>衛生管理のポイントを説明できる</li>
+                            <li>食種の違いと調理法を説明できる</li>
+                            <li>嚥下調整食の作り方を理解している</li>
+                            <li>緊急時の対応を知っている</li>
+                        </ul>
+                    </div>
+                    <div class="card">
+                        <h4>【知識】</h4>
+                        <ul class="checklist">
+                            <li>HACCPの7原則を説明できる</li>
+                            <li>温度管理の基準を言える</li>
+                            <li>主な治療食の特徴を説明できる</li>
+                            <li>帳票類の記入ができる</li>
+                            <li>施設との連携方法を理解している</li>
+                        </ul>
+                    </div>
+                    <div class="card">
+                        <h4>【マインド】</h4>
+                        <ul class="checklist">
+                            <li>現場の大変さを体感した</li>
+                            <li>スタッフへの感謝の気持ちがある</li>
+                            <li>利用者のために働く意識がある</li>
+                            <li>改善したいことが見つかった</li>
+                            <li>SVとして現場を支えたいと思える</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- SVとして学ぶべきこと -->
+                <h2>SVの目で見るべきポイント（現場研修中）</h2>
+                <div class="grid-2">
+                    <div class="card">
+                        <h4>【作業効率】</h4>
+                        <ul>
+                            <li>無駄な動きはないか？</li>
+                            <li>効率化できる作業はないか？</li>
+                            <li>なぜこの手順で行っているか？</li>
+                            <li>機器や道具の配置は適切か？</li>
+                        </ul>
+                    </div>
+                    <div class="card">
+                        <h4>【人員配置】</h4>
+                        <ul>
+                            <li>各時間帯に何人いるか？</li>
+                            <li>忙しい時間帯はいつか？</li>
+                            <li>人が足りない時間帯は？</li>
+                            <li>シフトの組み方は適切か？</li>
+                        </ul>
+                    </div>
+                    <div class="card">
+                        <h4>【コスト】</h4>
+                        <ul>
+                            <li>食材のロスはどれくらいか？</li>
+                            <li>光熱費を節約できる部分は？</li>
+                            <li>消耗品の使い方は適切か？</li>
+                            <li>残業が発生しやすい作業は？</li>
+                        </ul>
+                    </div>
+                    <div class="card">
+                        <h4>【品質】</h4>
+                        <ul>
+                            <li>衛生管理は徹底されているか？</li>
+                            <li>味付けのばらつきはないか？</li>
+                            <li>盛り付けの統一感はあるか？</li>
+                            <li>温度管理は適切か？</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- 把握すべき数字 -->
+                <h3>SVとして把握すべき数字</h3>
+                <div class="grid-3">
+                    <div class="card">
+                        <h4>【食数関連】</h4>
+                        <ul>
+                            <li>1日の総食数（朝・昼・夕）</li>
+                            <li>食種別の内訳</li>
+                            <li>欠食数（平均）</li>
+                            <li>行事食の提供頻度</li>
+                        </ul>
+                    </div>
+                    <div class="card">
+                        <h4>【人員関連】</h4>
+                        <ul>
+                            <li>スタッフ総数（正社員・パート・派遣）</li>
+                            <li>時間帯別の配置人数</li>
+                            <li>1食あたり何人で作っているか</li>
+                            <li>残業の発生状況</li>
+                        </ul>
+                    </div>
+                    <div class="card">
+                        <h4>【コスト関連】</h4>
+                        <ul>
+                            <li>1食あたりの食材原価</li>
+                            <li>廃棄ロスの量</li>
+                            <li>消耗品の使用量</li>
+                            <li>光熱費（季節変動）</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- まとめ -->
+                <h2>まとめ：現場研修で得られるもの</h2>
+                <div class="warning-box" style="text-align: center;">
+                    <p style="font-size: 1.2em;"><strong>給食SVは現場に嫌われたら詰み、信頼されたら無双</strong></p>
+                    <p>最初の研修は「評価されに行く場」じゃなく<strong>「信頼を作る場」</strong></p>
+                </div>
+                <div class="grid-2">
+                    <div class="card" style="background: #ffebee;">
+                        <h4>得るべきでないもの</h4>
+                        <ul>
+                            <li>改善点のリスト</li>
+                            <li>問題点の報告書</li>
+                            <li>「自分はできる」という自信</li>
+                        </ul>
+                    </div>
+                    <div class="card" style="background: #e8f5e9;">
+                        <h4>得るべきもの</h4>
+                        <ul>
+                            <li>「あの人なら話を聞いてくれそう」という信頼</li>
+                            <li>現場のリアルな動きの理解</li>
+                            <li>キーパーソンとの関係性</li>
+                            <li>「また来てほしい」と思われる存在感</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- 実践で使えるセリフ集 -->
+                <h2 class="section-title">実践編：すぐに使えるセリフ集</h2>
+
+                <h3>場面別 実践セリフ集</h3>
+                <div class="grid-2">
+                    <div class="card" style="background: #e8f5e9;">
+                        <h4>【初日の挨拶】</h4>
+                        <div style="background: #fff; padding: 15px; border-radius: 5px; margin-bottom: 10px; border-left: 4px solid var(--success);">
+                            <p style="font-style: italic; margin: 0;">「おはようございます。今日から研修でお世話になる○○です。まだ何もわからないので、いろいろ教えていただけると嬉しいです。よろしくお願いします。」</p>
+                        </div>
+                        <p><strong>ポイント：</strong>明るく、はきはきと、でも謙虚に</p>
+                    </div>
+                    <div class="card" style="background: #fff3e0;">
+                        <h4>【手が空いた時】</h4>
+                        <div style="background: #fff; padding: 15px; border-radius: 5px; margin-bottom: 10px; border-left: 4px solid var(--warning);">
+                            <p style="font-style: italic; margin: 0;">「すみません、次に何かやれることありますか？」</p>
+                            <p style="font-style: italic; margin: 5px 0 0 0;">「お皿運びますか？洗い物やりましょうか？」</p>
+                        </div>
+                        <p><strong>ポイント：</strong>ぼーっと立たない、自分から動く</p>
+                    </div>
+                    <div class="card" style="background: #e3f2fd;">
+                        <h4>【教えてもらう時】</h4>
+                        <div style="background: #fff; padding: 15px; border-radius: 5px; margin-bottom: 10px; border-left: 4px solid var(--primary);">
+                            <p style="font-style: italic; margin: 0;">「○○さん、これってどうやるんですか？」</p>
+                            <p style="font-style: italic; margin: 5px 0 0 0;">「コツとかあったら教えてください」</p>
+                            <p style="font-style: italic; margin: 5px 0 0 0;">「〇〇さんすごいですね、どうやって覚えたんですか？」</p>
+                        </div>
+                        <p><strong>ポイント：</strong>名前を呼ぶ、リスペクトを示す</p>
+                    </div>
+                    <div class="card" style="background: #f3e5f5;">
+                        <h4>【教えてもらった後】</h4>
+                        <div style="background: #fff; padding: 15px; border-radius: 5px; margin-bottom: 10px; border-left: 4px solid var(--secondary);">
+                            <p style="font-style: italic; margin: 0;">「ありがとうございます！やってみます」</p>
+                            <p style="font-style: italic; margin: 5px 0 0 0;">「さっき教えてもらったやつ、やってみていいですか？」</p>
+                            <p style="font-style: italic; margin: 5px 0 0 0;">「〇〇さんのおかげでわかりました、ありがとうございます」</p>
+                        </div>
+                        <p><strong>ポイント：</strong>すぐに実践→報告の流れを作る</p>
+                    </div>
+                </div>
+
+                <div class="grid-2" style="margin-top: 20px;">
+                    <div class="card" style="background: #ffebee;">
+                        <h4>【ミスした時】</h4>
+                        <div style="background: #fff; padding: 15px; border-radius: 5px; margin-bottom: 10px; border-left: 4px solid var(--danger);">
+                            <p style="font-style: italic; margin: 0;">「すみません、○○してしまいました。どうしたらいいですか？」</p>
+                            <p style="font-style: italic; margin: 5px 0 0 0;">「私のミスです。リカバリー手伝わせてください」</p>
+                        </div>
+                        <p><strong>ポイント：</strong>隠さない、言い訳しない、すぐ報告、一緒に対処</p>
+                    </div>
+                    <div class="card" style="background: #e8f5e9;">
+                        <h4>【最終日の挨拶】</h4>
+                        <div style="background: #fff; padding: 15px; border-radius: 5px; margin-bottom: 10px; border-left: 4px solid var(--success);">
+                            <p style="font-style: italic; margin: 0;">「今日までありがとうございました。ここで教えてもらったやり方を、どう活かせるか、ちゃんと考えます」</p>
+                            <p style="font-style: italic; margin: 5px 0 0 0;">「〇〇さんに教えていただいた△△、すごく勉強になりました。ありがとうございました」</p>
+                        </div>
+                        <p><strong>ポイント：</strong>全員に個別で挨拶、具体的に感謝を伝える</p>
+                    </div>
+                </div>
+
+                <h3>よくある困った場面と切り返し</h3>
+                <table>
+                    <tr>
+                        <th style="width: 30%;">困った場面</th>
+                        <th style="width: 35%;">悪い対応例</th>
+                        <th style="width: 35%;">良い対応例</th>
+                    </tr>
+                    <tr>
+                        <td><strong>「SVになるんでしょ？」と聞かれた</strong></td>
+                        <td>「はい、そうです」「いずれ皆さんを管理する立場に」</td>
+                        <td>「まずは現場をしっかり理解したくて来ています。教えてください」</td>
+                    </tr>
+                    <tr>
+                        <td><strong>「これ、違うやり方だけど」と言われた</strong></td>
+                        <td>「マニュアルではこうですよね？」「前の現場ではこうでした」</td>
+                        <td>「なるほど、ここのやり方を教えてください」「何か理由があるんですか？勉強になります」</td>
+                    </tr>
+                    <tr>
+                        <td><strong>ベテランに冷たくされた</strong></td>
+                        <td>避ける、距離を置く、上司に相談</td>
+                        <td>淡々と丁寧に接し続ける「〇〇さんの段取りすごいですね」と仕事を認める</td>
+                    </tr>
+                    <tr>
+                        <td><strong>衛生上の問題を見つけた</strong></td>
+                        <td>「それ危なくないですか？」と指摘、本部に報告</td>
+                        <td>メモして後で責任者に「確認したいことがあるのですが…」と相談</td>
+                    </tr>
+                    <tr>
+                        <td><strong>忙しそうで質問できない</strong></td>
+                        <td>忙しい時に話しかける、ピーク時に質問</td>
+                        <td>片付け中や休憩時間に「さっきの件、ちょっと教えていただけますか？」</td>
+                    </tr>
+                    <tr>
+                        <td><strong>「若いのに大変ね」と言われた</strong></td>
+                        <td>「いえ、全然」「慣れてます」</td>
+                        <td>「皆さんの方がずっと大変ですよね。尊敬します」</td>
+                    </tr>
+                </table>
+
+                <h3>絶対にやってはいけないこと（現場での地雷）</h3>
+                <div class="danger-box">
+                    <div class="grid-2">
+                        <div>
+                            <h4>言ってはいけない一言</h4>
+                            <ul>
+                                <li>「前の現場では〜」（比較発言）</li>
+                                <li>「それ、効率悪くないですか？」</li>
+                                <li>「マニュアルと違いますよね？」</li>
+                                <li>「なんでこのやり方なんですか？」</li>
+                                <li>「改善した方がいいと思います」</li>
+                                <li>「本部に報告しておきます」</li>
+                            </ul>
+                        </div>
+                        <div>
+                            <h4>やってはいけない行動</h4>
+                            <ul>
+                                <li>ピーク時に話しかける</li>
+                                <li>作業を止めて質問する</li>
+                                <li>スマホをいじる（休憩中でも見られている）</li>
+                                <li>疲れた顔・退屈そうな顔をする</li>
+                                <li>現場の悪口を他で言う</li>
+                                <li>ぼーっと立っている</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <h3>信頼を勝ち取る必殺技</h3>
+                <div class="success-box">
+                    <h4 style="text-align: center;">現場の心をつかむ「3つの黄金ルール」</h4>
+                    <div class="grid-3" style="margin-top: 15px;">
+                        <div style="text-align: center;">
+                            <p style="font-size: 2em; margin: 0;">1</p>
+                            <p><strong>誰よりも早く動く</strong></p>
+                            <p style="font-size: 0.9em;">汚れ仕事、力仕事を進んでやる</p>
+                        </div>
+                        <div style="text-align: center;">
+                            <p style="font-size: 2em; margin: 0;">2</p>
+                            <p><strong>名前を覚えて呼ぶ</strong></p>
+                            <p style="font-size: 0.9em;">「〇〇さん」と呼ぶだけで好感度UP</p>
+                        </div>
+                        <div style="text-align: center;">
+                            <p style="font-size: 2em; margin: 0;">3</p>
+                            <p><strong>具体的に感謝を伝える</strong></p>
+                            <p style="font-size: 0.9em;">「〇〇教えてもらって助かりました」</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="success-box" style="text-align: center; margin-top: 30px;">
+                    <p>現場研修の半年間は、SVとしてのキャリアの「土台」になる</p>
+                    <p><strong>現場を知っているSVは信頼される / 現場を知らないSVは信頼されない</strong></p>
+                    <p>この半年間を大切に過ごすことで、将来、現場からも施設からも信頼されるSVになることができる</p>
+                </div>
+
+                <div class="nav-buttons">
+                    <a href="slide-10.html" class="nav-btn">← 前へ</a>
+                    <a href="slide-12.html" class="nav-btn">次へ →</a>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="scripts.js"></script>
+</body>
+</html>

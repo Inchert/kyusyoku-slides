@@ -1,0 +1,561 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>数値・改善思考 - ハーベスト SV研修資料</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- ハンバーガーメニューボタン -->
+    <button class="hamburger" onclick="toggleMenu()">
+        <span></span>
+        <span></span>
+        <span></span>
+    </button>
+    <div class="overlay" onclick="toggleMenu()"></div>
+
+    <!-- ツールバー非表示ボタン -->
+    <button class="toolbar-toggle" id="toolbarToggle" onclick="toggleToolbar()">
+        <svg viewBox="0 0 24 24"><path d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z"/></svg>
+    </button>
+
+    <!-- ツールバー -->
+    <div class="toolbar" id="toolbar">
+        <button id="searchBtn" onclick="toggleSearch()">
+            <svg viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg>
+        </button>
+        <button id="memoBtn" onclick="toggleMemo()">
+            <svg viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V5h14v14zm-2-8H7v-2h10v2zm-4 4H7v-2h6v2z"/></svg>
+        </button>
+        <button id="checkBtn" onclick="toggleCheckMode()">
+            <svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>
+        </button>
+    </div>
+
+    <!-- 検索パネル -->
+    <div class="search-panel" id="searchPanel">
+        <input type="text" id="searchInput" placeholder="検索..." oninput="performSearch()">
+        <div class="search-results" id="searchResults"></div>
+    </div>
+
+    <!-- メモパネル -->
+    <div class="memo-panel" id="memoPanel">
+        <h3>メモ</h3>
+        <textarea id="memoText" placeholder="このスライドのメモを入力..."></textarea>
+        <div class="memo-actions">
+            <button class="save-btn" onclick="saveMemo()">保存</button>
+            <button class="clear-btn" onclick="clearMemo()">クリア</button>
+        </div>
+        <div class="memo-saved" id="memoSaved">保存しました</div>
+    </div>
+
+    <!-- チェックモードインジケーター -->
+    <div class="check-mode-indicator" id="checkIndicator">チェックモード ON</div>
+
+    <div class="container">
+        <nav class="sidebar">
+            <h2>SV研修資料</h2>
+            <a href="index.html" class="nav-item"><span class="num">0</span><span>目次</span></a>
+            <a href="slide-01.html" class="nav-item"><span class="num">1</span><span>給食業界入門</span></a>
+            <a href="slide-02.html" class="nav-item"><span class="num">2</span><span>市場規模・将来予測</span></a>
+            <a href="slide-03.html" class="nav-item"><span class="num">3</span><span>業界構造・ビジネスモデル</span></a>
+            <a href="slide-04.html" class="nav-item"><span class="num">4</span><span>主要プレイヤー</span></a>
+            <a href="slide-05.html" class="nav-item"><span class="num">5</span><span>競合比較</span></a>
+            <a href="slide-06.html" class="nav-item"><span class="num">6</span><span>ハーベスト会社紹介</span></a>
+            <a href="slide-07.html" class="nav-item"><span class="num">7</span><span>給食関連法規</span></a>
+            <a href="slide-08.html" class="nav-item"><span class="num">8</span><span>業界課題</span></a>
+            <a href="slide-09.html" class="nav-item"><span class="num">9</span><span>トレンド・将来展望</span></a>
+            <a href="slide-10.html" class="nav-item"><span class="num">10</span><span>入社検討ポイント</span></a>
+            <a href="slide-11.html" class="nav-item"><span class="num">11</span><span>SV現場研修ガイド</span></a>
+            <a href="slide-12.html" class="nav-item"><span class="num">12</span><span>ヘルスケア事業</span></a>
+            <a href="slide-13.html" class="nav-item"><span class="num">13</span><span>SV着任後ガイド</span></a>
+            <a href="slide-14.html" class="nav-item"><span class="num">14</span><span>SV実務マニュアル</span></a>
+            <a href="slide-15.html" class="nav-item"><span class="num">15</span><span>新規営業ガイド</span></a>
+            <a href="slide-16.html" class="nav-item"><span class="num">16</span><span>緊急時対応</span></a>
+            <a href="slide-17.html" class="nav-item"><span class="num">17</span><span>衛生管理基礎</span></a>
+            <a href="slide-18.html" class="nav-item"><span class="num">18</span><span>給食オペレーション</span></a>
+            <a href="slide-19.html" class="nav-item"><span class="num">19</span><span>栄養管理基礎</span></a>
+            <a href="slide-20.html" class="nav-item"><span class="num">20</span><span>原価管理入門</span></a>
+            <a href="slide-21.html" class="nav-item"><span class="num">21</span><span>労務管理の基本</span></a>
+            <a href="slide-22.html" class="nav-item"><span class="num">22</span><span>クライアント対応術</span></a>
+            <a href="slide-23.html" class="nav-item"><span class="num">23</span><span>トラブル対応</span></a>
+            <a href="slide-24.html" class="nav-item"><span class="num">24</span><span>給食システム入門</span></a>
+            <a href="slide-25.html" class="nav-item"><span class="num">A</span><span>専門用語集（付録A）</span></a>
+            <a href="slide-26.html" class="nav-item"><span class="num">B</span><span>SV分析ツール（付録B）</span></a>
+            <a href="slide-27.html" class="nav-item"><span class="num">C</span><span>キャリアパス（付録C）</span></a>
+            <a href="slide-28.html" class="nav-item"><span class="num">D</span><span>SVの役割と4つの柱</span></a>
+            <a href="slide-29.html" class="nav-item"><span class="num">E</span><span>人のマネジメント</span></a>
+            <a href="slide-30.html" class="nav-item active"><span class="num">F</span><span>数値・改善思考</span></a>
+            <a href="slide-31.html" class="nav-item"><span class="num">G</span><span>データに基づく意思決定</span></a>
+            <a href="slide-32.html" class="nav-item"><span class="num">H</span><span>報告・説得スキル</span></a>
+            <a href="slide-33.html" class="nav-item"><span class="num">I</span><span>SV心構えと自己研鑽</span></a>
+        </nav>
+
+        <main class="main-content">
+            <div class="slide active">
+                <h1>付録F 数値・改善思考</h1>
+
+                <!-- 数字で説明する -->
+                <h2>「感覚」ではなく「数字で説明」</h2>
+                <div class="info-box" style="text-align: center; padding: 30px;">
+                    <p style="font-size: 1.2em;">SVは感覚ではなく、数字で状況を説明できなければならない</p>
+                    <div class="grid-2" style="margin-top: 20px;">
+                        <div style="background: #ffebee; padding: 20px; border-radius: 10px;">
+                            <h4 style="color: var(--danger);">感覚的な説明</h4>
+                            <p>「人が足りない感じがする」</p>
+                            <p>「最近クレームが多い気がする」</p>
+                            <p>「コストがかかりすぎている」</p>
+                        </div>
+                        <div style="background: #e8f5e9; padding: 20px; border-radius: 10px;">
+                            <h4 style="color: var(--success);">数字で説明</h4>
+                            <p>「欠員率15%で、必要人員の2名が不足」</p>
+                            <p>「今月のクレームは8件で前月比+3件」</p>
+                            <p>「食材費率が42%で目標を5%超過」</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- KPI設計 -->
+                <h2>KPI（重要業績評価指標）の設計</h2>
+                <div class="info-box">
+                    <h4>KPIとは</h4>
+                    <p><strong>Key Performance Indicator</strong>（重要業績評価指標）の略。目標達成度を測るための定量的な指標。SVは自分の担当エリアのKPIを把握し、改善に向けて行動する。</p>
+                </div>
+
+                <h3>SVが追うべきKPI体系</h3>
+                <div class="diagram-box">
+                    <div style="text-align: center; margin-bottom: 20px;">
+                        <div style="background: var(--primary); color: white; padding: 15px; border-radius: 10px; display: inline-block;">
+                            <strong>最終目標：営業利益</strong>
+                        </div>
+                    </div>
+                    <div class="grid-2">
+                        <div>
+                            <div style="background: var(--success); color: white; padding: 10px; border-radius: 5px; text-align: center; margin-bottom: 10px;">
+                                <strong>売上向上</strong>
+                            </div>
+                            <ul>
+                                <li>食数 × 単価</li>
+                                <li>契約継続率</li>
+                                <li>追加サービス獲得</li>
+                            </ul>
+                        </div>
+                        <div>
+                            <div style="background: var(--danger); color: white; padding: 10px; border-radius: 5px; text-align: center; margin-bottom: 10px;">
+                                <strong>コスト削減</strong>
+                            </div>
+                            <ul>
+                                <li>食材費率</li>
+                                <li>人件費率</li>
+                                <li>その他経費</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <h3>カテゴリ別 詳細KPI一覧</h3>
+
+                <!-- 収益KPI -->
+                <h4 style="color: var(--success); border-bottom: 2px solid var(--success); padding-bottom: 5px;">1. 収益KPI</h4>
+                <table>
+                    <tr>
+                        <th style="width: 20%;">KPI名</th>
+                        <th style="width: 20%;">計算式</th>
+                        <th style="width: 15%;">目安</th>
+                        <th style="width: 20%;">確認頻度</th>
+                        <th style="width: 25%;">改善アクション</th>
+                    </tr>
+                    <tr>
+                        <td><strong>営業利益率</strong></td>
+                        <td>営業利益 ÷ 売上 × 100</td>
+                        <td><span class="badge badge-success">5〜10%</span></td>
+                        <td>月次</td>
+                        <td>食材費・人件費の最適化</td>
+                    </tr>
+                    <tr>
+                        <td><strong>食材費率</strong></td>
+                        <td>食材費 ÷ 売上 × 100</td>
+                        <td><span class="badge badge-primary">35〜40%</span></td>
+                        <td>週次/月次</td>
+                        <td>発注最適化、廃棄削減、仕入れ見直し</td>
+                    </tr>
+                    <tr>
+                        <td><strong>人件費率</strong></td>
+                        <td>人件費 ÷ 売上 × 100</td>
+                        <td><span class="badge badge-warning">45〜50%</span></td>
+                        <td>月次</td>
+                        <td>シフト最適化、残業削減、生産性向上</td>
+                    </tr>
+                    <tr>
+                        <td><strong>FL比率</strong></td>
+                        <td>(食材費+人件費) ÷ 売上 × 100</td>
+                        <td><span class="badge badge-danger">80〜85%</span></td>
+                        <td>月次</td>
+                        <td>総合的なコスト管理</td>
+                    </tr>
+                    <tr>
+                        <td><strong>1食あたりコスト</strong></td>
+                        <td>総コスト ÷ 提供食数</td>
+                        <td>施設別に設定</td>
+                        <td>月次</td>
+                        <td>効率化による1食原価低減</td>
+                    </tr>
+                </table>
+
+                <!-- 品質KPI -->
+                <h4 style="color: var(--primary); border-bottom: 2px solid var(--primary); padding-bottom: 5px; margin-top: 30px;">2. 品質KPI</h4>
+                <table>
+                    <tr>
+                        <th style="width: 20%;">KPI名</th>
+                        <th style="width: 20%;">計算式</th>
+                        <th style="width: 15%;">目安</th>
+                        <th style="width: 20%;">確認頻度</th>
+                        <th style="width: 25%;">改善アクション</th>
+                    </tr>
+                    <tr>
+                        <td><strong>クレーム件数</strong></td>
+                        <td>月間クレーム総数</td>
+                        <td><span class="badge badge-success">月0〜2件</span></td>
+                        <td>週次/月次</td>
+                        <td>原因分析、再発防止策</td>
+                    </tr>
+                    <tr>
+                        <td><strong>クレーム発生率</strong></td>
+                        <td>クレーム件数 ÷ 提供食数 × 10,000</td>
+                        <td><span class="badge badge-primary">1万食あたり1件未満</span></td>
+                        <td>月次</td>
+                        <td>品質管理の徹底</td>
+                    </tr>
+                    <tr>
+                        <td><strong>異物混入件数</strong></td>
+                        <td>月間異物混入報告数</td>
+                        <td><span class="badge badge-danger">0件</span></td>
+                        <td>即時/月次</td>
+                        <td>調理環境の点検、教育強化</td>
+                    </tr>
+                    <tr>
+                        <td><strong>衛生監査スコア</strong></td>
+                        <td>監査点数（100点満点）</td>
+                        <td><span class="badge badge-success">90点以上</span></td>
+                        <td>監査時</td>
+                        <td>日常衛生管理の徹底</td>
+                    </tr>
+                    <tr>
+                        <td><strong>温度記録遵守率</strong></td>
+                        <td>正常記録数 ÷ 必要記録数 × 100</td>
+                        <td><span class="badge badge-success">100%</span></td>
+                        <td>日次</td>
+                        <td>記録習慣の徹底、仕組み化</td>
+                    </tr>
+                    <tr>
+                        <td><strong>施設満足度</strong></td>
+                        <td>アンケート結果（5段階）</td>
+                        <td><span class="badge badge-primary">4.0以上</span></td>
+                        <td>四半期/年次</td>
+                        <td>フィードバック対応</td>
+                    </tr>
+                </table>
+
+                <!-- 人材KPI -->
+                <h4 style="color: var(--secondary); border-bottom: 2px solid var(--secondary); padding-bottom: 5px; margin-top: 30px;">3. 人材KPI</h4>
+                <table>
+                    <tr>
+                        <th style="width: 20%;">KPI名</th>
+                        <th style="width: 20%;">計算式</th>
+                        <th style="width: 15%;">目安</th>
+                        <th style="width: 20%;">確認頻度</th>
+                        <th style="width: 25%;">改善アクション</th>
+                    </tr>
+                    <tr>
+                        <td><strong>欠員率</strong></td>
+                        <td>欠員数 ÷ 必要人員 × 100</td>
+                        <td><span class="badge badge-warning">10%以内</span></td>
+                        <td>週次</td>
+                        <td>採用活動強化、定着率向上</td>
+                    </tr>
+                    <tr>
+                        <td><strong>離職率</strong></td>
+                        <td>退職者数 ÷ 平均在籍者数 × 100</td>
+                        <td><span class="badge badge-warning">年20%以内</span></td>
+                        <td>月次/年次</td>
+                        <td>職場環境改善、面談強化</td>
+                    </tr>
+                    <tr>
+                        <td><strong>残業時間</strong></td>
+                        <td>月間残業時間合計/平均</td>
+                        <td><span class="badge badge-primary">月20h以内</span></td>
+                        <td>月次</td>
+                        <td>業務効率化、シフト最適化</td>
+                    </tr>
+                    <tr>
+                        <td><strong>有給取得率</strong></td>
+                        <td>取得日数 ÷ 付与日数 × 100</td>
+                        <td><span class="badge badge-success">70%以上</span></td>
+                        <td>四半期</td>
+                        <td>取得促進、計画的付与</td>
+                    </tr>
+                    <tr>
+                        <td><strong>シフト充足率</strong></td>
+                        <td>実出勤人数 ÷ 必要人数 × 100</td>
+                        <td><span class="badge badge-success">100%</span></td>
+                        <td>日次</td>
+                        <td>応援体制構築、多能工化</td>
+                    </tr>
+                    <tr>
+                        <td><strong>新人定着率</strong></td>
+                        <td>3ヶ月後在籍者 ÷ 入社者 × 100</td>
+                        <td><span class="badge badge-primary">80%以上</span></td>
+                        <td>四半期</td>
+                        <td>教育体制強化、フォロー充実</td>
+                    </tr>
+                </table>
+
+                <!-- 業務KPI -->
+                <h4 style="color: var(--accent); border-bottom: 2px solid var(--accent); padding-bottom: 5px; margin-top: 30px;">4. 業務効率KPI</h4>
+                <table>
+                    <tr>
+                        <th style="width: 20%;">KPI名</th>
+                        <th style="width: 20%;">計算式</th>
+                        <th style="width: 15%;">目安</th>
+                        <th style="width: 20%;">確認頻度</th>
+                        <th style="width: 25%;">改善アクション</th>
+                    </tr>
+                    <tr>
+                        <td><strong>1人あたり食数</strong></td>
+                        <td>提供食数 ÷ 勤務時間</td>
+                        <td>施設別に設定</td>
+                        <td>月次</td>
+                        <td>作業効率化、動線改善</td>
+                    </tr>
+                    <tr>
+                        <td><strong>廃棄率</strong></td>
+                        <td>廃棄量 ÷ 調理量 × 100</td>
+                        <td><span class="badge badge-primary">5%以内</span></td>
+                        <td>週次</td>
+                        <td>発注精度向上、献立調整</td>
+                    </tr>
+                    <tr>
+                        <td><strong>発注精度</strong></td>
+                        <td>適正発注回数 ÷ 総発注回数 × 100</td>
+                        <td><span class="badge badge-success">95%以上</span></td>
+                        <td>月次</td>
+                        <td>食数予測精度向上</td>
+                    </tr>
+                    <tr>
+                        <td><strong>欠品発生率</strong></td>
+                        <td>欠品回数 ÷ 提供回数 × 100</td>
+                        <td><span class="badge badge-danger">0%</span></td>
+                        <td>週次</td>
+                        <td>在庫管理徹底</td>
+                    </tr>
+                </table>
+
+                <!-- PDCA -->
+                <h2>PDCAサイクル</h2>
+                <div class="info-box">
+                    <h4>PDCAとは</h4>
+                    <p>Plan（計画）→ Do（実行）→ Check（評価）→ Act（改善）のサイクルを回すことで、継続的に業務を改善する手法。</p>
+                </div>
+
+                <div class="flowchart">
+                    <div class="flow-step" style="background: var(--primary); color: white;">
+                        <strong>Plan</strong><br>
+                        目標設定・計画<br>
+                        <small>何を、いつまでに、どうするか</small>
+                    </div>
+                    <div class="flow-arrow">→</div>
+                    <div class="flow-step" style="background: var(--success); color: white;">
+                        <strong>Do</strong><br>
+                        実行<br>
+                        <small>計画に基づいて実施</small>
+                    </div>
+                    <div class="flow-arrow">→</div>
+                    <div class="flow-step" style="background: var(--warning); color: white;">
+                        <strong>Check</strong><br>
+                        評価・検証<br>
+                        <small>結果を数値で確認</small>
+                    </div>
+                    <div class="flow-arrow">→</div>
+                    <div class="flow-step" style="background: var(--danger); color: white;">
+                        <strong>Act</strong><br>
+                        改善・標準化<br>
+                        <small>次のサイクルへ</small>
+                    </div>
+                </div>
+
+                <h3>PDCA具体例：食材費削減</h3>
+                <table>
+                    <tr>
+                        <th>フェーズ</th>
+                        <th>内容</th>
+                        <th>具体例</th>
+                    </tr>
+                    <tr>
+                        <td><span class="badge badge-primary">Plan</span></td>
+                        <td>目標設定と計画</td>
+                        <td>食材費率を現状42%から38%に下げる。発注量適正化と廃棄削減で達成を目指す。期間は3ヶ月。</td>
+                    </tr>
+                    <tr>
+                        <td><span class="badge badge-success">Do</span></td>
+                        <td>施策の実行</td>
+                        <td>週次で食数予測を見直し発注。廃棄記録を開始。在庫棚卸を月2回実施。</td>
+                    </tr>
+                    <tr>
+                        <td><span class="badge badge-warning">Check</span></td>
+                        <td>結果の検証</td>
+                        <td>1ヶ月後：41%に改善。廃棄量が20%減少。特定食材の余剰が多いことを発見。</td>
+                    </tr>
+                    <tr>
+                        <td><span class="badge badge-danger">Act</span></td>
+                        <td>改善と標準化</td>
+                        <td>余剰食材の発注基準を修正。効果があった取り組みをマニュアル化。他事業所へ横展開。</td>
+                    </tr>
+                </table>
+
+                <!-- 見える化・伝える化・自動化 -->
+                <h2>仕組み化の3ステップ</h2>
+                <div class="diagram-box">
+                    <div class="flowchart">
+                        <div class="flow-step" style="background: var(--primary); color: white;">
+                            <strong>1. 見える化</strong><br>
+                            現状を数値で把握<br>
+                            <small>測定できないものは改善できない</small>
+                        </div>
+                        <div class="flow-arrow">→</div>
+                        <div class="flow-step" style="background: var(--secondary); color: white;">
+                            <strong>2. 伝える化</strong><br>
+                            状況を共有<br>
+                            <small>日報、ダッシュボード</small>
+                        </div>
+                        <div class="flow-arrow">→</div>
+                        <div class="flow-step" style="background: var(--success); color: white;">
+                            <strong>3. 自動化</strong><br>
+                            人の判断を減らす<br>
+                            <small>アラート通知など</small>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="danger-box" style="margin-top: 20px;">
+                    <h4>鉄則</h4>
+                    <p style="font-size: 1.1em; text-align: center;"><strong>現場の入力負担を増やす自動化は定着しない</strong></p>
+                    <p>仕組み化の目的は「現場を楽にすること」。入力・記録の手間が増えるだけの仕組みは形骸化する。</p>
+                </div>
+
+                <h3>見える化の具体例</h3>
+                <div class="grid-3">
+                    <div class="card">
+                        <h4>数値の見える化</h4>
+                        <ul>
+                            <li>食材費率の週次グラフ</li>
+                            <li>クレーム件数の月次推移</li>
+                            <li>欠員状況の一覧表</li>
+                            <li>温度記録のリアルタイム表示</li>
+                        </ul>
+                    </div>
+                    <div class="card">
+                        <h4>業務の見える化</h4>
+                        <ul>
+                            <li>作業進捗のホワイトボード</li>
+                            <li>シフト表の見える位置への掲示</li>
+                            <li>在庫状況の色分け管理</li>
+                            <li>清掃チェックリスト</li>
+                        </ul>
+                    </div>
+                    <div class="card">
+                        <h4>問題の見える化</h4>
+                        <ul>
+                            <li>ヒヤリハット報告の共有</li>
+                            <li>課題管理表</li>
+                            <li>改善提案ボード</li>
+                            <li>クレーム分析レポート</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <h3>伝える化の具体例</h3>
+                <div class="grid-2">
+                    <div class="card">
+                        <h4>日報・週報</h4>
+                        <ul>
+                            <li>当日の食数実績</li>
+                            <li>トラブル・クレームの報告</li>
+                            <li>スタッフの出退勤状況</li>
+                            <li>施設からの要望・フィードバック</li>
+                        </ul>
+                    </div>
+                    <div class="card">
+                        <h4>ダッシュボード</h4>
+                        <ul>
+                            <li>複数事業所のKPI一覧</li>
+                            <li>異常値のハイライト表示</li>
+                            <li>目標対比の達成状況</li>
+                            <li>アクション必要事項の表示</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <h3>自動化の具体例</h3>
+                <div class="grid-2">
+                    <div class="success-box">
+                        <h4>良い自動化（現場の負担軽減）</h4>
+                        <ul>
+                            <li>温度異常時の自動アラート</li>
+                            <li>在庫が基準以下で自動発注提案</li>
+                            <li>勤怠データの自動集計</li>
+                            <li>献立に基づく必要食材量の自動計算</li>
+                        </ul>
+                    </div>
+                    <div class="danger-box">
+                        <h4>悪い自動化（負担増加）</h4>
+                        <ul>
+                            <li>入力項目が多すぎるシステム</li>
+                            <li>使いにくいタブレット入力</li>
+                            <li>レポート作成の手間が増える</li>
+                            <li>現場の事情を無視した一律ルール</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- まとめ -->
+                <h2>まとめ：数値・改善思考の要点</h2>
+                <div class="success-box">
+                    <div class="grid-3" style="text-align: center;">
+                        <div>
+                            <p style="font-size: 2em; margin: 0;">数字</p>
+                            <p>感覚ではなく<br>数字で語る</p>
+                        </div>
+                        <div>
+                            <p style="font-size: 2em; margin: 0;">PDCA</p>
+                            <p>計画→実行→検証→改善<br>のサイクルを回す</p>
+                        </div>
+                        <div>
+                            <p style="font-size: 2em; margin: 0;">仕組み</p>
+                            <p>見える化→伝える化<br>→自動化</p>
+                        </div>
+                    </div>
+                </div>
+
+                <h3>数値・改善思考 チェックリスト</h3>
+                <ul class="checklist">
+                    <li>担当事業所のKPIを把握している</li>
+                    <li>数字を使って状況を説明できる</li>
+                    <li>週次でKPIを確認する習慣がある</li>
+                    <li>PDCAサイクルを実践している</li>
+                    <li>改善施策を数字で検証している</li>
+                    <li>見える化の取り組みを行っている</li>
+                    <li>現場の負担を増やさない仕組みを意識している</li>
+                </ul>
+
+                <div class="nav-buttons">
+                    <a href="slide-29.html" class="nav-btn">← 前へ</a>
+                    <a href="slide-31.html" class="nav-btn">次へ →</a>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="scripts.js"></script>
+</body>
+</html>

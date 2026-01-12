@@ -1,0 +1,513 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>データに基づく意思決定 - ハーベスト SV研修資料</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- ハンバーガーメニューボタン -->
+    <button class="hamburger" onclick="toggleMenu()">
+        <span></span>
+        <span></span>
+        <span></span>
+    </button>
+    <div class="overlay" onclick="toggleMenu()"></div>
+
+    <!-- ツールバー非表示ボタン -->
+    <button class="toolbar-toggle" id="toolbarToggle" onclick="toggleToolbar()">
+        <svg viewBox="0 0 24 24"><path d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z"/></svg>
+    </button>
+
+    <!-- ツールバー -->
+    <div class="toolbar" id="toolbar">
+        <button id="searchBtn" onclick="toggleSearch()">
+            <svg viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg>
+        </button>
+        <button id="memoBtn" onclick="toggleMemo()">
+            <svg viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V5h14v14zm-2-8H7v-2h10v2zm-4 4H7v-2h6v2z"/></svg>
+        </button>
+        <button id="checkBtn" onclick="toggleCheckMode()">
+            <svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>
+        </button>
+    </div>
+
+    <!-- 検索パネル -->
+    <div class="search-panel" id="searchPanel">
+        <input type="text" id="searchInput" placeholder="検索..." oninput="performSearch()">
+        <div class="search-results" id="searchResults"></div>
+    </div>
+
+    <!-- メモパネル -->
+    <div class="memo-panel" id="memoPanel">
+        <h3>メモ</h3>
+        <textarea id="memoText" placeholder="このスライドのメモを入力..."></textarea>
+        <div class="memo-actions">
+            <button class="save-btn" onclick="saveMemo()">保存</button>
+            <button class="clear-btn" onclick="clearMemo()">クリア</button>
+        </div>
+        <div class="memo-saved" id="memoSaved">保存しました</div>
+    </div>
+
+    <!-- チェックモードインジケーター -->
+    <div class="check-mode-indicator" id="checkIndicator">チェックモード ON</div>
+
+    <div class="container">
+        <nav class="sidebar">
+            <h2>SV研修資料</h2>
+            <a href="index.html" class="nav-item"><span class="num">0</span><span>目次</span></a>
+            <a href="slide-01.html" class="nav-item"><span class="num">1</span><span>給食業界入門</span></a>
+            <a href="slide-02.html" class="nav-item"><span class="num">2</span><span>市場規模・将来予測</span></a>
+            <a href="slide-03.html" class="nav-item"><span class="num">3</span><span>業界構造・ビジネスモデル</span></a>
+            <a href="slide-04.html" class="nav-item"><span class="num">4</span><span>主要プレイヤー</span></a>
+            <a href="slide-05.html" class="nav-item"><span class="num">5</span><span>競合比較</span></a>
+            <a href="slide-06.html" class="nav-item"><span class="num">6</span><span>ハーベスト会社紹介</span></a>
+            <a href="slide-07.html" class="nav-item"><span class="num">7</span><span>給食関連法規</span></a>
+            <a href="slide-08.html" class="nav-item"><span class="num">8</span><span>業界課題</span></a>
+            <a href="slide-09.html" class="nav-item"><span class="num">9</span><span>トレンド・将来展望</span></a>
+            <a href="slide-10.html" class="nav-item"><span class="num">10</span><span>入社検討ポイント</span></a>
+            <a href="slide-11.html" class="nav-item"><span class="num">11</span><span>SV現場研修ガイド</span></a>
+            <a href="slide-12.html" class="nav-item"><span class="num">12</span><span>ヘルスケア事業</span></a>
+            <a href="slide-13.html" class="nav-item"><span class="num">13</span><span>SV着任後ガイド</span></a>
+            <a href="slide-14.html" class="nav-item"><span class="num">14</span><span>SV実務マニュアル</span></a>
+            <a href="slide-15.html" class="nav-item"><span class="num">15</span><span>新規営業ガイド</span></a>
+            <a href="slide-16.html" class="nav-item"><span class="num">16</span><span>緊急時対応</span></a>
+            <a href="slide-17.html" class="nav-item"><span class="num">17</span><span>衛生管理基礎</span></a>
+            <a href="slide-18.html" class="nav-item"><span class="num">18</span><span>給食オペレーション</span></a>
+            <a href="slide-19.html" class="nav-item"><span class="num">19</span><span>栄養管理基礎</span></a>
+            <a href="slide-20.html" class="nav-item"><span class="num">20</span><span>原価管理入門</span></a>
+            <a href="slide-21.html" class="nav-item"><span class="num">21</span><span>労務管理の基本</span></a>
+            <a href="slide-22.html" class="nav-item"><span class="num">22</span><span>クライアント対応術</span></a>
+            <a href="slide-23.html" class="nav-item"><span class="num">23</span><span>トラブル対応</span></a>
+            <a href="slide-24.html" class="nav-item"><span class="num">24</span><span>給食システム入門</span></a>
+            <a href="slide-25.html" class="nav-item"><span class="num">A</span><span>専門用語集（付録A）</span></a>
+            <a href="slide-26.html" class="nav-item"><span class="num">B</span><span>SV分析ツール（付録B）</span></a>
+            <a href="slide-27.html" class="nav-item"><span class="num">C</span><span>キャリアパス（付録C）</span></a>
+            <a href="slide-28.html" class="nav-item"><span class="num">D</span><span>SVの役割と4つの柱</span></a>
+            <a href="slide-29.html" class="nav-item"><span class="num">E</span><span>人のマネジメント</span></a>
+            <a href="slide-30.html" class="nav-item"><span class="num">F</span><span>数値・改善思考</span></a>
+            <a href="slide-31.html" class="nav-item active"><span class="num">G</span><span>データに基づく意思決定</span></a>
+            <a href="slide-32.html" class="nav-item"><span class="num">H</span><span>報告・説得スキル</span></a>
+            <a href="slide-33.html" class="nav-item"><span class="num">I</span><span>SV心構えと自己研鑽</span></a>
+        </nav>
+
+        <main class="main-content">
+            <div class="slide active">
+                <h1>付録G データに基づく意思決定</h1>
+
+                <!-- SVの判断フレームワーク -->
+                <h2>SVの判断フレームワーク</h2>
+                <div class="info-box">
+                    <h4>問題解決の7ステップ</h4>
+                    <p>SVが現場の問題に直面したとき、感覚ではなくデータに基づいて判断するためのフレームワーク</p>
+                </div>
+
+                <div class="diagram-box">
+                    <table>
+                        <tr>
+                            <th style="width: 15%;">ステップ</th>
+                            <th style="width: 25%;">問い</th>
+                            <th style="width: 30%;">内容</th>
+                            <th style="width: 30%;">具体例</th>
+                        </tr>
+                        <tr>
+                            <td><span class="badge badge-primary">1</span></td>
+                            <td><strong>現象</strong><br>何が起きてる？</td>
+                            <td>問題を具体的に特定する</td>
+                            <td>「クレームが増えている」</td>
+                        </tr>
+                        <tr>
+                            <td><span class="badge badge-primary">2</span></td>
+                            <td><strong>場所</strong><br>どこで？</td>
+                            <td>発生場所・範囲を特定</td>
+                            <td>「A事業所で」</td>
+                        </tr>
+                        <tr>
+                            <td><span class="badge badge-primary">3</span></td>
+                            <td><strong>時間</strong><br>いつ？</td>
+                            <td>発生時期・時間帯を特定</td>
+                            <td>「今月に入ってから」</td>
+                        </tr>
+                        <tr>
+                            <td><span class="badge badge-primary">4</span></td>
+                            <td><strong>頻度</strong><br>どれくらい？</td>
+                            <td>数値で把握する</td>
+                            <td>「月8件（前月比+5件）」</td>
+                        </tr>
+                        <tr>
+                            <td><span class="badge badge-secondary">5</span></td>
+                            <td><strong>仮説</strong><br>なぜ？</td>
+                            <td>原因を推測する</td>
+                            <td>「新人が増えたから？」</td>
+                        </tr>
+                        <tr>
+                            <td><span class="badge badge-success">6</span></td>
+                            <td><strong>一手</strong><br>最小の打ち手</td>
+                            <td>最も効果的な対策を選ぶ</td>
+                            <td>「新人への教育強化」</td>
+                        </tr>
+                        <tr>
+                            <td><span class="badge badge-success">7</span></td>
+                            <td><strong>検証</strong><br>何で確認？</td>
+                            <td>効果測定の方法を決める</td>
+                            <td>「来月のクレーム件数で確認」</td>
+                        </tr>
+                    </table>
+                </div>
+
+                <h3>フレームワーク活用例：食材費オーバー</h3>
+                <div class="card">
+                    <table>
+                        <tr>
+                            <th style="width: 15%;">ステップ</th>
+                            <th style="width: 85%;">分析内容</th>
+                        </tr>
+                        <tr>
+                            <td><strong>1. 現象</strong></td>
+                            <td>食材費率が目標を超過している</td>
+                        </tr>
+                        <tr>
+                            <td><strong>2. 場所</strong></td>
+                            <td>B事業所のみ（他の事業所は問題なし）</td>
+                        </tr>
+                        <tr>
+                            <td><strong>3. 時間</strong></td>
+                            <td>先月から発生（2ヶ月連続）</td>
+                        </tr>
+                        <tr>
+                            <td><strong>4. 頻度</strong></td>
+                            <td>食材費率42%（目標38%、4%オーバー）</td>
+                        </tr>
+                        <tr>
+                            <td><strong>5. 仮説</strong></td>
+                            <td>①発注過多 ②廃棄増加 ③食数予測ミス</td>
+                        </tr>
+                        <tr>
+                            <td><strong>6. 一手</strong></td>
+                            <td>廃棄記録を確認 → 特定食材の廃棄が多いことを発見 → その食材の発注基準見直し</td>
+                        </tr>
+                        <tr>
+                            <td><strong>7. 検証</strong></td>
+                            <td>来月の食材費率で確認。週次で廃棄量もモニタリング</td>
+                        </tr>
+                    </table>
+                </div>
+
+                <!-- 報告のテクニック -->
+                <h2>報告のテクニック</h2>
+                <div class="info-box">
+                    <h4>データを「伝わる情報」に変える3つの手法</h4>
+                </div>
+
+                <div class="grid-3">
+                    <div class="card" style="border-top: 5px solid var(--primary);">
+                        <h4 style="color: var(--primary);">1. 比較する</h4>
+                        <p><strong>他店舗・他期間と比べる</strong></p>
+                        <ul>
+                            <li>「A事業所は他の事業所より食材費率が3%高い」</li>
+                            <li>「前年同月と比較して売上が5%増加」</li>
+                            <li>「業界平均と比べてクレーム率は低い」</li>
+                        </ul>
+                    </div>
+                    <div class="card" style="border-top: 5px solid var(--secondary);">
+                        <h4 style="color: var(--secondary);">2. 推移を見る</h4>
+                        <p><strong>時系列で変化を追う</strong></p>
+                        <ul>
+                            <li>「クレーム件数は3ヶ月連続で減少傾向」</li>
+                            <li>「食材費率は先月から改善に転じた」</li>
+                            <li>「欠員率は年初から上昇を続けている」</li>
+                        </ul>
+                    </div>
+                    <div class="card" style="border-top: 5px solid var(--success);">
+                        <h4 style="color: var(--success);">3. 分解する</h4>
+                        <p><strong>要素に分けて深掘りする</strong></p>
+                        <ul>
+                            <li>「売上減少の内訳：食数減-3%、単価変動なし」</li>
+                            <li>「人件費増加の要因：残業増+2%、採用コスト増+1%」</li>
+                            <li>「クレーム8件の内訳：味3件、量2件、温度3件」</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <h3>悪い報告 vs 良い報告</h3>
+                <table>
+                    <tr>
+                        <th style="width: 50%;">悪い報告（感覚的）</th>
+                        <th style="width: 50%;">良い報告（データ）</th>
+                    </tr>
+                    <tr>
+                        <td style="background: #ffebee;">「クレームが増えています」</td>
+                        <td style="background: #e8f5e9;">「今月のクレームは8件で、前月比+3件、前年同月比+2件です。内訳は味に関するものが3件、量が2件、温度が3件です」</td>
+                    </tr>
+                    <tr>
+                        <td style="background: #ffebee;">「人が足りない感じです」</td>
+                        <td style="background: #e8f5e9;">「必要人員12名に対し現在10名で、欠員率17%です。特に早番の人手が不足しており、シフト充足率は85%です」</td>
+                    </tr>
+                    <tr>
+                        <td style="background: #ffebee;">「食材費がオーバーしています」</td>
+                        <td style="background: #e8f5e9;">「食材費率42%で目標38%を4%超過。前月比+2%。主な要因は野菜の価格高騰(+15%)と廃棄増加(前月比+20%)です」</td>
+                    </tr>
+                    <tr>
+                        <td style="background: #ffebee;">「改善しました」</td>
+                        <td style="background: #e8f5e9;">「施策実施後、食材費率は42%→39%に改善。目標との差は1%に縮小。廃棄量も30%削減できました」</td>
+                    </tr>
+                </table>
+
+                <!-- データ分析の視点 -->
+                <h2>データ分析の視点</h2>
+                <h3>1. 異常値を見つける</h3>
+                <div class="info-box">
+                    <p><strong>異常値</strong>とは、通常の範囲から外れた数値。問題の早期発見に役立つ。</p>
+                </div>
+                <table>
+                    <tr>
+                        <th>項目</th>
+                        <th>正常範囲</th>
+                        <th>異常値の例</th>
+                        <th>考えられる原因</th>
+                    </tr>
+                    <tr>
+                        <td>食材費率</td>
+                        <td>35〜40%</td>
+                        <td>45%以上</td>
+                        <td>発注ミス、廃棄増、価格高騰</td>
+                    </tr>
+                    <tr>
+                        <td>残業時間</td>
+                        <td>月20h以内</td>
+                        <td>月40h超</td>
+                        <td>欠員、非効率な作業、シフト不備</td>
+                    </tr>
+                    <tr>
+                        <td>クレーム件数</td>
+                        <td>月0〜2件</td>
+                        <td>月5件以上</td>
+                        <td>品質低下、教育不足、設備問題</td>
+                    </tr>
+                    <tr>
+                        <td>温度記録</td>
+                        <td>基準内</td>
+                        <td>逸脱あり</td>
+                        <td>機器故障、記録漏れ、管理不足</td>
+                    </tr>
+                </table>
+
+                <h3>2. トレンドを読む</h3>
+                <div class="grid-2">
+                    <div class="card">
+                        <h4>上昇トレンド</h4>
+                        <div style="background: #e8f5e9; padding: 15px; border-radius: 5px; margin-bottom: 10px; text-align: center;">
+                            <span style="font-size: 2em;">↗</span>
+                        </div>
+                        <p><strong>良いトレンド：</strong>売上、満足度、定着率</p>
+                        <p><strong>悪いトレンド：</strong>コスト、クレーム、離職率</p>
+                    </div>
+                    <div class="card">
+                        <h4>下降トレンド</h4>
+                        <div style="background: #ffebee; padding: 15px; border-radius: 5px; margin-bottom: 10px; text-align: center;">
+                            <span style="font-size: 2em;">↘</span>
+                        </div>
+                        <p><strong>良いトレンド：</strong>コスト、クレーム、廃棄率</p>
+                        <p><strong>悪いトレンド：</strong>売上、人員、満足度</p>
+                    </div>
+                </div>
+
+                <h3>3. 相関を探す</h3>
+                <div class="info-box">
+                    <p><strong>相関</strong>とは、2つの要素の関係性。因果関係を推測するヒントになる。</p>
+                </div>
+                <table>
+                    <tr>
+                        <th>現象A</th>
+                        <th>現象B</th>
+                        <th>推測される関係</th>
+                    </tr>
+                    <tr>
+                        <td>欠員率が上昇</td>
+                        <td>クレームが増加</td>
+                        <td>人手不足による品質低下</td>
+                    </tr>
+                    <tr>
+                        <td>残業時間が増加</td>
+                        <td>離職率が上昇</td>
+                        <td>過重労働による退職</td>
+                    </tr>
+                    <tr>
+                        <td>教育時間を増加</td>
+                        <td>新人定着率が改善</td>
+                        <td>教育投資の効果</td>
+                    </tr>
+                    <tr>
+                        <td>巡回頻度を増加</td>
+                        <td>衛生スコアが向上</td>
+                        <td>SVの介入効果</td>
+                    </tr>
+                </table>
+
+                <!-- 意思決定の優先順位 -->
+                <h2>意思決定の優先順位付け</h2>
+                <h3>緊急度×重要度マトリクス</h3>
+                <div class="grid-2">
+                    <div class="card" style="border: 3px solid var(--danger);">
+                        <h4 style="color: var(--danger);">第1領域：緊急かつ重要</h4>
+                        <p><strong>時間配分：20%</strong></p>
+                        <ul>
+                            <li>食中毒発生</li>
+                            <li>重大クレーム</li>
+                            <li>欠員による営業不能リスク</li>
+                        </ul>
+                        <p style="background: #ffebee; padding: 10px; border-radius: 5px;"><strong>対応：</strong>即座に対応。他の予定をキャンセルしてでも対処</p>
+                    </div>
+                    <div class="card" style="border: 3px solid var(--success);">
+                        <h4 style="color: var(--success);">第2領域：重要だが緊急ではない</h4>
+                        <p><strong>時間配分：60%（最重要！）</strong></p>
+                        <ul>
+                            <li>チーフ育成</li>
+                            <li>予防活動</li>
+                            <li>改善活動・営業活動</li>
+                        </ul>
+                        <p style="background: #e8f5e9; padding: 10px; border-radius: 5px;"><strong>対応：</strong>計画的に時間を確保。ここに時間を使えるSVが成果を出す</p>
+                    </div>
+                    <div class="card" style="border: 3px solid var(--warning);">
+                        <h4 style="color: var(--warning);">第3領域：緊急だが重要でない</h4>
+                        <p><strong>時間配分：15%</strong></p>
+                        <ul>
+                            <li>急な会議招集</li>
+                            <li>電話・メール対応</li>
+                            <li>雑多な問い合わせ</li>
+                        </ul>
+                        <p style="background: #fff3e0; padding: 10px; border-radius: 5px;"><strong>対応：</strong>可能な限り委譲・効率化。振り回されない</p>
+                    </div>
+                    <div class="card" style="border: 3px solid #ccc;">
+                        <h4 style="color: #666;">第4領域：緊急でも重要でもない</h4>
+                        <p><strong>時間配分：5%</strong></p>
+                        <ul>
+                            <li>形式的な報告</li>
+                            <li>意味のない会議</li>
+                            <li>雑談</li>
+                        </ul>
+                        <p style="background: #f5f5f5; padding: 10px; border-radius: 5px;"><strong>対応：</strong>排除・削減。この領域に時間を使わない</p>
+                    </div>
+                </div>
+
+                <!-- データドリブンの習慣 -->
+                <h2>データドリブンの習慣</h2>
+                <h3>SVの週次ルーティン</h3>
+                <table>
+                    <tr>
+                        <th style="width: 20%;">タイミング</th>
+                        <th style="width: 40%;">確認項目</th>
+                        <th style="width: 40%;">アクション</th>
+                    </tr>
+                    <tr>
+                        <td><strong>毎日</strong></td>
+                        <td>
+                            <ul style="margin: 0; padding-left: 20px;">
+                                <li>各事業所からの報告</li>
+                                <li>トラブル・クレームの有無</li>
+                                <li>シフト充足状況</li>
+                            </ul>
+                        </td>
+                        <td>異常があれば即対応</td>
+                    </tr>
+                    <tr>
+                        <td><strong>週次</strong></td>
+                        <td>
+                            <ul style="margin: 0; padding-left: 20px;">
+                                <li>食数実績の確認</li>
+                                <li>食材費・人件費の概算</li>
+                                <li>クレーム集計</li>
+                                <li>欠員状況</li>
+                            </ul>
+                        </td>
+                        <td>
+                            <ul style="margin: 0; padding-left: 20px;">
+                                <li>週報の作成</li>
+                                <li>翌週の巡回計画調整</li>
+                                <li>問題事業所への介入計画</li>
+                            </ul>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><strong>月次</strong></td>
+                        <td>
+                            <ul style="margin: 0; padding-left: 20px;">
+                                <li>収支確定値</li>
+                                <li>KPI達成状況</li>
+                                <li>離職・採用状況</li>
+                                <li>施設との関係性</li>
+                            </ul>
+                        </td>
+                        <td>
+                            <ul style="margin: 0; padding-left: 20px;">
+                                <li>月次報告書の作成</li>
+                                <li>翌月の重点施策決定</li>
+                                <li>上司への報告・相談</li>
+                            </ul>
+                        </td>
+                    </tr>
+                </table>
+
+                <h3>データを見る際の注意点</h3>
+                <div class="grid-2">
+                    <div class="warning-box">
+                        <h4>陥りやすい罠</h4>
+                        <ul>
+                            <li><strong>数字だけを見る</strong> - 現場の背景を無視</li>
+                            <li><strong>短期の変動に一喜一憂</strong> - トレンドを見ない</li>
+                            <li><strong>平均だけを見る</strong> - ばらつきを無視</li>
+                            <li><strong>因果関係の誤認</strong> - 相関と因果を混同</li>
+                        </ul>
+                    </div>
+                    <div class="success-box">
+                        <h4>正しいアプローチ</h4>
+                        <ul>
+                            <li><strong>数字＋現場の声</strong> - 両方を確認</li>
+                            <li><strong>3ヶ月以上の推移</strong> - トレンドで判断</li>
+                            <li><strong>最大・最小値も確認</strong> - ばらつきを把握</li>
+                            <li><strong>仮説→検証</strong> - 因果関係を確認</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- まとめ -->
+                <h2>まとめ：データに基づく意思決定の要点</h2>
+                <div class="success-box">
+                    <div class="grid-2" style="text-align: center;">
+                        <div>
+                            <h4>判断フレームワーク</h4>
+                            <p>現象→場所→時間→頻度→仮説→一手→検証</p>
+                        </div>
+                        <div>
+                            <h4>報告テクニック</h4>
+                            <p>比較する・推移を見る・分解する</p>
+                        </div>
+                    </div>
+                    <div style="margin-top: 20px; padding: 15px; background: linear-gradient(135deg, var(--primary), var(--secondary)); color: white; border-radius: 10px; text-align: center;">
+                        <p style="margin: 0; font-size: 1.1em;"><strong>「感覚」ではなく「データ」で判断し、「数字」で説明するSVになろう</strong></p>
+                    </div>
+                </div>
+
+                <h3>データに基づく意思決定 チェックリスト</h3>
+                <ul class="checklist">
+                    <li>判断フレームワークを活用している</li>
+                    <li>報告時に比較・推移・分解を使っている</li>
+                    <li>異常値を早期に発見できている</li>
+                    <li>トレンドを読んで先手を打てている</li>
+                    <li>緊急度×重要度で優先順位を決めている</li>
+                    <li>週次でKPIを確認する習慣がある</li>
+                    <li>数字だけでなく現場の声も聞いている</li>
+                </ul>
+
+                <div class="nav-buttons">
+                    <a href="slide-30.html" class="nav-btn">← 前へ</a>
+                    <a href="slide-32.html" class="nav-btn">次へ →</a>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="scripts.js"></script>
+</body>
+</html>

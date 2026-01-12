@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>給食オペレーション - ハーベスト SV研修資料</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- ハンバーガーメニューボタン -->
+    <button class="hamburger" onclick="toggleMenu()">
+        <span></span>
+        <span></span>
+        <span></span>
+    </button>
+    <div class="overlay" onclick="toggleMenu()"></div>
+
+    <!-- ツールバー非表示ボタン -->
+    <button class="toolbar-toggle" id="toolbarToggle" onclick="toggleToolbar()">
+        <svg viewBox="0 0 24 24"><path d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z"/></svg>
+    </button>
+
+    <!-- ツールバー -->
+    <div class="toolbar" id="toolbar">
+        <button id="searchBtn" onclick="toggleSearch()">
+            <svg viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg>
+        </button>
+        <button id="memoBtn" onclick="toggleMemo()">
+            <svg viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V5h14v14zm-2-8H7v-2h10v2zm-4 4H7v-2h6v2z"/></svg>
+        </button>
+        <button id="checkBtn" onclick="toggleCheckMode()">
+            <svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>
+        </button>
+    </div>
+
+    <!-- 検索パネル -->
+    <div class="search-panel" id="searchPanel">
+        <input type="text" id="searchInput" placeholder="検索..." oninput="performSearch()">
+        <div class="search-results" id="searchResults"></div>
+    </div>
+
+    <!-- メモパネル -->
+    <div class="memo-panel" id="memoPanel">
+        <h3>メモ</h3>
+        <textarea id="memoText" placeholder="このスライドのメモを入力..."></textarea>
+        <div class="memo-actions">
+            <button class="save-btn" onclick="saveMemo()">保存</button>
+            <button class="clear-btn" onclick="clearMemo()">クリア</button>
+        </div>
+        <div class="memo-saved" id="memoSaved">保存しました</div>
+    </div>
+
+    <!-- チェックモードインジケーター -->
+    <div class="check-mode-indicator" id="checkIndicator">チェックモード ON</div>
+
+    <div class="container">
+        <nav class="sidebar">
+            <h2>SV研修資料</h2>
+            <a href="index.html" class="nav-item"><span class="num">0</span><span>目次</span></a>
+            <a href="slide-01.html" class="nav-item"><span class="num">1</span><span>給食業界入門</span></a>
+            <a href="slide-02.html" class="nav-item"><span class="num">2</span><span>市場規模・将来予測</span></a>
+            <a href="slide-03.html" class="nav-item"><span class="num">3</span><span>業界構造・ビジネスモデル</span></a>
+            <a href="slide-04.html" class="nav-item"><span class="num">4</span><span>主要プレイヤー</span></a>
+            <a href="slide-05.html" class="nav-item"><span class="num">5</span><span>競合比較</span></a>
+            <a href="slide-06.html" class="nav-item"><span class="num">6</span><span>ハーベスト会社紹介</span></a>
+            <a href="slide-07.html" class="nav-item"><span class="num">7</span><span>給食関連法規</span></a>
+            <a href="slide-08.html" class="nav-item"><span class="num">8</span><span>業界課題</span></a>
+            <a href="slide-09.html" class="nav-item"><span class="num">9</span><span>トレンド・将来展望</span></a>
+            <a href="slide-10.html" class="nav-item"><span class="num">10</span><span>入社検討ポイント</span></a>
+            <a href="slide-11.html" class="nav-item"><span class="num">11</span><span>SV現場研修ガイド</span></a>
+            <a href="slide-12.html" class="nav-item"><span class="num">12</span><span>ヘルスケア事業</span></a>
+            <a href="slide-13.html" class="nav-item"><span class="num">13</span><span>SV着任後ガイド</span></a>
+            <a href="slide-14.html" class="nav-item"><span class="num">14</span><span>SV実務マニュアル</span></a>
+            <a href="slide-15.html" class="nav-item"><span class="num">15</span><span>新規営業ガイド</span></a>
+            <a href="slide-16.html" class="nav-item"><span class="num">16</span><span>緊急時対応</span></a>
+            <a href="slide-17.html" class="nav-item"><span class="num">17</span><span>衛生管理基礎</span></a>
+            <a href="slide-18.html" class="nav-item active"><span class="num">18</span><span>給食オペレーション</span></a>
+            <a href="slide-19.html" class="nav-item"><span class="num">19</span><span>栄養管理基礎</span></a>
+            <a href="slide-20.html" class="nav-item"><span class="num">20</span><span>原価管理入門</span></a>
+            <a href="slide-21.html" class="nav-item"><span class="num">21</span><span>労務管理の基本</span></a>
+            <a href="slide-22.html" class="nav-item"><span class="num">22</span><span>クライアント対応術</span></a>
+            <a href="slide-23.html" class="nav-item"><span class="num">23</span><span>トラブル対応</span></a>
+            <a href="slide-24.html" class="nav-item"><span class="num">24</span><span>給食システム入門</span></a>
+            <a href="slide-25.html" class="nav-item"><span class="num">A</span><span>専門用語集（付録A）</span></a>
+            <a href="slide-26.html" class="nav-item"><span class="num">B</span><span>SV分析ツール（付録B）</span></a>
+            <a href="slide-27.html" class="nav-item"><span class="num">C</span><span>キャリアパス（付録C）</span></a>
+            <a href="slide-28.html" class="nav-item"><span class="num">D</span><span>SVの役割と4つの柱</span></a>
+            <a href="slide-29.html" class="nav-item"><span class="num">E</span><span>人のマネジメント</span></a>
+            <a href="slide-30.html" class="nav-item"><span class="num">F</span><span>数値・改善思考</span></a>
+            <a href="slide-31.html" class="nav-item"><span class="num">G</span><span>データに基づく意思決定</span></a>
+            <a href="slide-32.html" class="nav-item"><span class="num">H</span><span>報告・説得スキル</span></a>
+            <a href="slide-33.html" class="nav-item"><span class="num">I</span><span>SV心構えと自己研鑽</span></a>
+        </nav>
+
+        <main class="main-content">
+            <div class="slide active">
+                <h1>第18章 給食オペレーション</h1>
+
+                <h2>給食提供の1日の流れ</h2>
+                <div class="timeline">
+                    <div class="timeline-item">
+                        <div class="timeline-time">5:00</div>
+                        <div>早番出勤・朝食調理開始（白衣着用、手洗い、体調チェック）</div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-time">6:30</div>
+                        <div>朝食盛り付け開始（温度確認、食札確認）</div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-time">7:00</div>
+                        <div>朝食配膳（配膳車への積み込み、病棟への配膳）</div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-time">8:00</div>
+                        <div>下膳・洗浄開始（残食チェック、食器洗浄・消毒）</div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-time">9:00</div>
+                        <div>昼食調理開始（食材の下処理、加熱調理）</div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-time">11:30</div>
+                        <div>昼食配膳</div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-time">14:00</div>
+                        <div>夕食調理開始、おやつ準備</div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-time">17:30</div>
+                        <div>夕食配膳</div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-time">19:00</div>
+                        <div>下膳・洗浄・翌日準備・厨房清掃</div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-time">20:00</div>
+                        <div>遅番退勤</div>
+                    </div>
+                </div>
+
+                <h2>食種対応</h2>
+                <table>
+                    <tr>
+                        <th>食種</th>
+                        <th>対象者</th>
+                        <th>特徴</th>
+                    </tr>
+                    <tr>
+                        <td><span class="badge badge-success">常食</span></td>
+                        <td>制限のない方</td>
+                        <td>一般的な食事</td>
+                    </tr>
+                    <tr>
+                        <td><span class="badge badge-info">軟菜食</span></td>
+                        <td>咀嚼力が弱い方</td>
+                        <td>やわらかく調理</td>
+                    </tr>
+                    <tr>
+                        <td><span class="badge badge-warning">きざみ食</span></td>
+                        <td>咀嚼に問題がある方</td>
+                        <td>細かくきざむ</td>
+                    </tr>
+                    <tr>
+                        <td><span class="badge badge-danger">ミキサー食</span></td>
+                        <td>嚥下困難な方</td>
+                        <td>ペースト状に</td>
+                    </tr>
+                    <tr>
+                        <td><span class="badge badge-primary">糖尿病食</span></td>
+                        <td>糖尿病患者</td>
+                        <td>エネルギー・糖質制限</td>
+                    </tr>
+                    <tr>
+                        <td><span class="badge badge-primary">腎臓病食</span></td>
+                        <td>腎臓病患者</td>
+                        <td>たんぱく質・塩分制限</td>
+                    </tr>
+                </table>
+
+                <h2>嚥下調整食の分類（学会分類2021）</h2>
+                <div class="diagram-box">
+                    <div class="steps">
+                        <div class="step">
+                            <div class="step-number">0</div>
+                            <div class="step-label">嚥下訓練食品</div>
+                        </div>
+                        <div class="step">
+                            <div class="step-number">1</div>
+                            <div class="step-label">ゼリー・プリン状</div>
+                        </div>
+                        <div class="step">
+                            <div class="step-number">2</div>
+                            <div class="step-label">ピューレ・ペースト</div>
+                        </div>
+                        <div class="step">
+                            <div class="step-number">3</div>
+                            <div class="step-label">舌でつぶせる</div>
+                        </div>
+                        <div class="step">
+                            <div class="step-number">4</div>
+                            <div class="step-label">歯ぐきでつぶせる</div>
+                        </div>
+                        <div class="step">
+                            <div class="step-number">普通</div>
+                            <div class="step-label">通常の食事</div>
+                        </div>
+                    </div>
+                </div>
+
+                <h2>配膳の重要ポイント</h2>
+                <div class="warning-box">
+                    <h4>配膳ミスを防ぐ</h4>
+                    <ul>
+                        <li><strong>食札確認</strong>：必ず食札と食事内容を照合</li>
+                        <li><strong>ダブルチェック</strong>：2人以上で確認</li>
+                        <li><strong>アレルギー食</strong>：特に慎重に確認</li>
+                        <li><strong>治療食</strong>：食種・量を間違えない</li>
+                    </ul>
+                </div>
+
+                <div class="nav-buttons">
+                    <a href="slide-17.html" class="nav-btn">← 前へ</a>
+                    <a href="slide-19.html" class="nav-btn">次へ →</a>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="scripts.js"></script>
+</body>
+</html>

@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>市場規模・将来予測 - ハーベスト SV研修資料</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- ハンバーガーメニューボタン -->
+    <button class="hamburger" onclick="toggleMenu()">
+        <span></span>
+        <span></span>
+        <span></span>
+    </button>
+    <div class="overlay" onclick="toggleMenu()"></div>
+
+    <!-- ツールバー非表示ボタン -->
+    <button class="toolbar-toggle" id="toolbarToggle" onclick="toggleToolbar()">
+        <svg viewBox="0 0 24 24"><path d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z"/></svg>
+    </button>
+
+    <!-- ツールバー -->
+    <div class="toolbar" id="toolbar">
+        <button id="searchBtn" onclick="toggleSearch()">
+            <svg viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg>
+        </button>
+        <button id="memoBtn" onclick="toggleMemo()">
+            <svg viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V5h14v14zm-2-8H7v-2h10v2zm-4 4H7v-2h6v2z"/></svg>
+        </button>
+        <button id="checkBtn" onclick="toggleCheckMode()">
+            <svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>
+        </button>
+    </div>
+
+    <!-- 検索パネル -->
+    <div class="search-panel" id="searchPanel">
+        <input type="text" id="searchInput" placeholder="検索..." oninput="performSearch()">
+        <div class="search-results" id="searchResults"></div>
+    </div>
+
+    <!-- メモパネル -->
+    <div class="memo-panel" id="memoPanel">
+        <h3>メモ</h3>
+        <textarea id="memoText" placeholder="このスライドのメモを入力..."></textarea>
+        <div class="memo-actions">
+            <button class="save-btn" onclick="saveMemo()">保存</button>
+            <button class="clear-btn" onclick="clearMemo()">クリア</button>
+        </div>
+        <div class="memo-saved" id="memoSaved">保存しました</div>
+    </div>
+
+    <!-- チェックモードインジケーター -->
+    <div class="check-mode-indicator" id="checkIndicator">チェックモード ON</div>
+
+    <div class="container">
+        <nav class="sidebar">
+            <h2>SV研修資料</h2>
+            <a href="index.html" class="nav-item"><span class="num">0</span><span>目次</span></a>
+            <a href="slide-01.html" class="nav-item"><span class="num">1</span><span>給食業界入門</span></a>
+            <a href="slide-02.html" class="nav-item active"><span class="num">2</span><span>市場規模・将来予測</span></a>
+            <a href="slide-03.html" class="nav-item"><span class="num">3</span><span>業界構造・ビジネスモデル</span></a>
+            <a href="slide-04.html" class="nav-item"><span class="num">4</span><span>主要プレイヤー</span></a>
+            <a href="slide-05.html" class="nav-item"><span class="num">5</span><span>競合比較</span></a>
+            <a href="slide-06.html" class="nav-item"><span class="num">6</span><span>ハーベスト会社紹介</span></a>
+            <a href="slide-07.html" class="nav-item"><span class="num">7</span><span>給食関連法規</span></a>
+            <a href="slide-08.html" class="nav-item"><span class="num">8</span><span>業界課題</span></a>
+            <a href="slide-09.html" class="nav-item"><span class="num">9</span><span>トレンド・将来展望</span></a>
+            <a href="slide-10.html" class="nav-item"><span class="num">10</span><span>入社検討ポイント</span></a>
+            <a href="slide-11.html" class="nav-item"><span class="num">11</span><span>SV現場研修ガイド</span></a>
+            <a href="slide-12.html" class="nav-item"><span class="num">12</span><span>ヘルスケア事業</span></a>
+            <a href="slide-13.html" class="nav-item"><span class="num">13</span><span>SV着任後ガイド</span></a>
+            <a href="slide-14.html" class="nav-item"><span class="num">14</span><span>SV実務マニュアル</span></a>
+            <a href="slide-15.html" class="nav-item"><span class="num">15</span><span>新規営業ガイド</span></a>
+            <a href="slide-16.html" class="nav-item"><span class="num">16</span><span>緊急時対応</span></a>
+            <a href="slide-17.html" class="nav-item"><span class="num">17</span><span>衛生管理基礎</span></a>
+            <a href="slide-18.html" class="nav-item"><span class="num">18</span><span>給食オペレーション</span></a>
+            <a href="slide-19.html" class="nav-item"><span class="num">19</span><span>栄養管理基礎</span></a>
+            <a href="slide-20.html" class="nav-item"><span class="num">20</span><span>原価管理入門</span></a>
+            <a href="slide-21.html" class="nav-item"><span class="num">21</span><span>労務管理の基本</span></a>
+            <a href="slide-22.html" class="nav-item"><span class="num">22</span><span>クライアント対応術</span></a>
+            <a href="slide-23.html" class="nav-item"><span class="num">23</span><span>トラブル対応</span></a>
+            <a href="slide-24.html" class="nav-item"><span class="num">24</span><span>給食システム入門</span></a>
+            <a href="slide-25.html" class="nav-item"><span class="num">A</span><span>専門用語集（付録A）</span></a>
+            <a href="slide-26.html" class="nav-item"><span class="num">B</span><span>SV分析ツール（付録B）</span></a>
+            <a href="slide-27.html" class="nav-item"><span class="num">C</span><span>キャリアパス（付録C）</span></a>
+            <a href="slide-28.html" class="nav-item"><span class="num">D</span><span>SVの役割と4つの柱</span></a>
+            <a href="slide-29.html" class="nav-item"><span class="num">E</span><span>人のマネジメント</span></a>
+            <a href="slide-30.html" class="nav-item"><span class="num">F</span><span>数値・改善思考</span></a>
+            <a href="slide-31.html" class="nav-item"><span class="num">G</span><span>データに基づく意思決定</span></a>
+            <a href="slide-32.html" class="nav-item"><span class="num">H</span><span>報告・説得スキル</span></a>
+            <a href="slide-33.html" class="nav-item"><span class="num">I</span><span>SV心構えと自己研鑽</span></a>
+        </nav>
+
+        <main class="main-content">
+            <div class="slide active">
+                <h1>第2章 市場規模と将来予測</h1>
+
+                <h2>市場規模サマリー（2023年度）</h2>
+                <div class="grid-2">
+                    <div class="card" style="border-top: 4px solid var(--primary);">
+                        <h4>給食市場全体（6分野計）</h4>
+                        <p style="font-size: 2rem; color: var(--primary); font-weight: bold; text-align: center;">約4兆7,915億円</p>
+                        <p style="text-align: center;">前年比 +3.9%</p>
+                    </div>
+                    <div class="card" style="border-top: 4px solid var(--secondary);">
+                        <h4>集団給食市場</h4>
+                        <p style="font-size: 2rem; color: var(--secondary); font-weight: bold; text-align: center;">約3兆1,741億円</p>
+                        <p style="text-align: center;">前年比 +6.2%</p>
+                    </div>
+                </div>
+
+                <h2>分野別市場規模（2023年）</h2>
+                <table>
+                    <tr><th>分野</th><th>市場規模</th><th>前年比</th><th>構成比</th></tr>
+                    <tr><td><strong>事業所給食</strong></td><td>1兆5,884億円</td><td style="color: var(--success);">+10.3%</td><td>約50%</td></tr>
+                    <tr><td>病院給食</td><td>7,513億円</td><td style="color: var(--success);">+2.8%</td><td>約24%</td></tr>
+                    <tr><td>学校給食</td><td>4,832億円</td><td style="color: var(--success);">+4.0%</td><td>約15%</td></tr>
+                    <tr><td>保育所給食</td><td>3,512億円</td><td style="color: var(--danger);">-0.7%</td><td>約11%</td></tr>
+                </table>
+
+                <h2>将来予測</h2>
+                <div class="diagram-box">
+                    <h4>市場規模成長予測</h4>
+                    <table>
+                        <tr><th>年度</th><th>市場規模</th><th>対2023年比</th></tr>
+                        <tr><td>2023年度</td><td>4兆7,915億円</td><td>基準</td></tr>
+                        <tr><td>2026年度</td><td><strong>5兆円超</strong></td><td>+5%程度</td></tr>
+                        <tr><td>2028年度</td><td><strong>5兆1,254億円</strong></td><td><strong>+7.0%</strong></td></tr>
+                    </table>
+                </div>
+
+                <h2>分野別将来予測</h2>
+                <div class="grid-2">
+                    <div class="success-box">
+                        <h4>成長する分野</h4>
+                        <ul>
+                            <li><strong>高齢者施設給食</strong> - 高齢化、施設数増加で大幅増</li>
+                            <li><strong>事業所給食</strong> - 出社回帰、福利厚生強化で増加</li>
+                            <li><strong>弁当給食</strong> - 在宅高齢者向け配食が成長</li>
+                        </ul>
+                    </div>
+                    <div class="warning-box">
+                        <h4>横ばい・減少の分野</h4>
+                        <ul>
+                            <li><strong>学校給食</strong> - 少子化で横ばい</li>
+                            <li><strong>病院給食</strong> - 病床数削減、在院日数短縮</li>
+                            <li><strong>保育所給食</strong> - 少子化で減少</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <h2>注目：2028年に「逆転」が起きる</h2>
+                <div class="danger-box">
+                    <h4>高齢者施設給食 ＞ 病院給食</h4>
+                    <p>2028年には高齢者施設給食の市場規模が病院給食を上回る見込み</p>
+                    <ul>
+                        <li>日本の高齢化率：約30%（2025年）</li>
+                        <li>有料老人ホーム・サ高住の増加</li>
+                        <li>病院の機能分化・病床削減政策</li>
+                    </ul>
+                </div>
+
+                <h2>コロナ禍からの回復</h2>
+                <table>
+                    <tr><th>時期</th><th>状況</th></tr>
+                    <tr><td>2020年春</td><td>コロナ禍で大幅落ち込み（特に事業所給食）</td></tr>
+                    <tr><td>2021年度〜</td><td>行動制限緩和で回復基調</td></tr>
+                    <tr><td>2023年度</td><td><strong>6分野すべてが前年比プラス</strong></td></tr>
+                    <tr><td>2024年度〜</td><td>引き続きプラス成長予測</td></tr>
+                </table>
+
+                <h2>業界売上の集中度</h2>
+                <div class="info-box">
+                    <h4>市場シェア構造</h4>
+                    <ul>
+                        <li><strong>上位5社で約40%のシェア</strong>（寡占傾向）</li>
+                        <li>残りは中堅・中小企業が多数</li>
+                        <li>M&Aによる業界再編が進行中</li>
+                    </ul>
+                </div>
+
+                <h2>メディカル給食市場</h2>
+                <div class="card">
+                    <h4>病院給食＋高齢者施設給食＋在宅配食サービス</h4>
+                    <table>
+                        <tr><th>年度</th><th>市場規模</th><th>前年比</th></tr>
+                        <tr><td>2024年度</td><td><strong>2兆4,096億円</strong></td><td>+2.4%</td></tr>
+                    </table>
+                    <p style="margin-top: 10px; font-size: 0.9rem;">ハーベストのヘルスケア事業はこの成長市場が主戦場</p>
+                </div>
+
+                <h2>外食産業における位置づけ</h2>
+                <table>
+                    <tr><th>市場</th><th>規模（2023年）</th><th>給食業界との比較</th></tr>
+                    <tr><td>外食産業全体</td><td>約27兆円</td><td>-</td></tr>
+                    <tr><td><strong>集団給食</strong></td><td><strong>約3.2兆円</strong></td><td>外食の約12%</td></tr>
+                    <tr><td>ファストフード</td><td>約3.8兆円</td><td>給食より大きい</td></tr>
+                    <tr><td>ファミレス</td><td>約1.3兆円</td><td>給食の半分以下</td></tr>
+                </table>
+                <p>給食業界は外食産業の中でも<strong>安定成長</strong>セクター</p>
+
+                <h2>コロナ影響の分野別比較</h2>
+                <table>
+                    <tr><th>分野</th><th>コロナ影響</th><th>回復状況</th></tr>
+                    <tr><td>事業所給食</td><td style="color: var(--danger);">大（在宅勤務）</td><td style="color: var(--success);">出社回帰で急回復</td></tr>
+                    <tr><td>学校給食</td><td style="color: var(--warning);">中（休校）</td><td>ほぼ回復</td></tr>
+                    <tr><td>病院給食</td><td>小</td><td>安定</td></tr>
+                    <tr><td>高齢者施設給食</td><td>小</td><td style="color: var(--success);">安定成長</td></tr>
+                </table>
+
+                <h2>まとめ：市場規模のポイント</h2>
+                <div class="success-box">
+                    <table>
+                        <tr><th>項目</th><th>内容</th></tr>
+                        <tr><td>現在の市場規模</td><td><strong>約4.8兆円</strong>（2023年）</td></tr>
+                        <tr><td>成長率</td><td>年率2〜4%程度</td></tr>
+                        <tr><td>2028年予測</td><td><strong>5.1兆円</strong>（+7%）</td></tr>
+                        <tr><td>成長分野</td><td style="color: var(--success);"><strong>高齢者施設給食</strong></td></tr>
+                        <tr><td>縮小分野</td><td>保育所給食、病院給食</td></tr>
+                        <tr><td>注目点</td><td>高齢者施設が病院を逆転へ</td></tr>
+                    </table>
+                </div>
+
+                <div class="nav-buttons">
+                    <a href="slide-01.html" class="nav-btn">← 前へ</a>
+                    <a href="slide-03.html" class="nav-btn">次へ →</a>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="scripts.js"></script>
+</body>
+</html>

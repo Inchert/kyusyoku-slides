@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>衛生管理基礎 - ハーベスト SV研修資料</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- ハンバーガーメニューボタン -->
+    <button class="hamburger" onclick="toggleMenu()">
+        <span></span>
+        <span></span>
+        <span></span>
+    </button>
+    <div class="overlay" onclick="toggleMenu()"></div>
+
+    <!-- ツールバー非表示ボタン -->
+    <button class="toolbar-toggle" id="toolbarToggle" onclick="toggleToolbar()">
+        <svg viewBox="0 0 24 24"><path d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z"/></svg>
+    </button>
+
+    <!-- ツールバー -->
+    <div class="toolbar" id="toolbar">
+        <button id="searchBtn" onclick="toggleSearch()">
+            <svg viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg>
+        </button>
+        <button id="memoBtn" onclick="toggleMemo()">
+            <svg viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V5h14v14zm-2-8H7v-2h10v2zm-4 4H7v-2h6v2z"/></svg>
+        </button>
+        <button id="checkBtn" onclick="toggleCheckMode()">
+            <svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>
+        </button>
+    </div>
+
+    <!-- 検索パネル -->
+    <div class="search-panel" id="searchPanel">
+        <input type="text" id="searchInput" placeholder="検索..." oninput="performSearch()">
+        <div class="search-results" id="searchResults"></div>
+    </div>
+
+    <!-- メモパネル -->
+    <div class="memo-panel" id="memoPanel">
+        <h3>メモ</h3>
+        <textarea id="memoText" placeholder="このスライドのメモを入力..."></textarea>
+        <div class="memo-actions">
+            <button class="save-btn" onclick="saveMemo()">保存</button>
+            <button class="clear-btn" onclick="clearMemo()">クリア</button>
+        </div>
+        <div class="memo-saved" id="memoSaved">保存しました</div>
+    </div>
+
+    <!-- チェックモードインジケーター -->
+    <div class="check-mode-indicator" id="checkIndicator">チェックモード ON</div>
+
+    <div class="container">
+        <nav class="sidebar">
+            <h2>SV研修資料</h2>
+            <a href="index.html" class="nav-item"><span class="num">0</span><span>目次</span></a>
+            <a href="slide-01.html" class="nav-item"><span class="num">1</span><span>給食業界入門</span></a>
+            <a href="slide-02.html" class="nav-item"><span class="num">2</span><span>市場規模・将来予測</span></a>
+            <a href="slide-03.html" class="nav-item"><span class="num">3</span><span>業界構造・ビジネスモデル</span></a>
+            <a href="slide-04.html" class="nav-item"><span class="num">4</span><span>主要プレイヤー</span></a>
+            <a href="slide-05.html" class="nav-item"><span class="num">5</span><span>競合比較</span></a>
+            <a href="slide-06.html" class="nav-item"><span class="num">6</span><span>ハーベスト会社紹介</span></a>
+            <a href="slide-07.html" class="nav-item"><span class="num">7</span><span>給食関連法規</span></a>
+            <a href="slide-08.html" class="nav-item"><span class="num">8</span><span>業界課題</span></a>
+            <a href="slide-09.html" class="nav-item"><span class="num">9</span><span>トレンド・将来展望</span></a>
+            <a href="slide-10.html" class="nav-item"><span class="num">10</span><span>入社検討ポイント</span></a>
+            <a href="slide-11.html" class="nav-item"><span class="num">11</span><span>SV現場研修ガイド</span></a>
+            <a href="slide-12.html" class="nav-item"><span class="num">12</span><span>ヘルスケア事業</span></a>
+            <a href="slide-13.html" class="nav-item"><span class="num">13</span><span>SV着任後ガイド</span></a>
+            <a href="slide-14.html" class="nav-item"><span class="num">14</span><span>SV実務マニュアル</span></a>
+            <a href="slide-15.html" class="nav-item"><span class="num">15</span><span>新規営業ガイド</span></a>
+            <a href="slide-16.html" class="nav-item"><span class="num">16</span><span>緊急時対応</span></a>
+            <a href="slide-17.html" class="nav-item active"><span class="num">17</span><span>衛生管理基礎</span></a>
+            <a href="slide-18.html" class="nav-item"><span class="num">18</span><span>給食オペレーション</span></a>
+            <a href="slide-19.html" class="nav-item"><span class="num">19</span><span>栄養管理基礎</span></a>
+            <a href="slide-20.html" class="nav-item"><span class="num">20</span><span>原価管理入門</span></a>
+            <a href="slide-21.html" class="nav-item"><span class="num">21</span><span>労務管理の基本</span></a>
+            <a href="slide-22.html" class="nav-item"><span class="num">22</span><span>クライアント対応術</span></a>
+            <a href="slide-23.html" class="nav-item"><span class="num">23</span><span>トラブル対応</span></a>
+            <a href="slide-24.html" class="nav-item"><span class="num">24</span><span>給食システム入門</span></a>
+            <a href="slide-25.html" class="nav-item"><span class="num">A</span><span>専門用語集（付録A）</span></a>
+            <a href="slide-26.html" class="nav-item"><span class="num">B</span><span>SV分析ツール（付録B）</span></a>
+            <a href="slide-27.html" class="nav-item"><span class="num">C</span><span>キャリアパス（付録C）</span></a>
+            <a href="slide-28.html" class="nav-item"><span class="num">D</span><span>SVの役割と4つの柱</span></a>
+            <a href="slide-29.html" class="nav-item"><span class="num">E</span><span>人のマネジメント</span></a>
+            <a href="slide-30.html" class="nav-item"><span class="num">F</span><span>数値・改善思考</span></a>
+            <a href="slide-31.html" class="nav-item"><span class="num">G</span><span>データに基づく意思決定</span></a>
+            <a href="slide-32.html" class="nav-item"><span class="num">H</span><span>報告・説得スキル</span></a>
+            <a href="slide-33.html" class="nav-item"><span class="num">I</span><span>SV心構えと自己研鑽</span></a>
+        </nav>
+
+        <main class="main-content">
+            <div class="slide active">
+                <h1>第17章 衛生管理基礎</h1>
+
+                <h2>衛生管理の3原則</h2>
+                <div class="grid-3">
+                    <div class="card" style="text-align: center; border-top: 4px solid var(--danger);">
+                        <div style="font-size: 2.5rem; color: var(--danger);">1</div>
+                        <h4>菌を「つけない」</h4>
+                        <p>手洗い、器具の洗浄・消毒</p>
+                    </div>
+                    <div class="card" style="text-align: center; border-top: 4px solid var(--warning);">
+                        <div style="font-size: 2.5rem; color: var(--warning);">2</div>
+                        <h4>菌を「増やさない」</h4>
+                        <p>温度管理、迅速な調理</p>
+                    </div>
+                    <div class="card" style="text-align: center; border-top: 4px solid var(--success);">
+                        <div style="font-size: 2.5rem; color: var(--success);">3</div>
+                        <h4>菌を「やっつける」</h4>
+                        <p>十分な加熱（75℃1分以上）</p>
+                    </div>
+                </div>
+
+                <h2>温度管理の基準</h2>
+                <table>
+                    <tr>
+                        <th>区分</th>
+                        <th>温度基準</th>
+                        <th>理由</th>
+                    </tr>
+                    <tr>
+                        <td><span class="badge badge-info">冷蔵保存</span></td>
+                        <td>10℃以下（推奨5℃以下）</td>
+                        <td>細菌の増殖を抑制</td>
+                    </tr>
+                    <tr>
+                        <td><span class="badge badge-primary">冷凍保存</span></td>
+                        <td>-18℃以下</td>
+                        <td>細菌の活動を停止</td>
+                    </tr>
+                    <tr>
+                        <td><span class="badge badge-danger">加熱調理</span></td>
+                        <td>中心温度75℃1分以上</td>
+                        <td>ほとんどの菌を死滅</td>
+                    </tr>
+                    <tr>
+                        <td><span class="badge badge-warning">温蔵</span></td>
+                        <td>65℃以上</td>
+                        <td>細菌の増殖を防止</td>
+                    </tr>
+                    <tr>
+                        <td><span class="badge badge-danger">危険温度帯</span></td>
+                        <td>10℃〜60℃</td>
+                        <td>最も菌が増殖しやすい</td>
+                    </tr>
+                </table>
+
+                <h2>食中毒の主な原因菌</h2>
+                <table>
+                    <tr>
+                        <th>菌名</th>
+                        <th>原因食品</th>
+                        <th>予防策</th>
+                    </tr>
+                    <tr>
+                        <td><strong>ノロウイルス</strong></td>
+                        <td>二枚貝、感染者からの二次感染</td>
+                        <td>十分な加熱、手洗い徹底</td>
+                    </tr>
+                    <tr>
+                        <td><strong>サルモネラ菌</strong></td>
+                        <td>卵、鶏肉</td>
+                        <td>十分な加熱、二次汚染防止</td>
+                    </tr>
+                    <tr>
+                        <td><strong>カンピロバクター</strong></td>
+                        <td>鶏肉</td>
+                        <td>十分な加熱、生肉の取り扱い注意</td>
+                    </tr>
+                    <tr>
+                        <td><strong>黄色ブドウ球菌</strong></td>
+                        <td>おにぎり、サンドイッチ</td>
+                        <td>手指の傷への注意、素手で触らない</td>
+                    </tr>
+                    <tr>
+                        <td><strong>ウェルシュ菌</strong></td>
+                        <td>カレー、シチュー</td>
+                        <td>作り置きしない、速やかな冷却</td>
+                    </tr>
+                </table>
+
+                <h2>異物混入対策</h2>
+                <table>
+                    <tr>
+                        <th>異物</th>
+                        <th>原因</th>
+                        <th>対策</th>
+                    </tr>
+                    <tr>
+                        <td>毛髪</td>
+                        <td>調理者から</td>
+                        <td>帽子・ネット着用、粘着ローラー</td>
+                    </tr>
+                    <tr>
+                        <td>虫</td>
+                        <td>食材・施設から</td>
+                        <td>検品、防虫対策、網戸</td>
+                    </tr>
+                    <tr>
+                        <td>金属片</td>
+                        <td>器具の破損</td>
+                        <td>器具点検、金属探知機</td>
+                    </tr>
+                    <tr>
+                        <td>プラスチック</td>
+                        <td>包装材、器具</td>
+                        <td>開封時の注意、器具点検</td>
+                    </tr>
+                    <tr>
+                        <td>絆創膏</td>
+                        <td>調理者から</td>
+                        <td>青色絆創膏使用、手袋着用</td>
+                    </tr>
+                </table>
+
+                <div class="nav-buttons">
+                    <a href="slide-16.html" class="nav-btn">← 前へ</a>
+                    <a href="slide-18.html" class="nav-btn">次へ →</a>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="scripts.js"></script>
+</body>
+</html>
